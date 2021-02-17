@@ -32,6 +32,9 @@
       "@directives/*": [
         "src/app/directives/*"
       ],
+      "@guards/*": [
+        "src/app/guards/*"
+      ],
       "@shared/*": [
         "src/app/shared/*"
       ],

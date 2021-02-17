@@ -7,20 +7,26 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      // {
-      //   path: 'roles'
-      // },
-      // {
-      //   path: 'users'
-      // },
+      {
+        path: 'roles',
+        loadChildren: () => import('@modules/auth/roles/roles.module')
+          .then(module => module.RolesModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('@modules/auth/users/users.module')
+          .then(module => module.UsersModule)
+      },
       {
         path: 'aircrafts',
         loadChildren: () => import('@modules/aircrafts/aircrafts.module')
           .then(module => module.AircraftsModule)
       },
-      // {
-      //   path: 'passengers'
-      // },
+      {
+        path: 'passengers',
+        loadChildren: () => import('@modules/auth/passengers/passengers.module')
+          .then(module => module.PassengersModule)
+      },
       {
         path: 'rentals',
         loadChildren: () => import('@modules/rentals/rentals.module')

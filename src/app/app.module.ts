@@ -4,6 +4,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CoreModule } from '@core/core.module';
+import { INTERCEPTOR_PROVIDERS } from '@interceptors/.';
 
 import { AppComponent } from 'src/app/app.component';
 
@@ -16,7 +17,9 @@ import { AppComponent } from 'src/app/app.component';
     NgbModule,
     CoreModule
   ],
-  providers: [],
+  providers: [
+    INTERCEPTOR_PROVIDERS
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

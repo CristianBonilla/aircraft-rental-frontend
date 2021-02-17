@@ -136,6 +136,7 @@
         "@services",
         "@interceptors",
         "@directives",
+        "@guards",
         "@shared",
         "@test"
       ]
