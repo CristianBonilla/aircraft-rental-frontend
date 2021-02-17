@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -13,9 +12,33 @@
     "target": "es2015",
     "module": "es2020",
     "lib": [
-      "es2018",
-      "dom"
-    ]
+      "DOM",
+      "DOM.Iterable",
+      "ES2018"
+    ],
+    "paths": {
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@modules/*": [
+        "src/app/modules/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@interceptors/*": [
+        "src/app/interceptors/*"
+      ],
+      "@directives/*": [
+        "src/app/directives/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@test/*": [
+        "test/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false

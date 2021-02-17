@@ -1,0 +1,42 @@
+<div class="sidebar_wrapper">
+  <div class="sidebar_user">
+    <div class="sidebar_user-photo">
+      <img src="assets/images/user-profile.png" alt="">
+    </div>
+    <div class="sidebar_user-info">
+      <p>Buen día, Christian</p>
+    </div>
+  </div>
+  <ul class="nav">
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="roles">
+        <fa-icon [icon]="[ 'fas', 'user-shield' ]" size="2x"></fa-icon>
+        <p>Roles<span class="badge badge-success">¡Nuevo!</span></p>
+      </a>
+    </li>
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="users">
+        <fa-icon [icon]="[ 'fas', 'users' ]" size="2x"></fa-icon>
+        <p>Usuarios</p>
+      </a>
+    </li>
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="aircrafts">
+        <fa-icon [icon]="[ 'far', 'paper-plane' ]" size="2x"></fa-icon>
+        <p>Aeronaves</p>
+      </a>
+    </li>
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="passengers">
+        <fa-icon [icon]="[ 'fas', 'briefcase' ]" size="2x"></fa-icon>
+        <p>Pasajeros</p>
+      </a>
+    </li>
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="rentals">
+        <fa-icon [icon]="[ 'fas', 'fighter-jet' ]" size="2x"></fa-icon>
+        <p>Alquileres</p>
+      </a>
+    </li>
+  </ul>
+</div>

@@ -126,6 +126,20 @@
     "directive-class-suffix": true,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      [
+        "src",
+        "@core",
+        "@modules",
+        "@services",
+        "@interceptors",
+        "@directives",
+        "@shared",
+        "@test"
+      ]
+    ],
     "no-input-rename": true,
     "no-inputs-metadata-property": true,
     "no-output-native": true,
@@ -138,7 +152,7 @@
     "use-pipe-transform-interface": true,
     "directive-selector": [
       true,
-      "attribute",
+      ["element", "attribute"],
       "arf",
       "camelCase"
     ],
