@@ -28,7 +28,7 @@ export class RentalsService {
   }
 
   createPassenger(passengerRequest: PassengerRequest) {
-    const create$ = this.http.post<PassengerRequest>(this.passengersEndpointUrl, passengerRequest, {
+    const create$ = this.http.post<PassengerResponse>(this.passengersEndpointUrl, passengerRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
     });
