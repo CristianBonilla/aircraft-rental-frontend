@@ -26,7 +26,7 @@ export interface UserResponse extends User {
 }
 
 export interface SuccessResponse {
-  token: string[];
+  token: string;
 }
 
 export interface FailedResponse {

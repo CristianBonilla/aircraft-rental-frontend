@@ -9,6 +9,7 @@ import { SidebarComponent } from '@modules/home/sidebar/sidebar.component';
 import { SidebarWrapperComponent } from '@modules/home/sidebar/sidebar-wrapper/sidebar-wrapper.component';
 import { HomeComponent } from '@modules/home/home.component';
 import { DirectivesModule } from '@directives/directives.module';
+import { authTokenProvider } from '@interceptors/.';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,9 @@ import { DirectivesModule } from '@directives/directives.module';
     HomeRoutingModule,
     IconsModule,
     DirectivesModule
+  ],
+  providers: [
+    [ authTokenProvider ]
   ]
 })
 export class HomeModule { }

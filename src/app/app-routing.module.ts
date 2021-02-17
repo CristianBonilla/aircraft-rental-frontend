@@ -7,28 +7,18 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        loadChildren: () => import('@modules/home/home.module')
+          .then(module => module.HomeModule)
       },
       {
         path: 'home',
-        loadChildren: () => import('@modules/home/home.module')
-          .then(module => module.HomeModule)
+        redirectTo: '',
+        pathMatch: 'full'
       },
       {
         path: 'auth',
         loadChildren: () => import('@modules/auth/auth.module')
           .then(module => module.AuthModule)
-      },
-      {
-        path: 'aircrafts',
-        loadChildren: () => import('@modules/aircrafts/aircrafts.module')
-          .then(module => module.AircraftsModule)
-      },
-      {
-        path: 'rentals',
-        loadChildren: () => import('@modules/rentals/rentals.module')
-          .then(module => module.RentalsModule)
       }
     ]
   },
