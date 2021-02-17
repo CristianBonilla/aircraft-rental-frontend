@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+enum AuthType {
+  Register,
+  Login
+}
 
 @Component({
   selector: 'arf-auth',
   templateUrl: './auth.component.html',
-  styles: [
-  ]
+  styles: []
 })
-export class AuthComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class AuthComponent {
+  type = AuthType;
+  auth = AuthType.Login;
 }

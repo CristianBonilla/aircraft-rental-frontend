@@ -1,15 +1,20 @@
-<div class="auth-panel">
-  <div class="login-info-box">
-    <h2>Tienes una cuenta?</h2>
-    <p>Accede e interactua con el panel administrativo para un proceso de alquiler</p>
-    <a class="btn btn-outline-primary" role="button" routerLink="login">Iniciar Sesión</a>
-  </div>
-  <div class="register-info-box">
-    <h2>No tienes una cuenta?</h2>
-    <p>Has un proceso de alquiler para hacer un viaje interestelar</p>
-    <a class="btn btn-outline-secondary" role="button" routerLink="register">Registrarse</a>
-  </div>
-  <div class="type-panel">
-    <router-outlet></router-outlet>
+<div class="auth-wrap">
+  <div class="auth-panel">
+    <div class="auth-panel_login">
+      <h2>Tienes una cuenta?</h2>
+      <p>Accede e interactua con el panel administrativo para un proceso de alquiler</p>
+      <button type="button" class="btn btn-light btn-lg" role="button" (click)="auth = type.Login">Iniciar Sesión</button>
+    </div>
+    <div class="auth-panel_register">
+      <h2>No tienes una cuenta?</h2>
+      <p>Has un proceso de alquiler para hacer un viaje interestelar</p>
+      <button type="button" class="btn btn-light btn-lg" role="button" (click)="auth = type.Register">Registrarse</button>
+    </div>
+    <div class="auth-panel_container" [ngClass]="{ 'right-log': auth === type.Register }">
+      <ng-container [ngSwitch]="auth">
+        <arf-register *ngSwitchCase="type.Register"></arf-register>
+        <arf-login *ngSwitchDefault></arf-login>
+      </ng-container>
+    </div>
   </div>
 </div>

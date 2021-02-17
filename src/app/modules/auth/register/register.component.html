@@ -1,7 +1,21 @@
-<div class="register-show">
-  <h2>REGISTER</h2>
-  <input type="text" placeholder="Email">
-  <input type="password" placeholder="Password">
-  <input type="password" placeholder="Confirm Password">
-  <input type="button" value="Register">
+<div class="register-show container">
+  <h2 class="text-secondary text-left">Registrarse</h2>
+  <form autocomplete="off">
+    <div class="form-group">
+      <input type="text" class="form-control" id="username" placeholder="Nombre de usuario">
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" id="password" placeholder="Contraseña">
+    </div>
+    <div class="form-group">
+      <input type="email" class="form-control" id="email" placeholder="Correo electrónico">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="first-name" placeholder="Nombres">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="last-name" placeholder="Apellidos">
+    </div>
+  </form>
+  <button type="submit" class="btn btn-primary btn-lg float-left">Registrarse</button>
 </div>

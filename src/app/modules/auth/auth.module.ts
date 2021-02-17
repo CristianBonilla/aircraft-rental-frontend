@@ -2,12 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { AuthRoutingModule } from '@modules/auth/auth-routing.module';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { AuthComponent } from './auth.component';
+import { AuthComponent } from '@modules/auth/auth.component';
 
 @NgModule({
-  declarations: [ LoginComponent, RegisterComponent, AuthComponent ],
+  declarations: [ AuthComponent ],
   imports: [
     CommonModule,
     NgxPermissionsModule.forChild({
