@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, of } from 'rxjs';
+import { of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 
@@ -9,14 +9,15 @@ import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 export class StorageService {
   get<T>(storageKey: STORAGE_KEYS) {
     const value = localStorage.getItem(storageKey);
-    const storageValue$ = from(value).pipe(
-      map<string, T>(value => {
+    const storageValue$ = of(value).pipe(
+      map<string, { [x: string]: T }>(value => {
         try {
-          return JSON.parse(value);
-        } catch (error) {
-          throw new TypeError(`Conversion error ${ error.message }`);
+          return { [storageKey]: JSON.parse(value) };
+        } catch {
+          return { [storageKey]: value };
         }
-      }));
+      })
+    );
 
     return storageValue$;
   }

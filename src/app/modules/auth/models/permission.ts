@@ -1,9 +1,9 @@
 export enum PermissionType {
-  ROLES = 'ROLES',
-  USERS = 'USERS',
-  AIRCRAFTS = 'AIRCRAFTS',
-  PASSENGERS = 'PASSENGERS',
-  RENTALS = 'RENTALS'
+  ROLES = 'CanRoles',
+  USERS = 'CanUsers',
+  AIRCRAFTS = 'CanAircrafts',
+  PASSENGERS = 'CanPassengers',
+  RENTALS = 'CanRentals'
 }
 
 export interface Permission {

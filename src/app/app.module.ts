@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,10 +13,11 @@ import { AppComponent } from 'src/app/app.component';
   declarations: [ AppComponent ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     NgxPermissionsModule.forRoot(),
     NgbModule,
-    CoreModule
+    CoreModule,
   ],
   providers: [
     INTERCEPTOR_PROVIDERS

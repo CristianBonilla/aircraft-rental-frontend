@@ -3,7 +3,7 @@ interface Rental {
   idAircraft: number;
   location: string;
   ArrivalDate: Date;
-  departureDate;
+  departureDate: Date;
 }
 
 export interface RentalRequest extends Rental { }

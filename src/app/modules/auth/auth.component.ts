@@ -12,5 +12,5 @@ enum AuthType {
 })
 export class AuthComponent {
   type = AuthType;
-  auth = AuthType.Login;
+  auth = this.type.Login;
 }

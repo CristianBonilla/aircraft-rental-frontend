@@ -1,7 +1,13 @@
 const APP_ROUTES = {
-  HOME: '/home',
-  LOGIN: '/auth',
-  REGISTER: '/auth/register'
+  AUTH: '/auth',
+  HOME: {
+    MAIN: '/',
+    ROLES: '/home/roles',
+    USERS: '/home/users',
+    AIRCRAFTS: '/home/aircrafts',
+    PASSENGERS: '/home/passengers',
+    RENTALS: '/home/rentals'
+  }
 };
 Object.freeze(APP_ROUTES);
 

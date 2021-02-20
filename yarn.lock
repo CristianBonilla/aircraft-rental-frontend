@@ -252,6 +252,13 @@
   dependencies:
     tslib "^2.0.0"
 
+"@auth0/angular-jwt@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@auth0/angular-jwt/-/angular-jwt-5.0.2.tgz#0a23f240e8c6ed37c5c7a354ad79a755a217936e"
+  integrity sha512-rSamC9mu+gUxoR86AXcIo+KD7xRIro+/iu1F2Ld85YAZEVKlpB5vYG+g0yGaEOqjtQWP/i0H6fi6XMGPVHSYYQ==
+  dependencies:
+    tslib "^2.0.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.8.3":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.13.tgz#dcfc826beef65e75c50e21d3837d7d95798dd658"
@@ -5894,12 +5901,26 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+ng-multiselect-dropdown@^0.2.14:
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/ng-multiselect-dropdown/-/ng-multiselect-dropdown-0.2.14.tgz#77f199cf1bf25f08fd73fbcadd1f1375c77fa578"
+  integrity sha512-S+dPT/Xskh5fJVQMAb0qUVSwoE+VJ8C9XUDe6C4/3/Cd43o2F3SHHHOXfOhcQfqkZYkGeJOmzRfc57aOohr4dA==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-permissions@^8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/ngx-permissions/-/ngx-permissions-8.1.1.tgz#4c02cbb9b53101fc1c217d1e54c39aa6869ef85f"
   integrity sha512-gxpZtyg9Hucx+sgoC+iJTYL02E6GOoDCfMKZ1rDnSzIFsyGWIsaNFbSi0FaoT4diWnQ+8B/kL4mEM7ldO/FTxA==
   dependencies:
     tslib "^1.10.0"
+
+ngx-trim-directive@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-trim-directive/-/ngx-trim-directive-1.1.0.tgz#028f0963486efd19298c39f09805e52e332223ba"
+  integrity sha512-czY8oy4oDPYzz2Umc1cVal3tPYIAduW0yHlTHYABWtqwTSBe3/1apvkkUmQou6Eqm7WJh7qxb0N6K/7Xqel/1g==
+  dependencies:
+    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -8670,6 +8691,11 @@ url-parse@^1.4.3, url-parse@^1.4.7:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+url-polyfill@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.12.tgz#6cdaa17f6b022841b3aec0bf8dbd87ac0cd33331"
+  integrity sha512-mYFmBHCapZjtcNHW0MDq9967t+z4Dmg5CJ0KqysK3+ZbyoNOWQHksGCTWwDhxGXllkWlOc10Xfko6v4a3ucM6A==
 
 url@^0.11.0:
   version "0.11.0"

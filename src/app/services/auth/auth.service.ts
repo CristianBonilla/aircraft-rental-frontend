@@ -4,7 +4,8 @@ import { SuccessResponse, UserLoginRequest, UserRegisterRequest, UserResponse } 
 import { Permission } from '@modules/auth/models/permission';
 import { RoleRequest, RoleResponse } from '@modules/auth/models/role';
 import { StorageService } from '@services/storage/storage.service';
-import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 
@@ -26,23 +27,39 @@ export class AuthService {
   private readonly loginEndpointUrl = LOGIN;
   private readonly usersEndpointUrl = USERS;
   private readonly rolesEndpointUrl = ROLES;
+  authLoading$ = new Subject<boolean>();
 
   constructor(private http: HttpClient, private storage: StorageService) { }
 
+  getTokenInStorage() {
+    const token$ = this.storage.get<string>(STORAGE_KEYS.USER_TOKEN)
+      .pipe(map<object, string>(source => source[STORAGE_KEYS.USER_TOKEN]));
+
+    return token$;
+  }
+
   userRegister(userRegisterRequest: UserRegisterRequest) {
+    this.authLoading$.next(true);
     const register$ = this.http.post<SuccessResponse>(this.registerEndpointUrl, userRegisterRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    }).pipe(map(success => this.storage.set(STORAGE_KEYS.USER_TOKEN, success.token)));
+    }).pipe(
+      map(success => this.storage.set(STORAGE_KEYS.USER_TOKEN, success.token)),
+      tap(_ => this.authLoading$.next(false))
+    );
 
     return register$;
   }
 
   userLogin(userLoginRequest: UserLoginRequest) {
+    this.authLoading$.next(true);
     const login$ = this.http.post<SuccessResponse>(this.loginEndpointUrl, userLoginRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    }).pipe(map(success => this.storage.set(STORAGE_KEYS.USER_TOKEN, success.token)));
+    }).pipe(
+      map(success => this.storage.set(STORAGE_KEYS.USER_TOKEN, success.token)),
+      tap(_ => this.authLoading$.next(false))
+    );
 
     return login$;
   }

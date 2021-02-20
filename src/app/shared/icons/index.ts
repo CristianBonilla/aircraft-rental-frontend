@@ -7,7 +7,8 @@ export {
   faUserShield,
   faUsers,
   faBriefcase,
-  faFighterJet
+  faFighterJet,
+  faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 
 export {

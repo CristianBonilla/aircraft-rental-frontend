@@ -1,15 +1,18 @@
 <div class="login-show container">
   <h2 class="text-secondary text-left">Iniciar Sesión</h2>
-  <form autocomplete="off">
+  <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="form-group">
-      <input type="text" class="form-control" id="usernameOrEmail" placeholder="Nombre de usuario o Email">
+      <input type="text" class="form-control" id="usernameOrEmail" placeholder="Usuario o Email" [formControl]="usernameOrEmail" trim="blur">
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" id="password" placeholder="Contraseña">
+      <input type="password" class="form-control" id="password" placeholder="Contraseña" [formControl]="password" trim="blur">
+    </div>
+    <div class="d-flex align-items-start flex-column flex-sm-row justify-content-sm-around w-100">
+      <a class="text-sm-left forgot-password" href="#" (click)="$event.preventDefault()">Olvidaste la contraseña?</a>
+      <button type="submit" class="btn btn-primary btn-lg float-left">
+        <fa-icon *ngIf="loading$ | async" [icon]="[ 'fas', 'spinner' ]" [spin]="true"></fa-icon>
+        Iniciar sesión
+      </button>
     </div>
   </form>
-  <div class="d-flex align-items-start flex-column flex-sm-row justify-content-sm-around w-100">
-    <a class="text-sm-left" href="#" (click)="$event.preventDefault()">Olvidaste la contraseña?</a>
-    <button type="submit" class="btn btn-primary btn-lg float-left">Iniciar sesión</button>
-  </div>
 </div>

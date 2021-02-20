@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { HomeRoutingModule } from '@modules/home/home-routing.module';
 import { IconsModule } from '@shared/icons/icons.module';
 
@@ -20,6 +21,10 @@ import { DirectivesModule } from '@directives/directives.module';
   ],
   imports: [
     CommonModule,
+    NgxPermissionsModule.forChild({
+      permissionsIsolate: true,
+      rolesIsolate: true
+    }),
     HomeRoutingModule,
     IconsModule,
     DirectivesModule

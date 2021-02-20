@@ -22,7 +22,7 @@ export interface UserRegisterRequest extends User {
 
 export interface UserResponse extends User {
   id: number;
-  idRole: number;
+  roleId: number;
 }
 
 export interface SuccessResponse {
