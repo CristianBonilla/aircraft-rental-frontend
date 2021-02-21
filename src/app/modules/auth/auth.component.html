@@ -1,15 +1,6 @@
 <div class="auth-wrap">
   <div class="auth-panel">
-    <div class="auth-panel_login">
-      <h2>Tienes una cuenta?</h2>
-      <p>Accede e interactua con el panel administrativo para un proceso de alquiler</p>
-      <button type="button" class="btn btn-light btn-lg" role="button" [disabled]="loading$ | async" (click)="auth = type.Login">Iniciar Sesión</button>
-    </div>
-    <div class="auth-panel_register">
-      <h2>No tienes una cuenta?</h2>
-      <p>Has un proceso de alquiler para hacer un viaje interestelar</p>
-      <button type="button" class="btn btn-light btn-lg" role="button" [disabled]="loading$ | async" (click)="auth = type.Register">Registrarse</button>
-    </div>
+    <ng-container *ngIf="auth !== type.Login; then login; else register"></ng-container>
     <div class="auth-panel_container" [ngClass]="{ 'right-log': auth === type.Register }">
       <ng-container [ngSwitch]="auth">
         <arf-register *ngSwitchCase="type.Register"></arf-register>
@@ -18,3 +9,19 @@
     </div>
   </div>
 </div>
+
+<ng-template #login>
+  <div class="auth-panel_login">
+    <h2>Tienes una cuenta?</h2>
+    <p>Accede e interactua con el panel administrativo para un proceso de alquiler</p>
+    <button type="button" class="btn btn-light btn-lg" role="button" [disabled]="loading$ | async" (click)="auth = type.Login">Iniciar Sesión</button>
+  </div>
+</ng-template>
+
+<ng-template #register>
+  <div class="auth-panel_register">
+    <h2>No tienes una cuenta?</h2>
+    <p>Has un proceso de alquiler para hacer un viaje interestelar</p>
+    <button type="button" class="btn btn-light btn-lg" role="button" [disabled]="loading$ | async" (click)="auth = type.Register">Registrarse</button>
+  </div>
+</ng-template>

@@ -11,8 +11,8 @@ import {
 import { Permission } from '@modules/auth/models/permission';
 import { RoleRequest, RoleResponse } from '@modules/auth/models/role';
 import { StorageService } from '@services/storage/storage.service';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { map, mergeMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
+import { catchError, delay, map, mergeMap, take, tap } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 
@@ -49,10 +49,6 @@ export class AuthService {
       .subscribe(userAccount => this.userAccountSubject.next(userAccount));
   }
 
-  get userAccount() {
-    return this.userAccountSubject.getValue();
-  }
-
   isAuthenticated() {
     const authenticated$ = combineLatest([
       this.tokenInStorage(),
@@ -87,7 +83,11 @@ export class AuthService {
       ...this.httpHeaderOptions
     }).pipe(
       mergeMap(success => this.saveUser(success)),
-      tap(_ => this.authLoadingSubject.next(false))
+      catchError(error => {
+        this.authLoadingSubject.next(false);
+
+        return of(error);
+      })
     );
 
     return register$;
@@ -100,10 +100,27 @@ export class AuthService {
       ...this.httpHeaderOptions
     }).pipe(
       mergeMap(success => this.saveUser(success)),
-      tap(_ => this.authLoadingSubject.next(false))
+      catchError(error => {
+        this.authLoadingSubject.next(false);
+
+        return of(error);
+      })
     );
 
     return login$;
+  }
+
+  userLogout() {
+    this.authLoadingSubject.next(true);
+    const logout$ = combineLatest([
+      this.storage.remove(STORAGE_KEYS.USER),
+      this.storage.remove(STORAGE_KEYS.USER_TOKEN)
+    ]).pipe(
+      delay(3000),
+      map(() => this.userAccountSubject.next(null)),
+      tap(() => this.authLoadingSubject.next(false)));
+
+    return logout$;
   }
 
   createRole(roleRequest: RoleRequest) {
@@ -164,12 +181,14 @@ export class AuthService {
     const authenticatedUser$ = this.storage.set(STORAGE_KEYS.USER_TOKEN, token)
       .pipe(
         mergeMap(() => {
-          this.userAccountSubject.next({
+          const userAccount: UserAccount = {
             user, role: { ...role, permissions: [ ...permissions ] }
-          });
+          };
+          this.userAccountSubject.next(userAccount);
 
-          return this.storage.set(STORAGE_KEYS.USER, this.userAccount);
-        })
+          return this.storage.set(STORAGE_KEYS.USER, userAccount);
+        }),
+        tap(() => this.authLoadingSubject.next(false))
       );
 
     return authenticatedUser$;

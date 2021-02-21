@@ -1,32 +1,28 @@
 .auth-wrap {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
 
   .auth-panel {
     display: flex;
     align-items: center;
+    flex-direction: column;
     position: relative;
-    text-align: center;
-    margin: 10px;
-    min-width: 800px;
     right: 0;
     left: 0;
-    height: 400px;
+    margin: 10px;
+    width: 100%;
+    text-align: center;
     background-color: rgba(20, 106, 236, 0.9);
 
     &_container {
       background-color: rgba(255, 255, 255, 1);
-      height: 500px;
-      position: absolute;
-      top: -50px;
-      width: 50%;
-      right: calc(50% - 20px);
       transition: .3s ease-in-out;
       z-index: 0;
+      width: calc(100% - 20px);
+      margin: 10px;
       box-shadow: 0 0 15px 9px #00000096;
-      overflow-y: auto;
 
       .login-show,
       .register-show {
@@ -77,10 +73,11 @@
     &_register,
     &_login {
       color: #FFFFFF;
+      padding: 10px;
 
       p {
         font-size: .9rem;
-        color: #ececec;
+        color: #ECECEC;
       }
 
       button:disabled {
@@ -89,23 +86,50 @@
     }
 
     &_register {
+      margin: 0;
+    }
+  }
+}
+
+@media (min-width: 576px) {
+  .auth-wrap .auth-panel {
+
+    &_container {
+      width: calc(80% - 20px);
+    }
+  }
+}
+
+@media (min-width: 830px) {
+  .auth-wrap .auth-panel {
+    flex-direction: row;
+    width: auto;
+    min-width: 800px;
+    height: 400px;
+
+    &_container {
+      height: 500px;
+      position: absolute;
+      top: -50px;
+      width: 50%;
+      right: calc(50% - 20px);
+      margin: 0;
+      overflow-y: auto;
+    }
+
+    &_register,
+    &_login {
       width: 30%;
       padding: 20px;
-      position: absolute;
-      right: 0;
       text-align: left;
+    }
+
+    &_register {
+      margin-left: auto;
 
       button {
         position: relative;
       }
-    }
-
-    &_login {
-      width: 30%;
-      padding: 20px;
-      position: absolute;
-      left: 0;
-      text-align: left;
     }
   }
 }

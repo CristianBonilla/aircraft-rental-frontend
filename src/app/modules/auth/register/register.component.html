@@ -33,7 +33,7 @@
         </select>
       </div>
       <button type="submit" class="btn btn-primary btn-lg float-left" [disabled]="loading$ | async">
-        <fa-icon *ngIf="loading$ | async" [icon]="[ 'fas', 'spinner' ]" [spin]="true"></fa-icon>
+        <fa-icon [icon]="[ 'fas', 'spinner' ]" [spin]="true" *ngIf="loading$ | async"></fa-icon>
         Registrarse
       </button>
     </form>
