@@ -9,6 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'roles',
+        // canActivate: [],
         loadChildren: () => import('@modules/auth/roles/roles.module')
           .then(module => module.RolesModule)
       },

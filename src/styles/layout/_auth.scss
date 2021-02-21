@@ -26,6 +26,7 @@
       transition: .3s ease-in-out;
       z-index: 0;
       box-shadow: 0 0 15px 9px #00000096;
+      overflow-y: auto;
 
       .login-show,
       .register-show {
@@ -35,12 +36,16 @@
         transition: opacity 300ms ease-in-out;
         color: #242424;
         text-align: left;
-        padding: 10px 20px;
+        padding: 20px;
         display: flex;
-        align-items: flex-start;
-        justify-content: center;
         flex-direction: column;
         height: 100%;
+
+        .wrap {
+          width: 100%;
+          margin: auto;
+          padding: 0 0 20px;
+        }
 
         form {
           width: 100%;
@@ -76,6 +81,10 @@
       p {
         font-size: .9rem;
         color: #ececec;
+      }
+
+      button:disabled {
+        cursor: default;
       }
     }
 

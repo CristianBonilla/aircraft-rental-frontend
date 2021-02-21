@@ -1,11 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SuccessResponse, UserLoginRequest, UserRegisterRequest, UserResponse } from '@modules/auth/models/authentication';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import {
+  UserAccount,
+  SuccessResponse,
+  UserLoginRequest,
+  UserRegisterRequest,
+  UserResponse
+} from '@modules/auth/models/authentication';
 import { Permission } from '@modules/auth/models/permission';
 import { RoleRequest, RoleResponse } from '@modules/auth/models/role';
 import { StorageService } from '@services/storage/storage.service';
-import { Subject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { map, mergeMap, take, tap } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 
@@ -27,38 +34,73 @@ export class AuthService {
   private readonly loginEndpointUrl = LOGIN;
   private readonly usersEndpointUrl = USERS;
   private readonly rolesEndpointUrl = ROLES;
-  authLoading$ = new Subject<boolean>();
+  private readonly jwtHelper: JwtHelperService;
+  private readonly authLoadingSubject = new Subject<boolean>();
+  private readonly userAccountSubject = new BehaviorSubject<UserAccount>(null);
+  loading$: Observable<boolean>;
+  userAccount$: Observable<UserAccount>;
 
-  constructor(private http: HttpClient, private storage: StorageService) { }
+  constructor(private http: HttpClient, private storage: StorageService) {
+    this.jwtHelper = new JwtHelperService();
+    this.loading$ = this.authLoadingSubject.asObservable();
+    this.userAccount$ = this.userAccountSubject.asObservable();
+    this.userInStorage()
+      .pipe(take(1))
+      .subscribe(userAccount => this.userAccountSubject.next(userAccount));
+  }
 
-  getTokenInStorage() {
-    const token$ = this.storage.get<string>(STORAGE_KEYS.USER_TOKEN)
-      .pipe(map<object, string>(source => source[STORAGE_KEYS.USER_TOKEN]));
+  get userAccount() {
+    return this.userAccountSubject.getValue();
+  }
+
+  isAuthenticated() {
+    const authenticated$ = combineLatest([
+      this.tokenInStorage(),
+      this.userInStorage()
+    ]).pipe(
+      map(([ token, userAccount ]) => {
+        const hasToken = !!token && !!token.trim() && !this.jwtHelper.isTokenExpired(token);
+
+        return hasToken && !!userAccount;
+      })
+    );
+
+    return authenticated$;
+  }
+
+  tokenInStorage() {
+    const token$ = this.getInStorage<string>(STORAGE_KEYS.USER_TOKEN);
 
     return token$;
   }
 
+  userInStorage() {
+    const user$ = this.getInStorage<UserAccount>(STORAGE_KEYS.USER);
+
+    return user$;
+  }
+
   userRegister(userRegisterRequest: UserRegisterRequest) {
-    this.authLoading$.next(true);
+    this.authLoadingSubject.next(true);
     const register$ = this.http.post<SuccessResponse>(this.registerEndpointUrl, userRegisterRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
     }).pipe(
-      map(success => this.storage.set(STORAGE_KEYS.USER_TOKEN, success.token)),
-      tap(_ => this.authLoading$.next(false))
+      mergeMap(success => this.saveUser(success)),
+      tap(_ => this.authLoadingSubject.next(false))
     );
 
     return register$;
   }
 
   userLogin(userLoginRequest: UserLoginRequest) {
-    this.authLoading$.next(true);
+    this.authLoadingSubject.next(true);
     const login$ = this.http.post<SuccessResponse>(this.loginEndpointUrl, userLoginRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
     }).pipe(
-      map(success => this.storage.set(STORAGE_KEYS.USER_TOKEN, success.token)),
-      tap(_ => this.authLoading$.next(false))
+      mergeMap(success => this.saveUser(success)),
+      tap(_ => this.authLoadingSubject.next(false))
     );
 
     return login$;
@@ -116,5 +158,27 @@ export class AuthService {
     });
 
     return permissions$;
+  }
+
+  private saveUser({ token, user, role, permissions }: SuccessResponse) {
+    const authenticatedUser$ = this.storage.set(STORAGE_KEYS.USER_TOKEN, token)
+      .pipe(
+        mergeMap(() => {
+          this.userAccountSubject.next({
+            user, role: { ...role, permissions: [ ...permissions ] }
+          });
+
+          return this.storage.set(STORAGE_KEYS.USER, this.userAccount);
+        })
+      );
+
+    return authenticatedUser$;
+  }
+
+  private getInStorage<T>(storageKey: STORAGE_KEYS) {
+    const inStorage$ = this.storage.get<T>(storageKey)
+      .pipe(map<object, T>(source => source[storageKey] ?? null));
+
+    return inStorage$;
   }
 }

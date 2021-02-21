@@ -2,7 +2,7 @@ import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } fro
 import { Injectable } from '@angular/core';
 import { AuthService } from '@services/auth/auth.service';
 import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 
 const {
@@ -25,8 +25,8 @@ export class AuthTokenService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const intercept$ = of(request).pipe(
-      switchMap(request => this.getRequest(request)),
-      switchMap(next.handle)
+      mergeMap(request => this.getRequest(request)),
+      mergeMap(request => next.handle(request))
     );
 
     return intercept$;
@@ -39,7 +39,7 @@ export class AuthTokenService implements HttpInterceptor {
   }
 
   private authRequestHeader(request: HttpRequest<any>) {
-    const requestHeader$ = this.authService.getTokenInStorage().pipe(
+    const requestHeader$ = this.authService.tokenInStorage().pipe(
       map(token => !!token ? request.clone(this.getHeaders(token)) : request)
     );
 

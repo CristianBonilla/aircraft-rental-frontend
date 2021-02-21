@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class StorageService {
   get<T>(storageKey: STORAGE_KEYS) {
     const value = localStorage.getItem(storageKey);
     const storageValue$ = of(value).pipe(
-      map<string, { [x: string]: T }>(value => {
+      map<string, { [x: string]: string | T }>(value => {
         try {
           return { [storageKey]: JSON.parse(value) };
         } catch {
@@ -25,7 +25,7 @@ export class StorageService {
   set<T>(storageKey: STORAGE_KEYS, source: T) {
     const setStorageValue$ = of(source).pipe(
       map(value => typeof value === 'object' ? JSON.stringify(value) : value.toString()),
-      switchMap(value => of(localStorage.setItem(storageKey, value)))
+      mergeMap(value => of(localStorage.setItem(storageKey, value)))
     );
 
     return setStorageValue$;

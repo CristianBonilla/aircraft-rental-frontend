@@ -13,15 +13,14 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) { }
 
   canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const hasToken$ = this.authService.getTokenInStorage().pipe(
+    const isAuthenticated$ = this.authService.isAuthenticated().pipe(
       take(1),
-      map(token => {
-        const hasToken = !!token && !!token.trim();
-        if (!hasToken && state.url === MAIN) {
+      map(authenticated => {
+        if (!authenticated && state.url === MAIN) {
           this.router.navigate([ AUTH ]);
 
           return false;
-        } else if (hasToken && state.url === AUTH) {
+        } else if (authenticated && state.url === AUTH) {
           this.router.navigate([ MAIN ]);
 
           return false;
@@ -31,6 +30,6 @@ export class AuthGuard implements CanActivate {
       })
     );
 
-    return hasToken$;
+    return isAuthenticated$;
   }
 }

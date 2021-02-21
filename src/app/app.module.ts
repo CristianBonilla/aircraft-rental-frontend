@@ -17,7 +17,7 @@ import { AppComponent } from 'src/app/app.component';
     AppRoutingModule,
     NgxPermissionsModule.forRoot(),
     NgbModule,
-    CoreModule,
+    CoreModule
   ],
   providers: [
     INTERCEPTOR_PROVIDERS

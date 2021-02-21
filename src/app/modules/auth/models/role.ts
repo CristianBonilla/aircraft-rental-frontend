@@ -8,5 +8,6 @@ export interface RoleRequest {
 export interface RoleResponse {
   id: number;
   name: string;
+  displayName: string;
   permissions: Permission[];
 }

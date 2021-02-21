@@ -1,7 +1,5 @@
-export enum UserLoginType {
-  Username,
-  Email
-}
+import { RoleResponse } from '@modules/auth/models/role';
+import { Permission } from '@modules/auth/models/permission';
 
 export interface UserLoginRequest {
   usernameOrEmail: string;
@@ -17,7 +15,7 @@ interface User {
 }
 
 export interface UserRegisterRequest extends User {
-  role: string;
+  role?: string;
 }
 
 export interface UserResponse extends User {
@@ -27,8 +25,16 @@ export interface UserResponse extends User {
 
 export interface SuccessResponse {
   token: string;
+  user: UserResponse;
+  role: RoleResponse;
+  permissions: Permission[];
 }
 
 export interface FailedResponse {
   errors: string[];
+}
+
+export interface UserAccount {
+  user: UserResponse;
+  role: RoleResponse;
 }

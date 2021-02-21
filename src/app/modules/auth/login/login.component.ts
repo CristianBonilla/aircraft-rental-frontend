@@ -3,7 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth/auth.service';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
+import { UserLoginRequest } from '../models/authentication';
 
 @Component({
   selector: 'arf-login',
@@ -31,16 +33,19 @@ export class LoginComponent {
     private authService: AuthService) {
     this.usernameOrEmail.setValidators([ Validators.required ]);
     this.password.setValidators([ Validators.required ]);
-    this.loading$ = this.authService.authLoading$.asObservable();
+    this.loading$ = this.authService.loading$;
   }
 
   login() {
     if (this.loginForm.invalid) {
       return;
     }
-    const usernameOrEmail = this.usernameOrEmail.value.trim();
-    const password = this.password.value.trim();
-    this.authService.userLogin({ usernameOrEmail, password })
+    const userLoginRequest: UserLoginRequest = {
+      usernameOrEmail: this.usernameOrEmail.value,
+      password: this.password.value
+    };
+    this.authService.userLogin(userLoginRequest)
+      .pipe(take(1))
       .subscribe(() => this.router.navigate([ APP_ROUTES.HOME.MAIN ]));
   }
 }

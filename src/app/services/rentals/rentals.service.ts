@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PassengerRequest, PassengerResponse } from '@modules/rentals/models/passenger';
 import { RentalRequest, RentalResponse } from '@modules/rentals/models/rental';
+import { map } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 
 @Injectable({
@@ -67,7 +68,9 @@ export class RentalsService {
     const passengers$ = this.http.get<PassengerResponse[]>(this.passengersEndpointUrl, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    });
+    }).pipe(
+      map(passengers => passengers.sort((passengerA, passengerB) => passengerA.id - passengerB.id))
+    );
 
     return passengers$;
   }
