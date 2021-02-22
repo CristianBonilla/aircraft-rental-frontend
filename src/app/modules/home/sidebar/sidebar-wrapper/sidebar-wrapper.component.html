@@ -4,7 +4,7 @@
       <img src="assets/images/user-profile.png" alt="">
     </div>
     <div class="sidebar_user-info">
-      <p>Buen día, Christian</p>
+      <p class="text-truncate">Buen día, {{ userName | async }}</p>
     </div>
   </div>
   <ul class="nav">
@@ -21,6 +21,12 @@
       </a>
     </li>
     <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="rentals">
+        <fa-icon [icon]="[ 'fas', 'fighter-jet' ]" size="2x"></fa-icon>
+        <p>Alquiler de Aeronaves</p>
+      </a>
+    </li>
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <a class="nav-link" routerLink="aircrafts">
         <fa-icon [icon]="[ 'far', 'paper-plane' ]" size="2x"></fa-icon>
         <p>Aeronaves</p>
@@ -30,12 +36,6 @@
       <a class="nav-link" routerLink="passengers">
         <fa-icon [icon]="[ 'fas', 'briefcase' ]" size="2x"></fa-icon>
         <p>Pasajeros</p>
-      </a>
-    </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      <a class="nav-link" routerLink="rentals">
-        <fa-icon [icon]="[ 'fas', 'fighter-jet' ]" size="2x"></fa-icon>
-        <p>Alquiler de Aeronaves</p>
       </a>
     </li>
   </ul>

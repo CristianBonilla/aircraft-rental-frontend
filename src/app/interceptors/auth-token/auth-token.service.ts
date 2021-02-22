@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from '@services/auth/auth.service';
+import { IdentityService } from '@services/identity/identity.service';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
@@ -21,7 +21,7 @@ export class AuthTokenService implements HttpInterceptor {
     LOGIN
   ];
 
-  constructor(private authService: AuthService) { }
+  constructor(private identity: IdentityService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const intercept$ = of(request).pipe(
@@ -39,7 +39,7 @@ export class AuthTokenService implements HttpInterceptor {
   }
 
   private authRequestHeader(request: HttpRequest<any>) {
-    const requestHeader$ = this.authService.tokenInStorage().pipe(
+    const requestHeader$ = this.identity.tokenInStorage().pipe(
       map(token => !!token ? request.clone(this.getHeaders(token)) : request)
     );
 

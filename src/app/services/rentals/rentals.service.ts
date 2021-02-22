@@ -69,7 +69,7 @@ export class RentalsService {
       responseType: 'json',
       ...this.httpHeaderOptions
     }).pipe(
-      map(passengers => passengers.sort((passengerA, passengerB) => passengerA.id - passengerB.id))
+      map(passengers => passengers.sort((compareA, compareB) => compareA.id - compareB.id))
     );
 
     return passengers$;

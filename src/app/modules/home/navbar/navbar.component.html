@@ -20,13 +20,13 @@
     <div id="navigation" class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/">
+          <a class="nav-link" (click)="$event.preventDefault()">
             <fa-icon [icon]="[ 'far', 'user-circle' ]" size="2x"></fa-icon>
             <p>Perfil</p>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/">
+          <a class="nav-link" (click)="$event.preventDefault()">
             <fa-icon [icon]="[ 'far', 'bell' ]" size="2x"></fa-icon>
             <p>Alertas</p>
           </a>

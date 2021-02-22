@@ -11,3 +11,8 @@ export interface RoleResponse {
   displayName: string;
   permissions: Permission[];
 }
+
+export enum DefaultRoles {
+  AdminUser = 'AdminUser',
+  CommonUser = 'CommonUser'
+}

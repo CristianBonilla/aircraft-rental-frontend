@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {
@@ -6,13 +6,15 @@ import {
   SuccessResponse,
   UserLoginRequest,
   UserRegisterRequest,
-  UserResponse
+  UserResponse,
+  FailedResponse
 } from '@modules/auth/models/authentication';
 import { Permission } from '@modules/auth/models/permission';
 import { RoleRequest, RoleResponse } from '@modules/auth/models/role';
+import { AuthorizationService } from '@services/authorization/authorization.service';
 import { StorageService } from '@services/storage/storage.service';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
-import { catchError, delay, map, mergeMap, take, tap } from 'rxjs/operators';
+import { catchError, delay, filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 
@@ -28,25 +30,32 @@ const {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class IdentityService {
   private readonly httpHeaderOptions: HttpHeaders;
   private readonly registerEndpointUrl = REGISTER;
   private readonly loginEndpointUrl = LOGIN;
   private readonly usersEndpointUrl = USERS;
   private readonly rolesEndpointUrl = ROLES;
   private readonly jwtHelper: JwtHelperService;
-  private readonly authLoadingSubject = new Subject<boolean>();
+  private readonly loadingSubject = new Subject<boolean>();
   private readonly userAccountSubject = new BehaviorSubject<UserAccount>(null);
   loading$: Observable<boolean>;
   userAccount$: Observable<UserAccount>;
 
-  constructor(private http: HttpClient, private storage: StorageService) {
+  constructor(
+    private http: HttpClient,
+    private storage: StorageService,
+    private authorization: AuthorizationService) {
     this.jwtHelper = new JwtHelperService();
-    this.loading$ = this.authLoadingSubject.asObservable();
+    this.loading$ = this.loadingSubject.asObservable();
     this.userAccount$ = this.userAccountSubject.asObservable();
-    this.userInStorage()
-      .pipe(take(1))
-      .subscribe(userAccount => this.userAccountSubject.next(userAccount));
+    this.userInStorage().pipe(
+      filter(userAccount => !!userAccount),
+      take(1))
+    .subscribe(userAccount => {
+      this.userAccountSubject.next(userAccount);
+      this.authorization.loadRoleAndPermissions(userAccount);
+    });
   }
 
   isAuthenticated() {
@@ -77,16 +86,17 @@ export class AuthService {
   }
 
   userRegister(userRegisterRequest: UserRegisterRequest) {
-    this.authLoadingSubject.next(true);
+    this.loadingSubject.next(true);
     const register$ = this.http.post<SuccessResponse>(this.registerEndpointUrl, userRegisterRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
     }).pipe(
       mergeMap(success => this.saveUser(success)),
-      catchError(error => {
-        this.authLoadingSubject.next(false);
+      catchError(({ error }: HttpErrorResponse) => {
+        const errors: FailedResponse = { errors: error?.errors ?? []  };
+        this.loadingSubject.next(false);
 
-        return of(error);
+        return of(errors);
       })
     );
 
@@ -94,16 +104,17 @@ export class AuthService {
   }
 
   userLogin(userLoginRequest: UserLoginRequest) {
-    this.authLoadingSubject.next(true);
+    this.loadingSubject.next(true);
     const login$ = this.http.post<SuccessResponse>(this.loginEndpointUrl, userLoginRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
     }).pipe(
       mergeMap(success => this.saveUser(success)),
-      catchError(error => {
-        this.authLoadingSubject.next(false);
+      catchError(({ error }: HttpErrorResponse) => {
+        const errors: FailedResponse = { errors: error?.errors ?? []  };
+        this.loadingSubject.next(false);
 
-        return of(error);
+        return of(errors);
       })
     );
 
@@ -111,14 +122,18 @@ export class AuthService {
   }
 
   userLogout() {
-    this.authLoadingSubject.next(true);
+    this.loadingSubject.next(true);
     const logout$ = combineLatest([
       this.storage.remove(STORAGE_KEYS.USER),
       this.storage.remove(STORAGE_KEYS.USER_TOKEN)
     ]).pipe(
       delay(3000),
-      map(() => this.userAccountSubject.next(null)),
-      tap(() => this.authLoadingSubject.next(false)));
+      tap(() => {
+        this.userAccountSubject.next(null);
+        this.authorization.removeRoleAndPermissions();
+        this.loadingSubject.next(false);
+      })
+    );
 
     return logout$;
   }
@@ -188,7 +203,11 @@ export class AuthService {
 
           return this.storage.set(STORAGE_KEYS.USER, userAccount);
         }),
-        tap(() => this.authLoadingSubject.next(false))
+        tap(() => {
+          const userAccount = this.userAccountSubject.getValue();
+          this.authorization.loadRoleAndPermissions(userAccount);
+          this.loadingSubject.next(false);
+        })
       );
 
     return authenticatedUser$;

@@ -15,7 +15,7 @@ const routes: Routes = [
       {
         path: 'home',
         redirectTo: '',
-        pathMatch: 'full'
+        pathMatch: 'prefix'
       },
       {
         path: 'auth',

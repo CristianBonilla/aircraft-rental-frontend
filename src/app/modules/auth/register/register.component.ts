@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { checkPassword } from '@core/validators/check-password.validator';
-import { AuthService } from '@services/auth/auth.service';
-import { Observable, of } from 'rxjs';
+import { IdentityService } from '@services/identity/identity.service';
+import { combineLatest, Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
 import { UserRegisterRequest } from '../models/authentication';
@@ -62,7 +62,7 @@ export class RegisterComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private authService: AuthService) {
+    private identity: IdentityService) {
     this.username.setValidators([
       Validators.required,
       Validators.minLength(5),
@@ -97,7 +97,7 @@ export class RegisterComponent {
     } else {
       this.role.setValue(null);
     }
-    this.loading$ = this.authService.loading$;
+    this.loading$ = this.identity.loading$;
   }
 
   register() {
@@ -112,8 +112,14 @@ export class RegisterComponent {
       lastName: this.lastName.value,
       role: this.role.value
     };
-    this.authService.userRegister(userRegisterRequest)
-      .pipe(take(1))
-      .subscribe(() => this.router.navigate([ APP_ROUTES.HOME.MAIN ]));
+    combineLatest([
+      this.identity.isAuthenticated(),
+      this.identity.userRegister(userRegisterRequest)
+    ]).pipe(take(1))
+      .subscribe(([ authenticated ]) => {
+        if (!authenticated) {
+          this.router.navigate([ APP_ROUTES.HOME.MAIN ]);
+        }
+      });
   }
 }

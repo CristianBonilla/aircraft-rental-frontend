@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@services/auth/auth.service';
+import { IdentityService } from '@services/identity/identity.service';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
@@ -30,10 +30,10 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private authService: AuthService) {
+    private identity: IdentityService) {
     this.usernameOrEmail.setValidators([ Validators.required ]);
     this.password.setValidators([ Validators.required ]);
-    this.loading$ = this.authService.loading$;
+    this.loading$ = this.identity.loading$;
   }
 
   login() {
@@ -44,7 +44,7 @@ export class LoginComponent {
       usernameOrEmail: this.usernameOrEmail.value,
       password: this.password.value
     };
-    this.authService.userLogin(userLoginRequest)
+    this.identity.userLogin(userLoginRequest)
       .pipe(take(1))
       .subscribe(() => this.router.navigate([ APP_ROUTES.HOME.MAIN ]));
   }

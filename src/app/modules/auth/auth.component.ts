@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '@services/auth/auth.service';
+import { IdentityService } from '@services/identity/identity.service';
 import { Observable } from 'rxjs';
 
 enum AuthType {
@@ -17,7 +17,7 @@ export class AuthComponent {
   readonly type = AuthType;
   auth = this.type.Login;
 
-  constructor(authService: AuthService) {
-    this.loading$ = authService.loading$;
+  constructor(identity: IdentityService) {
+    this.loading$ = identity.loading$;
   }
 }

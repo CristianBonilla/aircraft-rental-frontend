@@ -1,11 +1,11 @@
 <div class="sidebar" #sidebar>
   <div class="sidebar_logo">
-    <a class="sidebar_logo-text sidebar_logo-mini" routerLink="/">
+    <a class="sidebar_logo-text sidebar_logo-mini" [routerLink]="startRedirect$ | async">
       <figure class="figure">
         <img src="assets/images/logo.png" alt="">
       </figure>
     </a>
-    <a class="sidebar_logo-text sidebar_logo-normal" routerLink="/">Interestelar</a>
+    <a class="sidebar_logo-text sidebar_logo-normal" [routerLink]="startRedirect$ | async">Interestelar</a>
     <div class="sidebar_logo-minimize">
       <button type="button" (click)="minimize()">
         <fa-icon class="visible-on-regular" [icon]="[ 'fas', 'align-right' ]" size="lg"></fa-icon>

@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { WINDOW } from '@core/providers/window.provider';
 import { ToggleService } from '@modules/home/services/toggle.service';
+import { AuthorizationService } from '@services/authorization/authorization.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'arf-sidebar',
@@ -12,13 +14,18 @@ export class SidebarComponent implements AfterViewInit {
   private readonly sidebarRef: ElementRef<HTMLDivElement>;
 
   private readonly $body: HTMLElement;
+  readonly startRedirect$: Observable<string>;
 
-  constructor(@Inject(WINDOW) { document }: Window, private toggleService: ToggleService) {
+  constructor(
+    @Inject(WINDOW) { document }: Window,
+    private toggle: ToggleService,
+    authorization: AuthorizationService) {
     this.$body = document.body;
+    this.startRedirect$ = authorization.redirectTo$;
   }
 
   ngAfterViewInit() {
-    this.toggleService.addSidebar(this.sidebarRef.nativeElement);
+    this.toggle.addSidebar(this.sidebarRef.nativeElement);
   }
 
   minimize() {

@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@services/auth/auth.service';
 import { ToggleService } from '@modules/home/services/toggle.service';
 import { APP_ROUTES } from 'src/app/models/routes';
 import { Observable } from 'rxjs';
+import { IdentityService } from '@services/identity/identity.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'arf-navbar',
@@ -17,17 +18,18 @@ export class NavbarComponent implements AfterViewInit {
 
   constructor(
     private router: Router,
-    private toggleService: ToggleService,
-    private authService: AuthService) {
-    this.loading$ = this.authService.loading$;
+    private toggle: ToggleService,
+    private identity: IdentityService) {
+    this.loading$ = this.identity.loading$;
   }
 
   ngAfterViewInit() {
-    this.toggleService.addToggle(this.toggleRef.nativeElement);
+    this.toggle.addToggle(this.toggleRef.nativeElement);
   }
 
   logout() {
-    this.authService.userLogout()
+    this.identity.userLogout()
+      .pipe(take(1))
       .subscribe(() => this.router.navigate([ APP_ROUTES.AUTH ]));
   }
 }
