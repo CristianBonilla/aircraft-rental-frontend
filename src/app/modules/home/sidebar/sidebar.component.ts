@@ -21,7 +21,7 @@ export class SidebarComponent implements AfterViewInit {
     private toggle: ToggleService,
     authorization: AuthorizationService) {
     this.$body = document.body;
-    this.startRedirect$ = authorization.redirectTo$;
+    this.startRedirect$ = authorization.startRedirect$;
   }
 
   ngAfterViewInit() {

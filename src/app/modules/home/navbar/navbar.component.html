@@ -6,7 +6,7 @@
       <span class="navbar-toggler-bar navbar-kebab"></span>
     </button>
     <div class="navbar-wrapper">
-      <a class="navbar-brand" routerLink="/">
+      <a class="navbar-brand" [routerLink]="startRedirect$ | async">
         <fa-icon [icon]="[ 'fas', 'home' ]" size="2x"></fa-icon>
       </a>
       <div class="navbar-toggle" #toggle>

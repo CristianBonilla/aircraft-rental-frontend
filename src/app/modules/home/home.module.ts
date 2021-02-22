@@ -21,10 +21,7 @@ import { DirectivesModule } from '@directives/directives.module';
   ],
   imports: [
     CommonModule,
-    NgxPermissionsModule.forChild({
-      permissionsIsolate: true,
-      rolesIsolate: true
-    }),
+    NgxPermissionsModule.forChild(),
     HomeRoutingModule,
     IconsModule,
     DirectivesModule

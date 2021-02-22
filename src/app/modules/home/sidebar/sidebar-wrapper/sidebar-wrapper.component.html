@@ -8,31 +8,31 @@
     </div>
   </div>
   <ul class="nav">
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowRoles">
       <a class="nav-link" routerLink="roles">
         <fa-icon [icon]="[ 'fas', 'user-shield' ]" size="2x"></fa-icon>
         <p>Roles<span class="badge badge-success">¡Nuevo!</span></p>
       </a>
     </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowUsers">
       <a class="nav-link" routerLink="users">
         <fa-icon [icon]="[ 'fas', 'users' ]" size="2x"></fa-icon>
         <p>Usuarios</p>
       </a>
     </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowRentals">
       <a class="nav-link" routerLink="rentals">
         <fa-icon [icon]="[ 'fas', 'fighter-jet' ]" size="2x"></fa-icon>
         <p>Alquiler de Aeronaves</p>
       </a>
     </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowAircrafts">
       <a class="nav-link" routerLink="aircrafts">
         <fa-icon [icon]="[ 'far', 'paper-plane' ]" size="2x"></fa-icon>
         <p>Aeronaves</p>
       </a>
     </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowPassengers">
       <a class="nav-link" routerLink="passengers">
         <fa-icon [icon]="[ 'fas', 'briefcase' ]" size="2x"></fa-icon>
         <p>Pasajeros</p>

@@ -12,10 +12,10 @@ const { HOME } = APP_ROUTES;
 })
 export class AuthorizationService {
   private readonly redirectToSubject = new BehaviorSubject<string>(null);
-  readonly redirectTo$: Observable<string>;
+  readonly startRedirect$: Observable<string>;
 
   constructor(private roles: NgxRolesService, private permissions: NgxPermissionsService) {
-    this.redirectTo$ = this.redirectToSubject.asObservable();
+    this.startRedirect$ = this.redirectToSubject.asObservable();
   }
 
   loadRoleAndPermissions({ role }: UserAccount) {
@@ -31,7 +31,6 @@ export class AuthorizationService {
   }
 
   private startRedirectTo(permissions: Permission[]) {
-    console.log(permissions);
     let redirectTo = permissions.sort((compareA, compareB) => compareA.id - compareB.id)
       .map(({ name }) => {
         switch (name) {

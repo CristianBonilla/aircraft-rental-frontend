@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ALLOW } from '@modules/auth/models/permission';
 import { IdentityService } from '@services/identity/identity.service';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -10,9 +11,14 @@ import { map, take } from 'rxjs/operators';
 })
 export class SidebarWrapperComponent {
   readonly userName: Observable<string>;
+  readonly allowRoles = ALLOW.ROLES;
+  readonly allowUsers = ALLOW.USERS;
+  readonly allowRentals = ALLOW.RENTALS;
+  readonly allowAircrafts = ALLOW.AIRCRAFTS;
+  readonly allowPassengers = ALLOW.PASSENGERS;
 
-  constructor(private identity: IdentityService) {
-    this.userName = this.identity.userAccount$.pipe(
+  constructor(identity: IdentityService) {
+    this.userName = identity.userAccount$.pipe(
       take(1),
       map(({ user }) => user.firstName));
   }

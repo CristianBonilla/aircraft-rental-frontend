@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
   canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const isAuthenticated$ = combineLatest([
       this.identity.isAuthenticated(),
-      this.authorization.redirectTo$
+      this.authorization.startRedirect$
     ]).pipe(
       map(([ authenticated, redirectTo ]) => {
         if (!authenticated && state.url === MAIN) {

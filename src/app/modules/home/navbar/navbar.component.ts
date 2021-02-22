@@ -5,6 +5,7 @@ import { APP_ROUTES } from 'src/app/models/routes';
 import { Observable } from 'rxjs';
 import { IdentityService } from '@services/identity/identity.service';
 import { take } from 'rxjs/operators';
+import { AuthorizationService } from '@services/authorization/authorization.service';
 
 @Component({
   selector: 'arf-navbar',
@@ -15,12 +16,15 @@ export class NavbarComponent implements AfterViewInit {
   @ViewChild('toggle')
   private readonly toggleRef: ElementRef<HTMLDivElement>;
   readonly loading$: Observable<boolean>;
+  readonly startRedirect$: Observable<string>;
 
   constructor(
     private router: Router,
     private toggle: ToggleService,
-    private identity: IdentityService) {
+    private identity: IdentityService,
+    authorization: AuthorizationService) {
     this.loading$ = this.identity.loading$;
+    this.startRedirect$ = authorization.startRedirect$;
   }
 
   ngAfterViewInit() {

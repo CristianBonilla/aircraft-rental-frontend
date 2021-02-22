@@ -1,3 +1,7 @@
+import { DefaultRoles } from "@modules/auth/models/role";
+
+const { AdminUser } = DefaultRoles;
+
 export enum PermissionType {
   ROLES = 'CanRoles',
   USERS = 'CanUsers',
@@ -10,3 +14,13 @@ export interface Permission {
   id: number;
   name: PermissionType;
 }
+
+export const ALLOW = {
+  ROLES: [ AdminUser, PermissionType.ROLES ],
+  USERS: [ AdminUser, PermissionType.USERS ],
+  RENTALS: [ AdminUser, PermissionType.RENTALS ],
+  AIRCRAFTS: [ AdminUser, PermissionType.AIRCRAFTS ],
+  PASSENGERS: [ AdminUser, PermissionType.PASSENGERS ]
+};
+
+Object.freeze(ALLOW);
