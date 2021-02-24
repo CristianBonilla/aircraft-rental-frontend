@@ -11,11 +11,11 @@ const { HOME } = APP_ROUTES;
   providedIn: 'root'
 })
 export class AuthorizationService {
-  private readonly redirectToSubject = new BehaviorSubject<string>(null);
+  private readonly startRedirectSubject = new BehaviorSubject<string>(null);
   readonly startRedirect$: Observable<string>;
 
   constructor(private roles: NgxRolesService, private permissions: NgxPermissionsService) {
-    this.startRedirect$ = this.redirectToSubject.asObservable();
+    this.startRedirect$ = this.startRedirectSubject.asObservable();
   }
 
   loadRoleAndPermissions({ role }: UserAccount) {
@@ -28,6 +28,7 @@ export class AuthorizationService {
   removeRoleAndPermissions() {
     this.roles.flushRoles();
     this.permissions.flushPermissions();
+    this.startRedirectSubject.next(null);
   }
 
   private startRedirectTo(permissions: Permission[]) {
@@ -51,6 +52,6 @@ export class AuthorizationService {
     if (!redirectTo) {
       redirectTo = HOME.MAIN;
     }
-    this.redirectToSubject.next(redirectTo);
+    this.startRedirectSubject.next(redirectTo);
   }
 }

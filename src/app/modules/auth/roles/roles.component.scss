@@ -1,0 +1,17 @@
+.roles-container {
+  width: 100%;
+
+  h4 {
+    line-height: 1;
+  }
+
+  button fa-icon {
+    vertical-align: middle;
+  }
+}
+
+@media (min-width: 576px) {
+  .roles-container {
+    width: 50%;
+  }
+}

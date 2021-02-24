@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { checkPassword } from '@core/validators/check-password.validator';
+import { patternValidator } from '@core/validators/custom.validator';
+import { passwordMatchValidator } from '@core/validators/password.validator';
 import { IdentityService } from '@services/identity/identity.service';
 import { combineLatest, Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
-import { UserRegisterRequest } from '../models/authentication';
+import { UserRegisterRequest } from '@modules/auth/models/authentication';
 
 @Component({
   selector: 'arf-register',
@@ -24,7 +25,7 @@ export class RegisterComponent {
     firstName: [ '' ],
     lastName: [ '' ],
     role: [ '' ]
-  }, { validators: checkPassword });
+  }, { validators: passwordMatchValidator });
   readonly loading$: Observable<boolean>;
   readonly roles = of([
     { name: 'AdminUser', displayName: 'Administrador' },
@@ -70,14 +71,12 @@ export class RegisterComponent {
     ]);
     this.password.setValidators([
       Validators.required,
-      Validators.minLength(10),
-      Validators.maxLength(30)
+      patternValidator(/[A-Z]/, { hasCapitalCase: true }),
+      patternValidator(/[a-z]/, { hasSmallCase: true }),
+      patternValidator(/[ £`~!¡¿@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, { hasSpecialCharacters: true }),
+      Validators.minLength(10)
     ]);
-    this.confirmPassword.setValidators([
-      Validators.required,
-      Validators.minLength(10),
-      Validators.maxLength(30)
-    ]);
+    this.confirmPassword.setValidators([ Validators.required ]);
     this.email.setValidators([
       Validators.required,
       Validators.email

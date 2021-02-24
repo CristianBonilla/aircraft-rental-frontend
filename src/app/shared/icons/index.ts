@@ -8,7 +8,8 @@ export {
   faUsers,
   faBriefcase,
   faFighterJet,
-  faSpinner
+  faSpinner,
+  faPlusCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 export {

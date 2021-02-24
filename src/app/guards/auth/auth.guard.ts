@@ -23,18 +23,14 @@ export class AuthGuard implements CanActivate {
       this.authorization.startRedirect$
     ]).pipe(
       map(([ authenticated, startRedirect ]) => {
-        if (authenticated) {
-          if (state.url === AUTH || state.url === MAIN && state.url !== startRedirect) {
-            this.router.navigate([ startRedirect ]);
+        if (authenticated && (state.url === AUTH || state.url === MAIN && state.url !== startRedirect)) {
+          this.router.navigate([ startRedirect ]);
 
-            return false;
-          }
-        } else {
-          if (state.url === MAIN || state.url !== AUTH) {
-            this.router.navigate([ AUTH ]);
+          return false;
+        } else if (!authenticated && (state.url === MAIN || state.url !== AUTH)) {
+          this.router.navigate([ AUTH ]);
 
-            return false;
-          }
+          return false;
         }
 
         return true;

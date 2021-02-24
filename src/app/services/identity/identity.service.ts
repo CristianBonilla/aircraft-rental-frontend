@@ -45,10 +45,14 @@ export class IdentityService {
   constructor(
     private http: HttpClient,
     private storage: StorageService,
-    private authorization: AuthorizationService) {
+    private authorization: AuthorizationService
+  ) {
     this.jwtHelper = new JwtHelperService();
     this.loading$ = this.loadingSubject.asObservable();
     this.userAccount$ = this.userAccountSubject.asObservable();
+  }
+
+  loadUserAndAuthorization() {
     this.userInStorage().pipe(
       filter(userAccount => !!userAccount),
       take(1))

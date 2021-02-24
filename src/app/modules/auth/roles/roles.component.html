@@ -1,1 +1,30 @@
-<p>roles works!</p>
+<div class="container-fluid">
+  <div class="roles-container">
+    <div class="d-flex justify-content-sm-between align-items-center bg-dark px-3 py-2">
+      <h4 class="text-light mb-0">Roles</h4>
+      <button type="button" class="btn btn-success btn-sm" (click)="openCreateRole()">
+        <fa-icon [icon]="[ 'fas', 'plus-circle' ]" size="lg"></fa-icon>
+        Crear un nuevo rol
+      </button>
+    </div>
+    <ng-container *ngIf="roles$ | async as roles">
+      <div class="table-responsive" *ngIf="!!roles && !!roles.length">
+        <table class="table table-sm table-bordered table-hover">
+          <caption>Roles disponibles</caption>
+          <thead class="thead-light">
+            <tr class="text-center">
+              <th scope="col">N°</th>
+              <th scope="col">Nombre del rol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let role of roles; let index = index">
+              <th scope="row" class="text-center">{{ index + 1 }}</th>
+              <td>{{ role.displayName }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </div>
+</div>
