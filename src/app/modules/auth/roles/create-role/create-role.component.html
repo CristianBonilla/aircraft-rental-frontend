@@ -8,24 +8,31 @@
   <div class="modal-body">
     <div class="form-row">
       <div class="form-group col-md-6">
-        <input type="text" id="name" class="form-control" placeholder="Nombre para identificar" [formControl]="name">
+        <input type="text" id="name" class="form-control" placeholder="Nombre para identificar"
+          [formControl]="name"
+          [arfFormErrorHandler]="name" trim="blur">
       </div>
       <div class="form-group col-md-6">
-        <input type="text" id="display-name" class="form-control" placeholder="Nombre para mostrar" [formControl]="displayName">
+        <input type="text" id="display-name" class="form-control" placeholder="Nombre para mostrar"
+          [formControl]="displayName"
+          [arfFormErrorHandler]="displayName" trim="blur">
       </div>
     </div>
     <div class="form-group">
       <label for="permissions">Permisos</label>
-      <arf-dropdown-select id="permissions" [multiple]="true" [items]="permissionList"
+      <arf-dropdown-select id="permissions" [multiple]="true"
+        [items]="permissionList"
         [options]="dropdownSelectOptions"
         [style]="dropdownSelectStyle"
-        [formControl]="permissions">
+        [formControl]="permissions"
+        [arfFormErrorHandler]="permissions">
       </arf-dropdown-select>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-success">
-      Guardar
+    <button type="submit" class="btn btn-success" [disabled]="!roleForm.valid">
+      <fa-icon [icon]="[ 'fas', 'user-shield' ]"></fa-icon>
+      Guardar Rol
     </button>
   </div>
 </form>

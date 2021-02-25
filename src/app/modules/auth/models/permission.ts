@@ -15,14 +15,17 @@ export interface Permission {
   name: PermissionType;
 }
 
-export const ALL_PERMISSIONS: (Permission & { displayName: string })[] = [
+export interface PermissionDetail extends Permission {
+  displayName: string;
+}
+
+export const ALL_PERMISSIONS: PermissionDetail[] = [
   { id: 1, name: PermissionType.ROLES, displayName: 'Roles' },
   { id: 2, name: PermissionType.USERS, displayName: 'Usuarios' },
   { id: 3, name: PermissionType.RENTALS, displayName: 'Alquileres' },
   { id: 4, name: PermissionType.AIRCRAFTS, displayName: 'Aeronaves' },
   { id: 5, name: PermissionType.PASSENGERS, displayName: 'Pasajeros' }
 ];
-
 Object.freeze(ALL_PERMISSIONS);
 
 export const ALLOW = {
@@ -32,5 +35,4 @@ export const ALLOW = {
   AIRCRAFTS: [ AdminUser, PermissionType.AIRCRAFTS ],
   PASSENGERS: [ AdminUser, PermissionType.PASSENGERS ]
 };
-
 Object.freeze(ALLOW);

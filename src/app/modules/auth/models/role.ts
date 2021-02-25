@@ -7,6 +7,7 @@ export enum DefaultRoles {
 
 export interface RoleRequest {
   name: string;
+  displayName: string;
   permissionsIDs: number[];
 }
 
@@ -15,4 +16,8 @@ export interface RoleResponse {
   name: string;
   displayName: string;
   permissions: Permission[];
+}
+
+export enum RoleState {
+  Created
 }

@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { resolveErrorMessage } from '@core/errors/errors';
+import { resolveErrorMessage } from '@helpers/errors/errors';
 import { delay } from 'rxjs/operators';
 
 interface ControlElements {
@@ -70,6 +70,8 @@ export class FormErrorHandlerDirective implements OnInit {
   }
 
   private hasError() {
-    return this.control.invalid && this.control.dirty || this.control.invalid && this.control.touched;
+    const { invalid, dirty, touched } = this.control;
+
+    return invalid && dirty || invalid && touched;
   }
 }

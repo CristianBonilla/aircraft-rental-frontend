@@ -23,6 +23,7 @@ export const ERROR_MESSAGES = {
   validAddress: 'Debes ingresar una dirección válida',
   noPasswordMatch: 'Las contraseñas no coinciden',
   onlyNumbers: 'Solo se permiten valores numéricos en este campo',
+  onlyLetters: 'Solo se permiten letras en este campo',
   hasCapitalCase: 'Este campo debe contener mayúsculas',
   hasSmallCase: 'Este campo debe contener minúsculas',
   hasSpecialCharacters: 'Este campo debe contener carácteres especiales'

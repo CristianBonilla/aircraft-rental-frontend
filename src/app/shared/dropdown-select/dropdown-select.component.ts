@@ -32,7 +32,20 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
   readonly selectRef: ElementRef<HTMLSelectElement>;
   @Input() items: DropdownSelectItem[] = [];
   @Input() options: DropdownSelectOptions = { };
-  @Input() style = DropdownSelectStyle.Light;
+
+  private _style = DropdownSelectStyle.Light;
+  @Input()
+  get style() {
+    return this._style;
+  }
+  set style(style: DropdownSelectStyle) {
+    if (!!this.$select) {
+      this.$select.selectpicker('setStyle', this._style, 'remove');
+      this.$select.selectpicker('setStyle', style, 'add');
+    }
+    this._style = style;
+  }
+
   @Input() disabled = false;
   @Input() multiple = false;
   defaultOptions: DropdownSelectOptions = {
@@ -46,6 +59,7 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     size: 10,
     width: '100%'
   };
+  $select: JQuery<HTMLSelectElement>;
   selectedItems: string | DropdownSelectItemValues;
   onChange = (_value?: any) => { };
   onTouched = (_value?: any) => { };
@@ -77,13 +91,16 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
   }
 
   ngAfterViewInit() {
-    const select$ = this.selectRef.nativeElement;
+    const $select = this.selectRef.nativeElement;
     const dropdownSelectOptions: DropdownSelectOptions = {
       ...this.defaultOptions,
       ...this.options,
       style: this.style
     };
-    setTimeout(() => $(select$).selectpicker(dropdownSelectOptions));
+    setTimeout(() => {
+      this.$select = $($select);
+      this.$select.selectpicker(dropdownSelectOptions);
+    });
   }
 
   writeValue(obj: any) {

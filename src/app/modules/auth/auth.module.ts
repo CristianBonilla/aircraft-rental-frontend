@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from '@modules/auth/auth-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@shared/icons/icons.module';
+import { DirectivesModule } from '@directives/directives.module';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+
 import { AuthComponent } from '@modules/auth/auth.component';
 import { LoginComponent } from '@modules/auth/login/login.component';
 import { RegisterComponent } from '@modules/auth/register/register.component';
-import { DirectivesModule } from '@directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -17,11 +18,11 @@ import { DirectivesModule } from '@directives/directives.module';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     AuthRoutingModule,
+    ReactiveFormsModule,
     IconsModule,
-    NgxTrimDirectiveModule,
-    DirectivesModule
+    DirectivesModule,
+    NgxTrimDirectiveModule
   ]
 })
 export class AuthModule { }

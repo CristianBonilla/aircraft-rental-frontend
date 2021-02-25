@@ -12,3 +12,12 @@ export function patternValidator(regex: RegExp, error: ValidationErrors) {
 
   return pattern;
 }
+
+export function requiredMultiValidator(control: AbstractControl): ValidationErrors {
+  if (!control.value || !Array.isArray(control.value)) {
+    return null;
+  }
+  const values: (string | number | object)[] = control.value;
+
+  return !!values.length ? null : { required: true };
+}
