@@ -7,6 +7,7 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { AuthComponent } from '@modules/auth/auth.component';
 import { LoginComponent } from '@modules/auth/login/login.component';
 import { RegisterComponent } from '@modules/auth/register/register.component';
+import { DirectivesModule } from '@directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RegisterComponent } from '@modules/auth/register/register.component';
     ReactiveFormsModule,
     AuthRoutingModule,
     IconsModule,
-    NgxTrimDirectiveModule
+    NgxTrimDirectiveModule,
+    DirectivesModule
   ]
 })
 export class AuthModule { }

@@ -19,7 +19,8 @@ export class SidebarComponent implements AfterViewInit {
   constructor(
     @Inject(WINDOW) { document }: Window,
     private toggle: ToggleService,
-    authorization: AuthorizationService) {
+    authorization: AuthorizationService
+  ) {
     this.$body = document.body;
     this.startRedirect$ = authorization.startRedirect$;
   }

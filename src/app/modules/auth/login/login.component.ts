@@ -30,7 +30,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private identity: IdentityService) {
+    private identity: IdentityService
+  ) {
     this.usernameOrEmail.setValidators([ Validators.required ]);
     this.password.setValidators([ Validators.required ]);
     this.loading$ = this.identity.loading$;

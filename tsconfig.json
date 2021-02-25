@@ -38,6 +38,9 @@
       "@shared/*": [
         "src/app/shared/*"
       ],
+      "@helpers/*": [
+        "src/app/helpers/*"
+      ],
       "@test/*": [
         "test/*"
       ]

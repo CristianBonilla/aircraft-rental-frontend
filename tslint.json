@@ -138,6 +138,7 @@
         "@directives",
         "@guards",
         "@shared",
+        "@helpers",
         "@test"
       ]
     ],

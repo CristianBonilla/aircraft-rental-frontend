@@ -8,7 +8,12 @@ import {
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DropdownSelectItem, DropdownSelectOptions, DropdownSelectStyle } from '@shared/dropdown-select';
+import {
+  DropdownSelectItem,
+  DropdownSelectItemValues,
+  DropdownSelectOptions,
+  DropdownSelectStyle
+} from '@shared/dropdown-select';
 
 @Component({
   selector: 'arf-dropdown-select',
@@ -41,7 +46,7 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     size: 10,
     width: '100%'
   };
-  selectedItems: DropdownSelectItem['value'][] = [];
+  selectedItems: string | DropdownSelectItemValues;
   onChange = (_value?: any) => { };
   onTouched = (_value?: any) => { };
 
@@ -49,10 +54,17 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     return this.selectedItems;
   }
 
-  set selected(value: DropdownSelectItem['value'][]) {
-    if (!!value && this.selectedItems !== value) {
-      this.selectedItems = value;
-      this.onChange(value);
+  set selected(values: string | DropdownSelectItemValues) {
+    let changeValues = false;
+    if (typeof values === 'string') {
+      changeValues = !!values && this.selectedItems !== values;
+    } else if (Array.isArray(values)) {
+      changeValues = this.hasDiff(this.selectedItems as DropdownSelectItemValues, values);
+    }
+    if (changeValues) {
+      this.selectedItems = values;
+      this.onChange(values);
+      this.onTouched(values);
     }
   }
 
@@ -60,7 +72,19 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     @Attribute('placeholder') public placeholder: string,
     @Attribute('id') public id: string,
     @Attribute('name') public name: string
-  ) { }
+  ) {
+    this.selectedItems = !!this.multiple ? [] : '';
+  }
+
+  ngAfterViewInit() {
+    const select$ = this.selectRef.nativeElement;
+    const dropdownSelectOptions: DropdownSelectOptions = {
+      ...this.defaultOptions,
+      ...this.options,
+      style: this.style
+    };
+    setTimeout(() => $(select$).selectpicker(dropdownSelectOptions));
+  }
 
   writeValue(obj: any) {
     this.selectedItems = obj;
@@ -82,17 +106,14 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     this.onTouched(value);
   }
 
-  ngAfterViewInit() {
-    const select$ = this.selectRef.nativeElement;
-    const dropdownSelectOptions: DropdownSelectOptions = {
-      ...this.defaultOptions,
-      ...this.options,
-      style: this.style
-    };
-    setTimeout(() => $(select$).selectpicker(dropdownSelectOptions), 10);
+  compareSelectedFn(itemA: DropdownSelectItem, itemB: DropdownSelectItem) {
+    return itemA && itemB ? itemA.value === itemB.value : itemA === itemB;
   }
 
-  compareFn(itemA: DropdownSelectItem, itemB: DropdownSelectItem) {
-    return itemA && itemB ? itemA.value === itemB.value : itemA === itemB;
+  private hasDiff(valuesA: DropdownSelectItemValues, valuesB: DropdownSelectItemValues) {
+    const diff = valuesA.filter(value => !valuesB.includes(value))
+      .concat(valuesB.filter(value => !valuesA.includes(value)));
+
+    return !!diff.length;
   }
 }

@@ -22,7 +22,8 @@ export class NavbarComponent implements AfterViewInit {
     private router: Router,
     private toggle: ToggleService,
     private identity: IdentityService,
-    authorization: AuthorizationService) {
+    authorization: AuthorizationService
+  ) {
     this.loading$ = this.identity.loading$;
     this.startRedirect$ = authorization.startRedirect$;
   }

@@ -18,11 +18,14 @@ export const ERROR_MESSAGES = {
   maxCurrency: 'El valor de este campo debe ser menor a $ { maxCurrency.max }',
   maxAdvance: 'El valor no puede exceder tu disponible para avances ($ { maxAdvance.max })',
   isMultiple: 'El valor no es múltiplo de $ { isMultiple.multiple }',
-  validEmail: 'Debes ingresar una email válido',
+  email: 'El valor debe ser un email válido',
   betweenAge: 'Debes tener entre { betweenAge.min } y { betweenAge.max } años',
   validAddress: 'Debes ingresar una dirección válida',
   noPasswordMatch: 'Las contraseñas no coinciden',
-  onlyNumbers: 'Solo se permiten valores numéricos en este campo'
+  onlyNumbers: 'Solo se permiten valores numéricos en este campo',
+  hasCapitalCase: 'Este campo debe contener mayúsculas',
+  hasSmallCase: 'Este campo debe contener minúsculas',
+  hasSpecialCharacters: 'Este campo debe contener carácteres especiales'
 };
 
 function interpolate(messageTemplate: string, objError: object) {
@@ -45,7 +48,7 @@ function interpolate(messageTemplate: string, objError: object) {
 }
 
 export function resolveErrorMessage(errors: ValidationErrors) {
-  const firstErrorKey = errors ? Object.keys(errors)[0] : null;
+  const firstErrorKey = !!errors ? Object.keys(errors)[0] : null;
   const message = ERROR_MESSAGES[firstErrorKey];
   const firstError = firstErrorKey ? { [firstErrorKey]: errors[firstErrorKey] } : null;
   const errorMessage = firstError && message ? interpolate(message, firstError) : DEFAULT_ERROR_MESSAGE;

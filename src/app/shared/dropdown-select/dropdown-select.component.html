@@ -4,7 +4,7 @@
     [attr.name]="name"
     [attr.title]="placeholder"
     [disabled]="disabled"
-    [compareWith]="compareFn"
+    [compareWith]="compareSelectedFn"
     [(ngModel)]="selected"
     (blur)="blur($event)" #select>
     <ng-template ngFor let-item [ngForOf]="items">
@@ -19,7 +19,7 @@
     [attr.name]="name"
     [attr.title]="placeholder"
     [disabled]="disabled"
-    [compareWith]="compareFn"
+    [compareWith]="compareSelectedFn"
     [(ngModel)]="selected"
     (blur)="blur($event)" multiple #select>
     <ng-template ngFor let-item [ngForOf]="items">

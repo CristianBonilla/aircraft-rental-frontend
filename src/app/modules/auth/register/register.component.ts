@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { patternValidator } from '@core/validators/custom.validator';
-import { passwordMatchValidator } from '@core/validators/password.validator';
+import { patternValidator } from '@helpers/validators/custom.validator';
+import { passwordMatchValidator } from '@helpers/validators/password.validator';
 import { IdentityService } from '@services/identity/identity.service';
 import { combineLatest, Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -17,6 +17,9 @@ import { UserRegisterRequest } from '@modules/auth/models/authentication';
 export class RegisterComponent {
   @Input() roleCustom = false;
 
+  private readonly controlOptions: AbstractControlOptions = {
+    validators: [ passwordMatchValidator ]
+  };
   readonly registerForm = this.formBuilder.group({
     username: [ '' ],
     password: [ '' ],
@@ -25,7 +28,7 @@ export class RegisterComponent {
     firstName: [ '' ],
     lastName: [ '' ],
     role: [ '' ]
-  }, { validators: passwordMatchValidator });
+  }, this.controlOptions);
   readonly loading$: Observable<boolean>;
   readonly roles = of([
     { name: 'AdminUser', displayName: 'Administrador' },
@@ -63,7 +66,8 @@ export class RegisterComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private identity: IdentityService) {
+    private identity: IdentityService
+  ) {
     this.username.setValidators([
       Validators.required,
       Validators.minLength(5),
@@ -73,6 +77,8 @@ export class RegisterComponent {
       Validators.required,
       patternValidator(/[A-Z]/, { hasCapitalCase: true }),
       patternValidator(/[a-z]/, { hasSmallCase: true }),
+      // check whether the entered password has a lower and upper case letter
+      // check whether the entered password has a special character
       patternValidator(/[ £`~!¡¿@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, { hasSpecialCharacters: true }),
       Validators.minLength(10)
     ]);
@@ -100,9 +106,6 @@ export class RegisterComponent {
   }
 
   register() {
-    if (this.registerForm.invalid) {
-      return;
-    }
     const userRegisterRequest: UserRegisterRequest = {
       username: this.username.value,
       password: this.password.value,

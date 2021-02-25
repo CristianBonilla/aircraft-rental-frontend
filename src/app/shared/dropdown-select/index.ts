@@ -13,3 +13,5 @@ export enum DropdownSelectStyle {
   Warning = 'btn-warning',
   Danger = 'btn-danger'
 }
+
+export type DropdownSelectItemValues = DropdownSelectItem['value'][];

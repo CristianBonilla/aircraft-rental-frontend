@@ -12,6 +12,12 @@
 
 @media (min-width: 576px) {
   .roles-container {
+    width: 80%;
+  }
+}
+
+@media (min-width: 768px) {
+  .roles-container {
     width: 50%;
   }
 }

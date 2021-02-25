@@ -1,5 +1,5 @@
 import { ValidationErrors } from '@angular/forms';
-import { DEFAULT_ERROR_MESSAGE, resolveErrorMessage } from '@core/errors/errors';
+import { DEFAULT_ERROR_MESSAGE, resolveErrorMessage } from '@helpers/errors/errors';
 
 describe('ErrorUtils', () => {
   describe('ResolveErrorMessage', () => {
