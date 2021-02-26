@@ -1,13 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { patternValidator } from '@helpers/validators/custom.validator';
 import { passwordMatchValidator } from '@helpers/validators/password.validator';
 import { IdentityService } from '@services/identity/identity.service';
-import { combineLatest, Observable, of } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
-import { UserRegisterRequest } from '@modules/auth/models/authentication';
+import { FailedResponse, UserRegisterRequest } from '@modules/auth/models/authentication';
+import { AuthorizationService } from '@services/authorization/authorization.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'arf-register',
@@ -16,6 +18,7 @@ import { UserRegisterRequest } from '@modules/auth/models/authentication';
 })
 export class RegisterComponent {
   @Input() roleCustom = false;
+  @Output() loading: EventEmitter<boolean> = new EventEmitter(false);
 
   private readonly controlOptions: AbstractControlOptions = {
     validators: [ passwordMatchValidator ]
@@ -29,6 +32,7 @@ export class RegisterComponent {
     lastName: [ '' ],
     role: [ '' ]
   }, this.controlOptions);
+  private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
   readonly roles = of([
     { name: 'AdminUser', displayName: 'Administrador' },
@@ -66,7 +70,8 @@ export class RegisterComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private identity: IdentityService
+    private identity: IdentityService,
+    private authorization: AuthorizationService
   ) {
     this.username.setValidators([
       Validators.required,
@@ -102,10 +107,11 @@ export class RegisterComponent {
     } else {
       this.role.setValue(null);
     }
-    this.loading$ = this.identity.loading$;
+    this.loading$ = this.loadingSubject.asObservable();
   }
 
   register() {
+    this.changeLoadingState(true);
     const userRegisterRequest: UserRegisterRequest = {
       username: this.username.value,
       password: this.password.value,
@@ -114,14 +120,27 @@ export class RegisterComponent {
       lastName: this.lastName.value,
       role: this.role.value
     };
-    combineLatest([
-      this.identity.isAuthenticated(),
-      this.identity.userRegister(userRegisterRequest)
-    ]).pipe(take(1))
-      .subscribe(([ authenticated ]) => {
-        if (!authenticated) {
-          this.router.navigate([ APP_ROUTES.HOME.MAIN ]);
-        }
+    this.identity.userRegister(userRegisterRequest)
+      .pipe(take(1))
+      .subscribe(userAccount => {
+        this.router.navigate([ APP_ROUTES.HOME.MAIN ]);
+        this.authorization.loadRoleAndPermissions(userAccount);
+        this.registerNavigationEnd();
+      }, ({ error }: HttpErrorResponse) => {
+        const errors: FailedResponse = { errors: error?.errors ?? []  };
+        this.changeLoadingState(false);
       });
+  }
+
+  private registerNavigationEnd() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      take(1)
+    ).subscribe(_ => this.changeLoadingState(false));
+  }
+
+  private changeLoadingState(loading: boolean) {
+    this.loadingSubject.next(loading);
+    this.loading.emit(loading);
   }
 }

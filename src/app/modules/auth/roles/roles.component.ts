@@ -3,7 +3,8 @@ import { RoleResponse, RoleState } from '@modules/auth/models/role';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
 import { CreateRoleComponent } from '@modules/auth/roles/create-role/create-role.component';
-import { of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'arf-roles',
@@ -12,8 +13,12 @@ import { of } from 'rxjs';
 })
 export class RolesComponent implements OnInit {
   roles$ = of<RoleResponse[]>([]);
+  private readonly loadingSubject = new BehaviorSubject(false);
+  readonly loading$: Observable<boolean>;
 
-  constructor(private modal: NgbModal, private identity: IdentityService) { }
+  constructor(private modal: NgbModal, private identity: IdentityService) {
+    this.loading$ = this.loadingSubject.asObservable();
+  }
 
   ngOnInit() {
     this.refreshRoles();
@@ -42,6 +47,8 @@ export class RolesComponent implements OnInit {
   }
 
   private refreshRoles() {
-    this.roles$ = this.identity.fetchRoles();
+    this.loadingSubject.next(true);
+    this.roles$ = this.identity.fetchRoles()
+      .pipe(tap(_ => this.loadingSubject.next(false)));
   }
 }

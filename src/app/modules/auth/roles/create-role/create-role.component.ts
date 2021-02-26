@@ -6,6 +6,7 @@ import { RoleRequest, RoleState } from '@modules/auth/models/role';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
 import { DropdownSelectItem, DropdownSelectOptions, DropdownSelectStyle } from '@shared/dropdown-select';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -27,6 +28,8 @@ export class CreateRoleComponent {
   };
   dropdownSelectStyle = DropdownSelectStyle.Info;
   readonly permissionList: DropdownSelectItem[] = [];
+  private readonly loadingSubject = new BehaviorSubject(false);
+  readonly loading$: Observable<boolean>;
 
   get name() {
     return this.roleForm.get('name');
@@ -63,9 +66,11 @@ export class CreateRoleComponent {
       text: displayName
     }));
     this.changePermissionsStyle();
+    this.loading$ = this.loadingSubject.asObservable();
   }
 
   createRole() {
+    this.loadingSubject.next(true);
     const roleRequest: RoleRequest = {
       name: this.name.value,
       displayName: this.displayName.value,
@@ -73,7 +78,10 @@ export class CreateRoleComponent {
     };
     this.identity.createRole(roleRequest)
       .pipe(take(1))
-      .subscribe(_ => this.activeModal.close(RoleState.Created));
+      .subscribe(_ => {
+        this.activeModal.close(RoleState.Created);
+        this.loadingSubject.next(false);
+      });
   }
 
   close() {

@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { AuthorizationService } from '@services/authorization/authorization.service';
 import { IdentityService } from '@services/identity/identity.service';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
-import { UserLoginRequest } from '../models/authentication';
+import { FailedResponse, UserLoginRequest } from '../models/authentication';
 
 @Component({
   selector: 'arf-login',
@@ -13,10 +15,13 @@ import { UserLoginRequest } from '../models/authentication';
   styles: []
 })
 export class LoginComponent {
+  @Output() loading: EventEmitter<boolean> = new EventEmitter(false);
+
   readonly loginForm = this.formBuilder.group({
     usernameOrEmail: [ '' ],
     password: [ '' ]
   });
+  private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
 
   get usernameOrEmail() {
@@ -30,23 +35,41 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private identity: IdentityService
+    private identity: IdentityService,
+    private authorization: AuthorizationService
   ) {
     this.usernameOrEmail.setValidators([ Validators.required ]);
     this.password.setValidators([ Validators.required ]);
-    this.loading$ = this.identity.loading$;
+    this.loading$ = this.loadingSubject.asObservable();
   }
 
   login() {
-    if (this.loginForm.invalid) {
-      return;
-    }
+    this.changeLoadingState(true);
     const userLoginRequest: UserLoginRequest = {
       usernameOrEmail: this.usernameOrEmail.value,
       password: this.password.value
     };
     this.identity.userLogin(userLoginRequest)
       .pipe(take(1))
-      .subscribe(() => this.router.navigate([ APP_ROUTES.HOME.MAIN ]));
+      .subscribe(userAccount => {
+        this.router.navigate([ APP_ROUTES.HOME.MAIN ]);
+        this.authorization.loadRoleAndPermissions(userAccount);
+        this.loginNavigationEnd();
+      }, ({ error }: HttpErrorResponse) => {
+        const errors: FailedResponse = { errors: error?.errors ?? []  };
+        this.changeLoadingState(false);
+      });
+  }
+
+  private loginNavigationEnd() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      take(1)
+    ).subscribe(_ => this.changeLoadingState(false));
+  }
+
+  private changeLoadingState(loading: boolean) {
+    this.loadingSubject.next(loading);
+    this.loading.emit(loading);
   }
 }

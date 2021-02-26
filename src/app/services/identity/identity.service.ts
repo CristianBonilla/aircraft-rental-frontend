@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {
@@ -7,14 +7,12 @@ import {
   UserLoginRequest,
   UserRegisterRequest,
   UserResponse,
-  FailedResponse
 } from '@modules/auth/models/authentication';
 import { Permission } from '@modules/auth/models/permission';
 import { RoleRequest, RoleResponse } from '@modules/auth/models/role';
-import { AuthorizationService } from '@services/authorization/authorization.service';
 import { StorageService } from '@services/storage/storage.service';
-import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
-import { catchError, delay, filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { delay, map, mergeMap, tap } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 
@@ -37,29 +35,12 @@ export class IdentityService {
   private readonly usersEndpointUrl = USERS;
   private readonly rolesEndpointUrl = ROLES;
   private readonly jwtHelper: JwtHelperService;
-  private readonly loadingSubject = new Subject<boolean>();
   private readonly userAccountSubject = new BehaviorSubject<UserAccount>(null);
-  loading$: Observable<boolean>;
   userAccount$: Observable<UserAccount>;
 
-  constructor(
-    private http: HttpClient,
-    private storage: StorageService,
-    private authorization: AuthorizationService
-  ) {
+  constructor(private http: HttpClient, private storage: StorageService) {
     this.jwtHelper = new JwtHelperService();
-    this.loading$ = this.loadingSubject.asObservable();
     this.userAccount$ = this.userAccountSubject.asObservable();
-  }
-
-  loadUserAndAuthorization() {
-    this.userInStorage().pipe(
-      filter(userAccount => !!userAccount),
-      take(1))
-    .subscribe(userAccount => {
-      this.userAccountSubject.next(userAccount);
-      this.authorization.loadRoleAndPermissions(userAccount);
-    });
   }
 
   isAuthenticated() {
@@ -77,6 +58,13 @@ export class IdentityService {
     return authenticated$;
   }
 
+  refreshUser() {
+    const user$ = this.userInStorage()
+      .pipe(tap(userAccount => this.userAccountSubject.next(userAccount)));
+
+    return user$;
+  }
+
   tokenInStorage() {
     const token$ = this.getInStorage<string>(STORAGE_KEYS.USER_TOKEN);
 
@@ -90,54 +78,28 @@ export class IdentityService {
   }
 
   userRegister(userRegisterRequest: UserRegisterRequest) {
-    this.loadingSubject.next(true);
     const register$ = this.http.post<SuccessResponse>(this.registerEndpointUrl, userRegisterRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    }).pipe(
-      mergeMap(success => this.saveUser(success)),
-      catchError(({ error }: HttpErrorResponse) => {
-        const errors: FailedResponse = { errors: error?.errors ?? []  };
-        this.loadingSubject.next(false);
-
-        return of(errors);
-      })
-    );
+    }).pipe(mergeMap(success => this.saveUser(success)));
 
     return register$;
   }
 
   userLogin(userLoginRequest: UserLoginRequest) {
-    this.loadingSubject.next(true);
     const login$ = this.http.post<SuccessResponse>(this.loginEndpointUrl, userLoginRequest, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    }).pipe(
-      mergeMap(success => this.saveUser(success)),
-      catchError(({ error }: HttpErrorResponse) => {
-        const errors: FailedResponse = { errors: error?.errors ?? []  };
-        this.loadingSubject.next(false);
-
-        return of(errors);
-      })
-    );
+    }).pipe(mergeMap(success => this.saveUser(success)));
 
     return login$;
   }
 
   userLogout() {
-    this.loadingSubject.next(true);
     const logout$ = combineLatest([
       this.storage.remove(STORAGE_KEYS.USER),
       this.storage.remove(STORAGE_KEYS.USER_TOKEN)
-    ]).pipe(
-      delay(3000),
-      tap(() => {
-        this.userAccountSubject.next(null);
-        this.authorization.removeRoleAndPermissions();
-        this.loadingSubject.next(false);
-      })
-    );
+    ]).pipe(delay(3000));
 
     return logout$;
   }
@@ -207,11 +169,7 @@ export class IdentityService {
 
           return this.storage.set(STORAGE_KEYS.USER, userAccount);
         }),
-        tap(() => {
-          const userAccount = this.userAccountSubject.getValue();
-          this.authorization.loadRoleAndPermissions(userAccount);
-          this.loadingSubject.next(false);
-        })
+        map(() => this.userAccountSubject.getValue())
       );
 
     return authenticatedUser$;
