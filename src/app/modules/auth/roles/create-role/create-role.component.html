@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title font-weight-bold">Crear un nuevo rol</h4>
-  <button type="button" class="close" (click)="close()">
+  <button type="button" class="close" (click)="close()" [disabled]="loading$ | async">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -31,7 +31,7 @@
   </div>
   <div class="modal-footer">
     <button type="submit" class="btn btn-success" [disabled]="!roleForm.valid || (loading$ | async)">
-      <fa-icon [icon]="[ 'fas', 'user-shield' ]"></fa-icon>
+      <fa-icon [icon]="(loading$ | async) ? [ 'fas', 'spinner' ] : [ 'fas', 'user-shield' ]" [spin]="loading$ | async"></fa-icon>
       Guardar Rol
     </button>
   </div>

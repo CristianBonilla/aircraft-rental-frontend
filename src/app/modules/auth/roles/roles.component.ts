@@ -32,6 +32,7 @@ export class RolesComponent implements OnInit {
       keyboard: false
     });
     this.createRoleClosed(modal);
+    modal.componentInstance
   }
 
   createRoleClosed(modal: NgbModalRef) {
@@ -39,6 +40,9 @@ export class RolesComponent implements OnInit {
       switch (state) {
         case RoleState.Created:
           this.refreshRoles();
+          const instance = modal.componentInstance as CreateRoleComponent;
+          console.log(instance);
+          // instance.setLoading(false);
           return;
         default:
           return;

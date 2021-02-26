@@ -5,7 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { AuthorizationService } from '@services/authorization/authorization.service';
 import { IdentityService } from '@services/identity/identity.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { delay, filter, take } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
 import { FailedResponse, UserLoginRequest } from '../models/authentication';
 
@@ -44,20 +44,21 @@ export class LoginComponent {
   }
 
   login() {
-    this.changeLoadingState(true);
+    this.setLoading(true);
     const userLoginRequest: UserLoginRequest = {
       usernameOrEmail: this.usernameOrEmail.value,
       password: this.password.value
     };
     this.identity.userLogin(userLoginRequest)
-      .pipe(take(1))
+      .pipe(delay(3000), take(1))
       .subscribe(userAccount => {
         this.router.navigate([ APP_ROUTES.HOME.MAIN ]);
         this.authorization.loadRoleAndPermissions(userAccount);
         this.loginNavigationEnd();
       }, ({ error }: HttpErrorResponse) => {
         const errors: FailedResponse = { errors: error?.errors ?? []  };
-        this.changeLoadingState(false);
+
+        this.setLoading(false);
       });
   }
 
@@ -65,10 +66,10 @@ export class LoginComponent {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       take(1)
-    ).subscribe(_ => this.changeLoadingState(false));
+    ).subscribe(_ => this.setLoading(false));
   }
 
-  private changeLoadingState(loading: boolean) {
+  private setLoading(loading: boolean) {
     this.loadingSubject.next(loading);
     this.loading.emit(loading);
   }

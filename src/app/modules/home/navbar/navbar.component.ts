@@ -4,7 +4,7 @@ import { ToggleService } from '@modules/home/services/toggle.service';
 import { APP_ROUTES } from 'src/app/models/routes';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IdentityService } from '@services/identity/identity.service';
-import { filter, mergeMap, take } from 'rxjs/operators';
+import { delay, filter, mergeMap, take } from 'rxjs/operators';
 import { AuthorizationService } from '@services/authorization/authorization.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class NavbarComponent implements AfterViewInit {
   logout() {
     this.loadingSubject.next(true);
     this.identity.userLogout()
-      .pipe(take(1))
+      .pipe(delay(3000), take(1))
       .subscribe(() => {
         this.router.navigate([ APP_ROUTES.AUTH ]);
         this.authNavigationEnd();

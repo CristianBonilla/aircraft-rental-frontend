@@ -88,6 +88,10 @@ export class CreateRoleComponent {
     this.activeModal.close();
   }
 
+  setLoading(loading: boolean) {
+    this.loadingSubject.next(loading);
+  }
+
   private changePermissionsStyle() {
     this.permissions.valueChanges.subscribe(() => {
       const { invalid, dirty, touched } = this.permissions;

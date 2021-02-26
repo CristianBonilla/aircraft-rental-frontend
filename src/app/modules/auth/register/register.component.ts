@@ -5,11 +5,12 @@ import { patternValidator } from '@helpers/validators/custom.validator';
 import { passwordMatchValidator } from '@helpers/validators/password.validator';
 import { IdentityService } from '@services/identity/identity.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { delay, filter, take } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
 import { FailedResponse, UserRegisterRequest } from '@modules/auth/models/authentication';
 import { AuthorizationService } from '@services/authorization/authorization.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserAccountRoutingService } from '@services/user-account-routing/user-account-routing.service';
 
 @Component({
   selector: 'arf-register',
@@ -111,7 +112,7 @@ export class RegisterComponent {
   }
 
   register() {
-    this.changeLoadingState(true);
+    this.setLoading(true);
     const userRegisterRequest: UserRegisterRequest = {
       username: this.username.value,
       password: this.password.value,
@@ -121,14 +122,14 @@ export class RegisterComponent {
       role: this.role.value
     };
     this.identity.userRegister(userRegisterRequest)
-      .pipe(take(1))
+      .pipe(delay(3000), take(1))
       .subscribe(userAccount => {
         this.router.navigate([ APP_ROUTES.HOME.MAIN ]);
         this.authorization.loadRoleAndPermissions(userAccount);
         this.registerNavigationEnd();
       }, ({ error }: HttpErrorResponse) => {
         const errors: FailedResponse = { errors: error?.errors ?? []  };
-        this.changeLoadingState(false);
+        this.setLoading(false);
       });
   }
 
@@ -136,10 +137,10 @@ export class RegisterComponent {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       take(1)
-    ).subscribe(_ => this.changeLoadingState(false));
+    ).subscribe(_ => this.setLoading(false));
   }
 
-  private changeLoadingState(loading: boolean) {
+  private setLoading(loading: boolean) {
     this.loadingSubject.next(loading);
     this.loading.emit(loading);
   }

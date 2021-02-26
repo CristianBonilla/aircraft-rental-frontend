@@ -11,8 +11,8 @@ import {
 import { Permission } from '@modules/auth/models/permission';
 import { RoleRequest, RoleResponse } from '@modules/auth/models/role';
 import { StorageService } from '@services/storage/storage.service';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { delay, map, mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 
@@ -99,7 +99,7 @@ export class IdentityService {
     const logout$ = combineLatest([
       this.storage.remove(STORAGE_KEYS.USER),
       this.storage.remove(STORAGE_KEYS.USER_TOKEN)
-    ]).pipe(delay(3000));
+    ]);
 
     return logout$;
   }
