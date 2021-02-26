@@ -1,11 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
 import { ToggleService } from '@modules/home/services/toggle.service';
-import { APP_ROUTES } from 'src/app/models/routes';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IdentityService } from '@services/identity/identity.service';
-import { delay, filter, mergeMap, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { AuthorizationService } from '@services/authorization/authorization.service';
+import { UserAccountRedirectService } from '@services/user-account-redirect/user-account-redirect.service';
 
 @Component({
   selector: 'arf-navbar',
@@ -21,10 +19,9 @@ export class NavbarComponent implements AfterViewInit {
   readonly startRedirect$: Observable<string>;
 
   constructor(
-    private router: Router,
     private toggle: ToggleService,
-    private identity: IdentityService,
-    private authorization: AuthorizationService
+    private authorization: AuthorizationService,
+    private userAccountRedirect: UserAccountRedirectService
   ) {
     this.loading$ = this.loadingSubject.asObservable();
     this.startRedirect$ = this.authorization.startRedirect$;
@@ -36,22 +33,8 @@ export class NavbarComponent implements AfterViewInit {
 
   logout() {
     this.loadingSubject.next(true);
-    this.identity.userLogout()
-      .pipe(delay(3000), take(1))
-      .subscribe(() => {
-        this.router.navigate([ APP_ROUTES.AUTH ]);
-        this.authNavigationEnd();
-      });
-  }
-
-  private authNavigationEnd() {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      mergeMap(_ => this.identity.refreshUser()),
-      take(1)
-    ).subscribe(_ => {
-      this.authorization.removeRoleAndPermissions();
-      this.loadingSubject.next(false);
-    });
+    this.userAccountRedirect.logout()
+      .pipe(take(1))
+      .subscribe(() => this.loadingSubject.next(false));
   }
 }

@@ -1,13 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
-import { AuthorizationService } from '@services/authorization/authorization.service';
-import { IdentityService } from '@services/identity/identity.service';
+import { UserAccountRedirectService } from '@services/user-account-redirect/user-account-redirect.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { delay, filter, take } from 'rxjs/operators';
-import { APP_ROUTES } from 'src/app/models/routes';
-import { FailedResponse, UserLoginRequest } from '../models/authentication';
+import { take } from 'rxjs/operators';
+import { FailedResponse, UserLoginRequest } from '@modules/auth/models/authentication';
 
 @Component({
   selector: 'arf-login',
@@ -33,10 +30,8 @@ export class LoginComponent {
   }
 
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
-    private identity: IdentityService,
-    private authorization: AuthorizationService
+    private userAccountRedirect: UserAccountRedirectService
   ) {
     this.usernameOrEmail.setValidators([ Validators.required ]);
     this.password.setValidators([ Validators.required ]);
@@ -49,24 +44,14 @@ export class LoginComponent {
       usernameOrEmail: this.usernameOrEmail.value,
       password: this.password.value
     };
-    this.identity.userLogin(userLoginRequest)
-      .pipe(delay(3000), take(1))
-      .subscribe(userAccount => {
-        this.router.navigate([ APP_ROUTES.HOME.MAIN ]);
-        this.authorization.loadRoleAndPermissions(userAccount);
-        this.loginNavigationEnd();
+    this.userAccountRedirect.login(userLoginRequest)
+      .pipe(take(1))
+      .subscribe(_ => {
+        this.setLoading(false);
       }, ({ error }: HttpErrorResponse) => {
         const errors: FailedResponse = { errors: error?.errors ?? []  };
-
         this.setLoading(false);
       });
-  }
-
-  private loginNavigationEnd() {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      take(1)
-    ).subscribe(_ => this.setLoading(false));
   }
 
   private setLoading(loading: boolean) {

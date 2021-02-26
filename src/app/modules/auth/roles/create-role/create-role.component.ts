@@ -78,10 +78,7 @@ export class CreateRoleComponent {
     };
     this.identity.createRole(roleRequest)
       .pipe(take(1))
-      .subscribe(_ => {
-        this.activeModal.close(RoleState.Created);
-        this.loadingSubject.next(false);
-      });
+      .subscribe(_ => this.activeModal.close(RoleState.Created));
   }
 
   close() {

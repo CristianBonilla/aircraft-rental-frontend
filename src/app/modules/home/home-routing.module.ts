@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { ALLOW } from '@modules/auth/models/permission';
 import { HomeComponent } from '@modules/home/home.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { APP_ROUTES } from 'src/app/models/routes';
+
+const { HOME: { MAIN: START_REDIRECT } } = APP_ROUTES;  // authorization - auth.guard
 
 const routes: Routes = [
   {
@@ -14,7 +17,8 @@ const routes: Routes = [
         path: 'roles',
         data: {
           permissions: {
-            only: ALLOW.ROLES
+            only: ALLOW.ROLES,
+            redirectTo: START_REDIRECT
           }
         },
         loadChildren: () => import('@modules/auth/roles/roles.module')
@@ -24,7 +28,8 @@ const routes: Routes = [
         path: 'users',
         data: {
           permissions: {
-            only: ALLOW.USERS
+            only: ALLOW.USERS,
+            redirectTo: START_REDIRECT
           }
         },
         loadChildren: () => import('@modules/auth/users/users.module')
@@ -34,7 +39,8 @@ const routes: Routes = [
         path: 'rentals',
         data: {
           permissions: {
-            only: ALLOW.RENTALS
+            only: ALLOW.RENTALS,
+            redirectTo: START_REDIRECT
           }
         },
         loadChildren: () => import('@modules/rentals/rentals.module')
@@ -44,7 +50,8 @@ const routes: Routes = [
         path: 'aircrafts',
         data: {
           permissions: {
-            only: ALLOW.AIRCRAFTS
+            only: ALLOW.AIRCRAFTS,
+            redirectTo: START_REDIRECT
           }
         },
         loadChildren: () => import('@modules/aircrafts/aircrafts.module')
@@ -54,7 +61,8 @@ const routes: Routes = [
         path: 'passengers',
         data: {
           permissions: {
-            only: ALLOW.PASSENGERS
+            only: ALLOW.PASSENGERS,
+            redirectTo: START_REDIRECT
           }
         },
         loadChildren: () => import('@modules/auth/passengers/passengers.module')

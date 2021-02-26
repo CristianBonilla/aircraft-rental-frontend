@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { UserAccount, UserLoginRequest, UserRegisterRequest } from '@modules/auth/models/authentication';
+import { UserAccount, UserLoginRequest, UserRegisterRequest, UserResponse } from '@modules/auth/models/authentication';
 import { AuthorizationService } from '@services/authorization/authorization.service';
 import { IdentityService } from '@services/identity/identity.service';
-import { defer, Observable, of } from 'rxjs';
+import { defer, Observable, throwError, timer } from 'rxjs';
 import { catchError, defaultIfEmpty, delay, filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserAccountRoutingService {
+export class UserAccountRedirectService {
   constructor(
     private identity: IdentityService,
     private authorization: AuthorizationService,
@@ -20,7 +20,7 @@ export class UserAccountRoutingService {
     const loadUser$ = this.identity.refreshUser().pipe(
       filter(userAccount => !!userAccount),
       tap(userAccount => this.authorization.loadRoleAndPermissions(userAccount)),
-      mergeMap(userAccount => this.nonExistentUser(userAccount.user.id)),
+      mergeMap(userAccount => this.nonExistentUser(userAccount.user)),
       defaultIfEmpty<NavigationEnd, null>(null)
     );
 
@@ -30,7 +30,8 @@ export class UserAccountRoutingService {
   login(userLoginRequest: UserLoginRequest) {
     const login$ = this.identity.userLogin(userLoginRequest).pipe(
       delay(3000),
-      mergeMap(userAccount => this.redirectToMain(userAccount))
+      mergeMap(userAccount => this.redirectToMain(userAccount)),
+      catchError(error => timer(3000).pipe(mergeMap(_ => throwError(error))))
     );
 
     return login$;
@@ -39,7 +40,8 @@ export class UserAccountRoutingService {
   register(userRegisterRequest: UserRegisterRequest) {
     const register$ = this.identity.userRegister(userRegisterRequest).pipe(
       delay(3000),
-      mergeMap(userAccount => this.redirectToMain(userAccount))
+      mergeMap(userAccount => this.redirectToMain(userAccount)),
+      catchError(error => timer(3000).pipe(mergeMap(_ => throwError(error))))
     );
 
     return register$;
@@ -71,13 +73,13 @@ export class UserAccountRoutingService {
 
   private redirectToAuth() {
     const redirect$ = defer(() => {
-      this.authorization.removeRoleAndPermissions();
       this.router.navigate([ APP_ROUTES.AUTH ]);
       const refreshUser$ = this.identity.refreshUser();
       const authRedirected$ = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd),
         mergeMap(event => refreshUser$.pipe(map(_ => event))),
-        take(1)
+        take(1),
+        tap(_ => this.authorization.removeRoleAndPermissions())
       ) as Observable<NavigationEnd>;
 
       return authRedirected$;
@@ -86,10 +88,9 @@ export class UserAccountRoutingService {
     return redirect$;
   }
 
-  private nonExistentUser(userId: number) {
-    const nonExistentUser$ = this.identity.fetchUserById(userId).pipe(
+  private nonExistentUser(userResponse: UserResponse) {
+    const nonExistentUser$ = this.identity.userExists(userResponse).pipe(
       map(user => !!user),
-      catchError(_ => of(false)),
       filter(existing => !existing),
       mergeMap(() => this.logout())
     );

@@ -1,16 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, Validators } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
 import { patternValidator } from '@helpers/validators/custom.validator';
 import { passwordMatchValidator } from '@helpers/validators/password.validator';
-import { IdentityService } from '@services/identity/identity.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { delay, filter, take } from 'rxjs/operators';
-import { APP_ROUTES } from 'src/app/models/routes';
+import { take } from 'rxjs/operators';
 import { FailedResponse, UserRegisterRequest } from '@modules/auth/models/authentication';
-import { AuthorizationService } from '@services/authorization/authorization.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UserAccountRoutingService } from '@services/user-account-routing/user-account-routing.service';
+import { UserAccountRedirectService } from '@services/user-account-redirect/user-account-redirect.service';
 
 @Component({
   selector: 'arf-register',
@@ -69,10 +65,8 @@ export class RegisterComponent {
   }
 
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
-    private identity: IdentityService,
-    private authorization: AuthorizationService
+    private userAccountRedirect: UserAccountRedirectService
   ) {
     this.username.setValidators([
       Validators.required,
@@ -121,23 +115,14 @@ export class RegisterComponent {
       lastName: this.lastName.value,
       role: this.role.value
     };
-    this.identity.userRegister(userRegisterRequest)
-      .pipe(delay(3000), take(1))
-      .subscribe(userAccount => {
-        this.router.navigate([ APP_ROUTES.HOME.MAIN ]);
-        this.authorization.loadRoleAndPermissions(userAccount);
-        this.registerNavigationEnd();
+    this.userAccountRedirect.register(userRegisterRequest)
+      .pipe(take(1))
+      .subscribe(_ => {
+        this.setLoading(false);
       }, ({ error }: HttpErrorResponse) => {
         const errors: FailedResponse = { errors: error?.errors ?? []  };
         this.setLoading(false);
       });
-  }
-
-  private registerNavigationEnd() {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      take(1)
-    ).subscribe(_ => this.setLoading(false));
   }
 
   private setLoading(loading: boolean) {

@@ -37,15 +37,8 @@ export class RolesComponent implements OnInit {
 
   createRoleClosed(modal: NgbModalRef) {
     modal.closed.subscribe((state: RoleState) => {
-      switch (state) {
-        case RoleState.Created:
-          this.refreshRoles();
-          const instance = modal.componentInstance as CreateRoleComponent;
-          console.log(instance);
-          // instance.setLoading(false);
-          return;
-        default:
-          return;
+      if (state === RoleState.Created) {
+        this.refreshRoles();
       }
     });
   }
