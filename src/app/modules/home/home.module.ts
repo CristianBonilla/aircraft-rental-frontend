@@ -5,13 +5,13 @@ import { HomeRoutingModule } from '@modules/home/home-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@shared/icons/icons.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DirectivesModule } from '@directives/directives.module';
 
 import { FooterComponent } from '@modules/home/footer/footer.component';
 import { NavbarComponent } from '@modules/home/navbar/navbar.component';
 import { SidebarComponent } from '@modules/home/sidebar/sidebar.component';
 import { SidebarWrapperComponent } from '@modules/home/sidebar/sidebar-wrapper/sidebar-wrapper.component';
 import { HomeComponent } from '@modules/home/home.component';
+import { ToggleSidebarDirective } from '@modules/home/directives/toggle-sidebar/toggle-sidebar.directive';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import { HomeComponent } from '@modules/home/home.component';
     NavbarComponent,
     SidebarComponent,
     SidebarWrapperComponent,
-    HomeComponent
+    HomeComponent,
+    ToggleSidebarDirective
   ],
   imports: [
     CommonModule,
@@ -27,8 +28,7 @@ import { HomeComponent } from '@modules/home/home.component';
     NgxPermissionsModule.forChild(),
     ReactiveFormsModule,
     IconsModule,
-    NgbModule,
-    DirectivesModule
+    NgbModule
   ]
 })
 export class HomeModule { }

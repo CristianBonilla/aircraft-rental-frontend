@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { ToggleService } from '@modules/home/services/toggle.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { ToggleSidebarService } from '@modules/home/services/toggle-sidebar/toggle-sidebar.service';
 import { AuthorizationService } from '@services/authorization/authorization.service';
 import { UserAccountRedirectService } from '@services/user-account-redirect/user-account-redirect.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'arf-navbar',
@@ -12,14 +12,14 @@ import { UserAccountRedirectService } from '@services/user-account-redirect/user
 })
 export class NavbarComponent implements AfterViewInit {
   @ViewChild('toggle')
-  private readonly toggleRef: ElementRef<HTMLDivElement>;
+  readonly toggleRef: ElementRef<HTMLDivElement>;
 
   private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
   readonly startRedirect$: Observable<string>;
 
   constructor(
-    private toggle: ToggleService,
+    private toggleSidebar: ToggleSidebarService,
     private authorization: AuthorizationService,
     private userAccountRedirect: UserAccountRedirectService
   ) {
@@ -28,7 +28,7 @@ export class NavbarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.toggle.addToggle(this.toggleRef.nativeElement);
+    this.toggleSidebar.addToggle(this.toggleRef.nativeElement);
   }
 
   logout() {

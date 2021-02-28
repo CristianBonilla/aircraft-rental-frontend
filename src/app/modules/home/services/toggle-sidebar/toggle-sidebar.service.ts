@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
+import { ToggleSidebar } from '@modules/home/models/toggle-sidebar';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-export interface Toggle {
-  $toggle?: HTMLDivElement;
-  $sidebar?: HTMLDivElement;
-}
 
 @Injectable({
   providedIn: 'root'
 })
-export class ToggleService {
-  private readonly toggleSubject: BehaviorSubject<Toggle>;
-  readonly toggle$: Observable<Toggle>;
+export class ToggleSidebarService {
+  private readonly toggleSubject: BehaviorSubject<ToggleSidebar>;
+  readonly toggle$: Observable<ToggleSidebar>;
 
   constructor() {
     this.toggleSubject = new BehaviorSubject(null);

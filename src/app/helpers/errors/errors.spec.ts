@@ -1,8 +1,8 @@
 import { ValidationErrors } from '@angular/forms';
 import { DEFAULT_ERROR_MESSAGE, resolveErrorMessage } from '@helpers/errors/errors';
 
-describe('ErrorUtils', () => {
-  describe('ResolveErrorMessage', () => {
+describe('ErrorsHelpers', () => {
+  describe('#resolveErrorMessage', () => {
     it('should correctly resolve an error message without interpolation', () => {
       // arrange
       const error: ValidationErrors = { required: true };

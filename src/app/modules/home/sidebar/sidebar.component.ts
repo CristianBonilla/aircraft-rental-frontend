@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { WINDOW } from '@core/providers/window.provider';
-import { ToggleService } from '@modules/home/services/toggle.service';
+import { ToggleSidebarService } from '@modules/home/services/toggle-sidebar/toggle-sidebar.service';
 import { AuthorizationService } from '@services/authorization/authorization.service';
 import { Observable } from 'rxjs';
 
@@ -11,14 +11,14 @@ import { Observable } from 'rxjs';
 })
 export class SidebarComponent implements AfterViewInit {
   @ViewChild('sidebar')
-  private readonly sidebarRef: ElementRef<HTMLDivElement>;
+  readonly sidebarRef: ElementRef<HTMLDivElement>;
 
   private readonly $body: HTMLElement;
   readonly startRedirect$: Observable<string>;
 
   constructor(
     @Inject(WINDOW) { document }: Window,
-    private toggle: ToggleService,
+    private toggleSidebar: ToggleSidebarService,
     authorization: AuthorizationService
   ) {
     this.$body = document.body;
@@ -26,7 +26,7 @@ export class SidebarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.toggle.addSidebar(this.sidebarRef.nativeElement);
+    this.toggleSidebar.addSidebar(this.sidebarRef.nativeElement);
   }
 
   minimize() {
