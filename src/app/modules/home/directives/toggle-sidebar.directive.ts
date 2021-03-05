@@ -1,7 +1,7 @@
 import { AfterViewInit, Directive, Inject } from '@angular/core';
 import { WINDOW } from '@core/providers/window.provider';
 import { ToggleSidebar } from '@modules/home/models/toggle-sidebar';
-import { ToggleSidebarService } from '@modules/home/services/toggle-sidebar/toggle-sidebar.service';
+import { ToggleSidebarService } from '@modules/home/services/toggle-sidebar.service';
 import { filter, take } from 'rxjs/operators';
 
 @Directive({
@@ -22,7 +22,7 @@ export class ToggleSidebarDirective implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.toggleSidebarService.toggle$.pipe(
+    this.toggleSidebarService.toggleSidebar$.pipe(
       filter(toggleSidebar => !!toggleSidebar && !!toggleSidebar.$toggle && !!toggleSidebar.$sidebar),
       take(1)
     ).subscribe(toggleSidebar => {

@@ -1,11 +1,6 @@
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
-import { ClassProvider, LOCALE_ID, ValueProvider } from "@angular/core";
+import { ClassProvider } from "@angular/core";
 import { AuthTokenService } from "@interceptors/auth-token/auth-token.service";
-
-export const localeIDProvider: ValueProvider = {
-  provide: LOCALE_ID,
-  useValue: 'es-CO'
-};
 
 export const authTokenProvider: ClassProvider = {
   provide: HTTP_INTERCEPTORS,
@@ -13,7 +8,4 @@ export const authTokenProvider: ClassProvider = {
   multi: true
 }
 
-export const INTERCEPTOR_PROVIDERS = [
-  localeIDProvider,
-  authTokenProvider
-];
+export const INTERCEPTOR_PROVIDERS = [ authTokenProvider ];

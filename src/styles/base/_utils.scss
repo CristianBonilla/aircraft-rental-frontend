@@ -1,0 +1,11 @@
+button fa-icon {
+  vertical-align: middle;
+}
+
+.btn.dropdown-toggle {
+
+  &,
+  &:focus {
+    outline: none !important;
+  }
+}

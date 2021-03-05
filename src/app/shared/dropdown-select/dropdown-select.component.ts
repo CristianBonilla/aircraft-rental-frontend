@@ -30,10 +30,12 @@ import {
 export class DropdownSelectComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild('select')
   readonly selectRef: ElementRef<HTMLSelectElement>;
+
   @Input() items: DropdownSelectItem[] = [];
   @Input() options: DropdownSelectOptions = { };
 
   private _style = DropdownSelectStyle.Light;
+
   @Input()
   get style() {
     return this._style;
@@ -101,6 +103,10 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
       this.$select = $($select);
       this.$select.selectpicker(dropdownSelectOptions);
     });
+  }
+
+  get hasSelected() {
+    return !!this.selected ? Array.isArray(this.selected) ? !!this.selected.length : true : false;
   }
 
   writeValue(obj: any) {

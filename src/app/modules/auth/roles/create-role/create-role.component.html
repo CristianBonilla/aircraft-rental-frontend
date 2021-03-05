@@ -21,9 +21,9 @@
     <div class="form-group">
       <label for="permissions">Permisos</label>
       <arf-dropdown-select id="permissions" [multiple]="true"
-        [items]="permissionList"
-        [options]="dropdownSelectOptions"
-        [style]="dropdownSelectStyle"
+        [items]="dropdownPermissionsSelect.data"
+        [options]="dropdownPermissionsSelect.options"
+        [style]="dropdownPermissionsSelect.style"
         [formControl]="permissions"
         [arfFormErrorHandler]="permissions">
       </arf-dropdown-select>

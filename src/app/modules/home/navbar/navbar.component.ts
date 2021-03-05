@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { ToggleSidebarService } from '@modules/home/services/toggle-sidebar/toggle-sidebar.service';
+import { ToggleSidebarService } from '@modules/home/services/toggle-sidebar.service';
 import { AuthorizationService } from '@services/authorization/authorization.service';
 import { UserAccountRedirectService } from '@services/user-account-redirect/user-account-redirect.service';
 import { BehaviorSubject, Observable } from 'rxjs';

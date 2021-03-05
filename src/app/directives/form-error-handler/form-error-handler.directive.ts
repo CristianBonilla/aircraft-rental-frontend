@@ -72,6 +72,6 @@ export class FormErrorHandlerDirective implements OnInit {
   private hasError() {
     const { invalid, dirty, touched } = this.control;
 
-    return invalid && dirty || invalid && touched;
+    return invalid && (dirty || touched);
   }
 }

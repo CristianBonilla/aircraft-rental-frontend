@@ -1,4 +1,21 @@
-<ng-container *ngIf="!multiple; else multiple">
+<div [ngClass]="{ 'mb-2': hasSelected }">
+  <ng-container *ngIf="!!multiple; else multipleSelect">
+    <select class="form-control"
+      [attr.id]="id"
+      [attr.name]="name"
+      [attr.title]="placeholder"
+      [disabled]="disabled"
+      [compareWith]="compareSelectedFn"
+      [(ngModel)]="selected"
+      (blur)="blur($event)" multiple #select>
+      <ng-template ngFor let-item [ngForOf]="items">
+        <option [ngValue]="item.value">{{ item.text }}</option>
+      </ng-template>
+    </select>
+  </ng-container>
+</div>
+
+<ng-template #multipleSelect>
   <select class="form-control"
     [attr.id]="id"
     [attr.name]="name"
@@ -7,21 +24,6 @@
     [compareWith]="compareSelectedFn"
     [(ngModel)]="selected"
     (blur)="blur($event)" #select>
-    <ng-template ngFor let-item [ngForOf]="items">
-      <option [ngValue]="item.value">{{ item.text }}</option>
-    </ng-template>
-  </select>
-</ng-container>
-
-<ng-template #multiple>
-  <select class="form-control"
-    [attr.id]="id"
-    [attr.name]="name"
-    [attr.title]="placeholder"
-    [disabled]="disabled"
-    [compareWith]="compareSelectedFn"
-    [(ngModel)]="selected"
-    (blur)="blur($event)" multiple #select>
     <ng-template ngFor let-item [ngForOf]="items">
       <option [ngValue]="item.value">{{ item.text }}</option>
     </ng-template>

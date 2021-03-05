@@ -62,7 +62,10 @@ export class AircraftsService {
   }
 
   deleteAircraft(aircraftId: number) {
-    const delete$ = this.http.delete<void>(`${ this.endpointUrl }/${ aircraftId }`);
+    const delete$ = this.http.delete<void>(`${ this.endpointUrl }/${ aircraftId }`, {
+      responseType: 'json',
+      ...this.httpHeaderOptions
+    });
 
     return delete$;
   }

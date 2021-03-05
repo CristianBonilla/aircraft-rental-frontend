@@ -15,3 +15,9 @@ export enum DropdownSelectStyle {
 }
 
 export type DropdownSelectItemValues = DropdownSelectItem['value'][];
+
+export interface CustomizeDropdownSelect {
+  data: DropdownSelectItem[];
+  style: DropdownSelectStyle;
+  options: DropdownSelectOptions;
+}

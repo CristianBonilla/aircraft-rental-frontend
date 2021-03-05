@@ -11,7 +11,7 @@ import { NavbarComponent } from '@modules/home/navbar/navbar.component';
 import { SidebarComponent } from '@modules/home/sidebar/sidebar.component';
 import { SidebarWrapperComponent } from '@modules/home/sidebar/sidebar-wrapper/sidebar-wrapper.component';
 import { HomeComponent } from '@modules/home/home.component';
-import { ToggleSidebarDirective } from '@modules/home/directives/toggle-sidebar/toggle-sidebar.directive';
+import { ToggleSidebarDirective } from '@modules/home/directives/toggle-sidebar.directive';
 
 @NgModule({
   declarations: [

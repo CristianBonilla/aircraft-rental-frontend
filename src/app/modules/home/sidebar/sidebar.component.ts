@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { WINDOW } from '@core/providers/window.provider';
-import { ToggleSidebarService } from '@modules/home/services/toggle-sidebar/toggle-sidebar.service';
+import { ToggleSidebarService } from '@modules/home/services/toggle-sidebar.service';
 import { AuthorizationService } from '@services/authorization/authorization.service';
 import { Observable } from 'rxjs';
 
