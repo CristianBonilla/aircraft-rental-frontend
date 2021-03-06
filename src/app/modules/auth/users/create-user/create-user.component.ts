@@ -13,21 +13,21 @@ import { APP_ROUTES } from 'src/app/models/routes';
 export class CreateUserComponent implements AfterViewInit {
   @ViewChild('userTemplate')
   readonly userTemplate: TemplateRef<NgbActiveModal>;
-  private modalRef: NgbModalRef;
+  private userModal: NgbModalRef;
 
   constructor(private modal: NgbModal, private router: Router) { }
 
   ngAfterViewInit() {
-    this.modalRef = this.modal.open(this.userTemplate, DEFAULT_MODAL_OPTIONS);
+    this.userModal = this.modal.open(this.userTemplate, DEFAULT_MODAL_OPTIONS);
     this.createUserHidden();
   }
 
-  createUserHidden() {
-    this.modalRef.hidden.pipe(take(1))
-      .subscribe(_ => this.router.navigate([ APP_ROUTES.HOME.USERS ]));
+  dismiss(active: NgbActiveModal) {
+    active.dismiss(null);
   }
 
-  close(active: NgbActiveModal) {
-    active.close(null);
+  private createUserHidden() {
+    this.userModal.hidden.pipe(take(1))
+      .subscribe(_ => this.router.navigate([ APP_ROUTES.HOME.USERS ]));
   }
 }

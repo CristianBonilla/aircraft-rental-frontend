@@ -36,7 +36,7 @@ export class IdentityService {
   private readonly rolesEndpointUrl = ROLES;
   private readonly jwtHelper: JwtHelperService;
   private readonly userAccountSubject = new BehaviorSubject<UserAccount>(null);
-  userAccount$: Observable<UserAccount>;
+  readonly userAccount$: Observable<UserAccount>;
 
   constructor(private http: HttpClient, private storage: StorageService) {
     this.jwtHelper = new JwtHelperService();
@@ -58,7 +58,7 @@ export class IdentityService {
     return authenticated$;
   }
 
-  refreshUser() {
+  loadUserInStorage() {
     const user$ = this.userInStorage()
       .pipe(tap(userAccount => this.userAccountSubject.next(userAccount)));
 

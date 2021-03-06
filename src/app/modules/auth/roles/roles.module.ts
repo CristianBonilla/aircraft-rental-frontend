@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RolesRoutingModule } from '@modules/auth/roles/roles-routing.module';
 import { IconsModule } from '@shared/icons/icons.module';
-import { DropdownSelectModule } from '@shared/dropdown-select/dropdown-select.module';
+import { DropdownSelectModule } from '@shared/components/dropdown-select/dropdown-select.module';
 import { DirectivesModule } from '@directives/directives.module';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 

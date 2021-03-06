@@ -7,6 +7,8 @@ import { defer, Observable, throwError, timer } from 'rxjs';
 import { catchError, defaultIfEmpty, delay, filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { APP_ROUTES } from 'src/app/models/routes';
 
+export const DEFAULT_WAIT = 3000;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +19,7 @@ export class UserAccountRedirectService {
     private router: Router) { }
 
   loadUser() {
-    const loadUser$ = this.identity.refreshUser().pipe(
+    const loadUser$ = this.identity.loadUserInStorage().pipe(
       filter(userAccount => !!userAccount),
       tap(userAccount => this.authorization.loadRoleAndPermissions(userAccount)),
       mergeMap(userAccount => this.nonExistentUser(userAccount.user)),
@@ -29,9 +31,9 @@ export class UserAccountRedirectService {
 
   login(userLoginRequest: UserLoginRequest) {
     const login$ = this.identity.userLogin(userLoginRequest).pipe(
-      delay(3000),
+      delay(DEFAULT_WAIT),
       mergeMap(userAccount => this.redirectToMain(userAccount)),
-      catchError(error => timer(3000).pipe(mergeMap(_ => throwError(error))))
+      catchError(error => timer(DEFAULT_WAIT).pipe(mergeMap(_ => throwError(error))))
     );
 
     return login$;
@@ -39,9 +41,9 @@ export class UserAccountRedirectService {
 
   register(userRegisterRequest: UserRegisterRequest) {
     const register$ = this.identity.userRegister(userRegisterRequest).pipe(
-      delay(3000),
+      delay(DEFAULT_WAIT),
       mergeMap(userAccount => this.redirectToMain(userAccount)),
-      catchError(error => timer(3000).pipe(mergeMap(_ => throwError(error))))
+      catchError(error => timer(DEFAULT_WAIT).pipe(mergeMap(_ => throwError(error))))
     );
 
     return register$;
@@ -49,7 +51,7 @@ export class UserAccountRedirectService {
 
   logout() {
     const logout$ = this.identity.userLogout().pipe(
-      delay(3000),
+      delay(DEFAULT_WAIT),
       mergeMap(() => this.redirectToAuth())
     );
 
@@ -74,7 +76,7 @@ export class UserAccountRedirectService {
   private redirectToAuth() {
     const redirect$ = defer(() => {
       this.router.navigate([ APP_ROUTES.AUTH ]);
-      const refreshUser$ = this.identity.refreshUser();
+      const refreshUser$ = this.identity.loadUserInStorage();
       const authRedirected$ = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd),
         mergeMap(event => refreshUser$.pipe(map(_ => event))),
@@ -92,7 +94,7 @@ export class UserAccountRedirectService {
     const nonExistentUser$ = this.identity.userExists(userResponse).pipe(
       map(user => !!user),
       filter(existing => !existing),
-      mergeMap(() => this.logout())
+      mergeMap(_ => this.logout())
     );
 
     return nonExistentUser$;

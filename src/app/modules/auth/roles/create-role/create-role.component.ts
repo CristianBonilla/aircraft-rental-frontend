@@ -1,21 +1,28 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { requiredMultiValidator } from '@helpers/validators/custom.validator';
 import { onlyLetters } from '@helpers/validators/formats.validator';
 import { ALL_PERMISSIONS } from '@modules/auth/models/permission';
 import { RoleRequest, RoleState } from '@modules/auth/models/role';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
-import { CustomizeDropdownSelect, DropdownSelectStyle } from '@shared/dropdown-select';
+import { RefreshService } from '@services/refresh/refresh.service';
+import { CustomizeDropdownSelect, DropdownSelectStyle } from '@shared/components/dropdown-select';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { DEFAULT_MODAL_OPTIONS } from 'src/app/models/modal';
+import { APP_ROUTES } from 'src/app/models/routes';
 
 @Component({
   selector: 'arf-create-role',
   templateUrl: './create-role.component.html',
   styles: []
 })
-export class CreateRoleComponent {
+export class CreateRoleComponent implements AfterViewInit {
+  @ViewChild('roleTemplate')
+  readonly roleTemplate: TemplateRef<NgbActiveModal>;
+  private roleModal: NgbModalRef;
   private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
   readonly roleForm = this.formBuilder.group({
@@ -47,9 +54,11 @@ export class CreateRoleComponent {
   }
 
   constructor(
-    private activeModal: NgbActiveModal,
+    private modal: NgbModal,
     private formBuilder: FormBuilder,
-    private identity: IdentityService
+    private identity: IdentityService,
+    private refresh: RefreshService,
+    private router: Router
   ) {
     this.loading$ = this.loadingSubject.asObservable();
     this.name.setValidators([
@@ -69,7 +78,12 @@ export class CreateRoleComponent {
     this.changeDropdownStyle(this.permissions, this.dropdownPermissionsSelect);
   }
 
-  createRole() {
+  ngAfterViewInit() {
+    this.roleModal = this.modal.open(this.roleTemplate, DEFAULT_MODAL_OPTIONS);
+    this.createRoleCompleted();
+  }
+
+  createRole(active: NgbActiveModal) {
     this.loadingSubject.next(true);
     const roleRequest: RoleRequest = {
       name: this.name.value,
@@ -78,15 +92,22 @@ export class CreateRoleComponent {
     };
     this.identity.createRole(roleRequest)
       .pipe(take(1))
-      .subscribe(_ => this.activeModal.close(RoleState.Created));
+      .subscribe(_ => active.close(RoleState.Created));
   }
 
   setLoading(loading: boolean) {
     this.loadingSubject.next(loading);
   }
 
-  close() {
-    this.activeModal.close(null);
+  dismiss(active: NgbActiveModal) {
+    active.dismiss(null);
+  }
+
+  private createRoleCompleted() {
+    this.roleModal.closed.pipe(take(1))
+      .subscribe(_ => this.refresh.dispatchRoles());
+    this.roleModal.hidden.pipe(take(1))
+      .subscribe(_ => this.router.navigate([ APP_ROUTES.HOME.ROLES ]));
   }
 
   private buildDropdownSelectItems() {

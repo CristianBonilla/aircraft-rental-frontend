@@ -13,7 +13,7 @@ import {
   DropdownSelectItemValues,
   DropdownSelectOptions,
   DropdownSelectStyle
-} from '@shared/dropdown-select';
+} from '@shared/components/dropdown-select';
 
 @Component({
   selector: 'arf-dropdown-select',
