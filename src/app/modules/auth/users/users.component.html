@@ -1,1 +1,58 @@
-<p>users works!</p>
+<div class="container-fluid">
+  <div class="table-container">
+    <div class="d-sm-flex justify-content-between align-items-center bg-primary px-3 py-2">
+      <h4 class="text-light my-1 my-sm-0">Usuarios</h4>
+      <a type="button" class="btn btn-outline-light my-1 my-sm-0" [ngClass]="{ 'disabled': loading$ | async }"
+        routerLink="create">
+        <fa-icon [icon]="[ 'fas', 'user-plus' ]" size="lg"></fa-icon>
+        Crear un nuevo usuario
+      </a>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped">
+        <ng-container *ngIf="users$ | async as users; else loadingUsers">
+          <ng-container *ngIf="!!users.length; else noUsersFound">
+            <ng-container *ngTemplateOutlet="header; context: { $implicit: true }"></ng-container>
+            <tbody>
+              <tr *ngFor="let user of users; let index = index">
+                <th scope="row" class="text-center">{{ index + 1 }}</th>
+                <td class="text-truncate miw-18">{{ user.username }}</td>
+                <td class="text-truncate miw-25">{{ user.email }}</td>
+                <td class="text-truncate">{{ user.firstName }}</td>
+                <td class="text-truncate">{{ user.lastName }}</td>
+              </tr>
+            </tbody>
+          </ng-container>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+
+<ng-template #noUsersFound>
+  <ng-container [ngTemplateOutlet]="header"></ng-container>
+  <tbody>
+    <td colspan="5" class="text-black-50 text-center table-active">No hay usuarios registrados</td>
+  </tbody>
+</ng-template>
+
+<ng-template #loadingUsers>
+  <ng-container [ngTemplateOutlet]="header"></ng-container>
+  <tbody>
+    <th scope="row" colspan="5" class="text-black-50 text-center table-active">Cargando...</th>
+  </tbody>
+</ng-template>
+
+<ng-template #header let-hasUsers>
+  <caption *ngIf="!!hasUsers">Usuarios disponibles</caption>
+  <thead class="thead-dark">
+    <tr class="text-center">
+      <th scope="col">N°</th>
+      <th scope="col">Nombre de usuario</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Nombres</th>
+      <th scope="col">Apellidos</th>
+    </tr>
+  </thead>
+</ng-template>

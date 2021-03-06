@@ -1,5 +1,61 @@
+a fa-icon,
 button fa-icon {
   vertical-align: middle;
+}
+
+.table-container {
+
+  h4 {
+    line-height: 1;
+  }
+
+  .table {
+
+    tbody th,
+    tbody td {
+      vertical-align: middle;
+
+      &:not(.table-actions) {
+        max-width: 180px;
+      }
+
+      &.miw {
+
+        &-18 {
+          min-width: 180px;
+        }
+
+        &-25 {
+          min-width: 250px;
+        }
+      }
+    }
+  }
+
+  .table-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      margin: 0 .25rem;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.card .card-actions {
+
+  button {
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
 }
 
 .btn.dropdown-toggle {
@@ -8,4 +64,8 @@ button fa-icon {
   &:focus {
     outline: none !important;
   }
+}
+
+.backdrop-white {
+  background-color: #FFFFFF !important;
 }

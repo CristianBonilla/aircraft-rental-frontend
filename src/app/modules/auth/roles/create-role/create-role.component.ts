@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { patternValidator, requiredMultiValidator } from '@helpers/validators/custom.validator';
+import { requiredMultiValidator } from '@helpers/validators/custom.validator';
+import { onlyLetters } from '@helpers/validators/formats.validator';
 import { ALL_PERMISSIONS } from '@modules/auth/models/permission';
 import { RoleRequest, RoleState } from '@modules/auth/models/role';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -53,13 +54,13 @@ export class CreateRoleComponent {
     this.loading$ = this.loadingSubject.asObservable();
     this.name.setValidators([
       Validators.required,
-      patternValidator(/^[A-Za-zñÑáéíóúÁÉÍÓÚ ]+$/, { onlyLetters: true }),
+      onlyLetters,
       Validators.minLength(3),
       Validators.maxLength(30)
     ]);
     this.displayName.setValidators([
       Validators.required,
-      patternValidator(/^[A-Za-zñÑáéíóúÁÉÍÓÚ ]+$/, { onlyLetters: true }),
+      onlyLetters,
       Validators.minLength(3),
       Validators.maxLength(50)
     ]);

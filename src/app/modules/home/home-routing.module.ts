@@ -11,10 +11,10 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivateChild: [ NgxPermissionsGuard ],
     children: [
       {
         path: 'roles',
+        canActivate: [ NgxPermissionsGuard ],
         data: {
           permissions: {
             only: ALLOW.ROLES,
@@ -26,6 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
+        canActivate: [ NgxPermissionsGuard ],
         data: {
           permissions: {
             only: ALLOW.USERS,
@@ -37,6 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'rentals',
+        canActivate: [ NgxPermissionsGuard ],
         data: {
           permissions: {
             only: ALLOW.RENTALS,
@@ -48,6 +50,7 @@ const routes: Routes = [
       },
       {
         path: 'aircrafts',
+        canActivate: [ NgxPermissionsGuard ],
         data: {
           permissions: {
             only: ALLOW.AIRCRAFTS,
@@ -59,6 +62,7 @@ const routes: Routes = [
       },
       {
         path: 'passengers',
+        canActivate: [ NgxPermissionsGuard ],
         data: {
           permissions: {
             only: ALLOW.PASSENGERS,

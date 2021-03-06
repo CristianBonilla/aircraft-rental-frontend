@@ -38,7 +38,7 @@ export class ToggleSidebarDirective implements AfterViewInit {
     });
   }
 
-  showSidebar() {
+  private showSidebar() {
     const $layer = this.layerElement();
     setTimeout(() => {
       $layer.classList.add('visible');
@@ -51,7 +51,7 @@ export class ToggleSidebarDirective implements AfterViewInit {
     this.visibleSidebar = true;
   }
 
-  hideSidebar() {
+  private hideSidebar() {
     this.$body.classList.remove('nav-open');
     const $layer = this.layerElement();
     $layer.classList.remove('visible');
@@ -62,7 +62,7 @@ export class ToggleSidebarDirective implements AfterViewInit {
     this.visibleSidebar = false;
   }
 
-  layerElement(): HTMLDivElement {
+  private layerElement(): HTMLDivElement {
     let $layer = this.$body.querySelector('.close-layer');
     if ($layer) {
       return $layer as HTMLDivElement;

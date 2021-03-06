@@ -6,6 +6,7 @@ export {
   faChevronRight,
   faUserShield,
   faUsers,
+  faUserPlus,
   faBriefcase,
   faFighterJet,
   faSpinner,

@@ -4,7 +4,8 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
 import { CreateRoleComponent } from '@modules/auth/roles/create-role/create-role.component';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
+import { DEFAULT_MODAL_OPTIONS } from 'src/app/models/modal';
 
 @Component({
   selector: 'arf-roles',
@@ -12,9 +13,9 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
-  roles$ = of<RoleResponse[]>([]);
   private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
+  roles$ = of<RoleResponse[]>([]);
 
   constructor(private modal: NgbModal, private identity: IdentityService) {
     this.loading$ = this.loadingSubject.asObservable();
@@ -25,14 +26,8 @@ export class RolesComponent implements OnInit {
   }
 
   openCreateRole() {
-    const modal = this.modal.open(CreateRoleComponent, {
-      animation: true,
-      backdrop: 'static',
-      centered: true,
-      keyboard: false
-    });
+    const modal = this.modal.open(CreateRoleComponent, DEFAULT_MODAL_OPTIONS);
     this.createRoleClosed(modal);
-    modal.componentInstance
   }
 
   createRoleClosed(modal: NgbModalRef) {
@@ -45,7 +40,7 @@ export class RolesComponent implements OnInit {
 
   private refreshRoles() {
     this.loadingSubject.next(true);
-    this.roles$ = this.identity.fetchRoles()
-      .pipe(tap(_ => this.loadingSubject.next(false)));
+    this.roles$ = this.identity.fetchRoles().pipe(
+      take(1), tap(_ => this.loadingSubject.next(false)));
   }
 }

@@ -13,13 +13,12 @@ import { FailedResponse, UserLoginRequest } from '@modules/auth/models/authentic
 })
 export class LoginComponent {
   @Output() loading: EventEmitter<boolean> = new EventEmitter(false);
-
+  private readonly loadingSubject = new BehaviorSubject(false);
+  readonly loading$: Observable<boolean>;
   readonly loginForm = this.formBuilder.group({
     usernameOrEmail: [ '' ],
     password: [ '' ]
   });
-  private readonly loadingSubject = new BehaviorSubject(false);
-  readonly loading$: Observable<boolean>;
 
   get usernameOrEmail() {
     return this.loginForm.get('usernameOrEmail');
@@ -33,9 +32,9 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private userAccountRedirect: UserAccountRedirectService
   ) {
+    this.loading$ = this.loadingSubject.asObservable();
     this.usernameOrEmail.setValidators([ Validators.required ]);
     this.password.setValidators([ Validators.required ]);
-    this.loading$ = this.loadingSubject.asObservable();
   }
 
   login() {

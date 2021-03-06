@@ -30,12 +30,9 @@ import {
 export class DropdownSelectComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild('select')
   readonly selectRef: ElementRef<HTMLSelectElement>;
-
+  private _style = DropdownSelectStyle.Light;
   @Input() items: DropdownSelectItem[] = [];
   @Input() options: DropdownSelectOptions = { };
-
-  private _style = DropdownSelectStyle.Light;
-
   @Input()
   get style() {
     return this._style;
@@ -47,7 +44,6 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     }
     this._style = style;
   }
-
   @Input() disabled = false;
   @Input() multiple = false;
   defaultOptions: DropdownSelectOptions = {

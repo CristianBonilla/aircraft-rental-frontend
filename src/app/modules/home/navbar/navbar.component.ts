@@ -13,7 +13,6 @@ import { take } from 'rxjs/operators';
 export class NavbarComponent implements AfterViewInit {
   @ViewChild('toggle')
   readonly toggleRef: ElementRef<HTMLDivElement>;
-
   private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
   readonly startRedirect$: Observable<string>;

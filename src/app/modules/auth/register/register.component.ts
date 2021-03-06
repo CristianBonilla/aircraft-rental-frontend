@@ -16,7 +16,8 @@ import { UserAccountRedirectService } from '@services/user-account-redirect/user
 export class RegisterComponent {
   @Input() roleCustom = false;
   @Output() loading: EventEmitter<boolean> = new EventEmitter(false);
-
+  private readonly loadingSubject = new BehaviorSubject(false);
+  readonly loading$: Observable<boolean>;
   private readonly controlOptions: AbstractControlOptions = {
     validators: [ passwordMatchValidator ]
   };
@@ -29,8 +30,6 @@ export class RegisterComponent {
     lastName: [ '' ],
     role: [ '' ]
   }, this.controlOptions);
-  private readonly loadingSubject = new BehaviorSubject(false);
-  readonly loading$: Observable<boolean>;
   readonly roles = of([
     { name: 'AdminUser', displayName: 'Administrador' },
     { name: 'CommonUser', displayName: 'Usuario' }
@@ -68,6 +67,7 @@ export class RegisterComponent {
     private formBuilder: FormBuilder,
     private userAccountRedirect: UserAccountRedirectService
   ) {
+    this.loading$ = this.loadingSubject.asObservable();
     this.username.setValidators([
       Validators.required,
       Validators.minLength(5),
@@ -102,7 +102,6 @@ export class RegisterComponent {
     } else {
       this.role.setValue(null);
     }
-    this.loading$ = this.loadingSubject.asObservable();
   }
 
   register() {

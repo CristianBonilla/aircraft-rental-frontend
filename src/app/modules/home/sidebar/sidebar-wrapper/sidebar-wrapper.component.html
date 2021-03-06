@@ -14,7 +14,7 @@
         <p>Roles<span class="badge badge-success">¡Nuevo!</span></p>
       </a>
     </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowUsers">
+    <li class="nav-item" routerLinkActive="active" *ngxPermissionsOnly="allowUsers">
       <a class="nav-link" routerLink="users">
         <fa-icon [icon]="[ 'fas', 'users' ]" size="2x"></fa-icon>
         <p>Usuarios</p>

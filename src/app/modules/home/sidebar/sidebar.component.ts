@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 export class SidebarComponent implements AfterViewInit {
   @ViewChild('sidebar')
   readonly sidebarRef: ElementRef<HTMLDivElement>;
-
   private readonly $body: HTMLElement;
   readonly startRedirect$: Observable<string>;
 

@@ -7,7 +7,7 @@ import { WINDOW } from '@core/providers/window.provider';
   styles: []
 })
 export class HomeComponent implements OnInit {
-  $body: HTMLElement;
+  private readonly $body: HTMLElement;
 
   constructor(@Inject(WINDOW) { document }: Window) {
     this.$body = document.body;
