@@ -102,7 +102,6 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
       style: this.style
     };
     setTimeout(() => {
-      console.log(this.items);
       this.$select = $($select);
       this.$select.selectpicker(dropdownSelectOptions);
     });
@@ -110,9 +109,9 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
 
   // check when there are items to refresh
   ngDoCheck() {
-    if (!!this.items.length && this.items !== this.oldItems) {
+    if (this.hasDiff(this.items, this.oldItems)) {
       this.refresh();
-      this.oldItems = this.items;
+      this.oldItems = [ ...this.items ];
     }
   }
 
@@ -158,9 +157,9 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     }
   }
 
-  private hasDiff(valuesA: DropdownSelectItemValues, valuesB: DropdownSelectItemValues) {
-    const diff = valuesA.filter(value => !valuesB.includes(value))
-      .concat(valuesB.filter(value => !valuesA.includes(value)));
+  private hasDiff<T>(sourceA: T[], sourceB: T[]) {
+    const diff = sourceA.filter(value => !sourceB.includes(value))
+      .concat(sourceB.filter(value => !sourceA.includes(value)));
 
     return !!diff.length;
   }
