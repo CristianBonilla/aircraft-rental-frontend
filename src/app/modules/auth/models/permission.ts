@@ -1,4 +1,4 @@
-import { DefaultRoles } from "@modules/auth/models/role";
+import { DefaultRoles } from '@modules/auth/models/role';
 
 const { AdminUser } = DefaultRoles;
 

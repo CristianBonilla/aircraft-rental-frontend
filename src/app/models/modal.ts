@@ -1,4 +1,4 @@
-import { NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 export const DEFAULT_MODAL_OPTIONS: NgbModalOptions = {
   animation: true,

@@ -23,6 +23,9 @@
       "@core/*": [
         "src/app/core/*"
       ],
+      "@facade/*": [
+        "src/app/facade/*"
+      ],
       "@modules/*": [
         "src/app/modules/*"
       ],

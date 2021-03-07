@@ -1,5 +1,5 @@
-import { LOCALE_ID, ValueProvider } from "@angular/core";
-import { registerLocaleData } from "@angular/common";
+import { LOCALE_ID, ValueProvider } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import localeEsCO from '@angular/common/locales/es-CO';
 
 registerLocaleData(localeEsCO);

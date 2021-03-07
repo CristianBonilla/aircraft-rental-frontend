@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RefreshRoles, REFRESH_ROLES } from '@core/providers/refresh.provider';
 import { requiredMultiValidator } from '@helpers/validators/custom.validator';
 import { onlyLetters } from '@helpers/validators/formats.validator';
 import { ALL_PERMISSIONS } from '@modules/auth/models/permission';
 import { RoleRequest, RoleState } from '@modules/auth/models/role';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
-import { RefreshService } from '@services/refresh/refresh.service';
 import { CustomizeDropdownSelect, DropdownSelectStyle } from '@shared/components/dropdown-select';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -57,7 +57,7 @@ export class CreateRoleComponent implements AfterViewInit {
     private modal: NgbModal,
     private formBuilder: FormBuilder,
     private identity: IdentityService,
-    private refresh: RefreshService,
+    @Inject(REFRESH_ROLES) private refresh: RefreshRoles,
     private router: Router
   ) {
     this.loading$ = this.loadingSubject.asObservable();
@@ -105,7 +105,7 @@ export class CreateRoleComponent implements AfterViewInit {
 
   private createRoleCompleted() {
     this.roleModal.closed.pipe(take(1))
-      .subscribe(_ => this.refresh.dispatchRoles());
+      .subscribe(_ => this.refresh.dispatch());
     this.roleModal.hidden.pipe(take(1))
       .subscribe(_ => this.router.navigate([ APP_ROUTES.HOME.ROLES ]));
   }

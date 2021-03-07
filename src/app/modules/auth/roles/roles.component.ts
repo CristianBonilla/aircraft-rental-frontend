@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { RefreshRoles, REFRESH_ROLES } from '@core/providers/refresh.provider';
 import { RoleResponse } from '@modules/auth/models/role';
-import { RefreshService } from '@services/refresh/refresh.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,13 +12,12 @@ export class RolesComponent implements OnInit {
   readonly loading$: Observable<boolean>;
   readonly roles$: Observable<RoleResponse[]>;
 
-  constructor(private refresh: RefreshService) {
-    const { loading$, data$ } = this.refresh.roles;
-    this.loading$ = loading$;
-    this.roles$ = data$;
+  constructor(@Inject(REFRESH_ROLES) private refresh: RefreshRoles) {
+    this.loading$ = this.refresh.loading$;
+    this.roles$ = this.refresh.data$;
   }
 
   ngOnInit() {
-    this.refresh.dispatchRoles();
+    this.refresh.dispatch();
   }
 }

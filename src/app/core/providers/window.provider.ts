@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { ClassProvider, FactoryProvider, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { ClassProvider, FactoryProvider, InjectionToken, PLATFORM_ID, Provider } from '@angular/core';
 
 // Create a new injection token for injecting the window into a component.
 export const WINDOW = new InjectionToken<Window>('windowToken');
@@ -48,7 +48,7 @@ const windowProvider: FactoryProvider = {
 };
 
 // Create an array of providers.
-export const WINDOW_PROVIDERS = [
+export const WINDOW_PROVIDERS: Provider[] = [
   browserWindowProvider,
   windowProvider
 ];

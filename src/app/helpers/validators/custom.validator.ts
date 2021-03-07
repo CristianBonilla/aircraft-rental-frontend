@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function patternValidator(regex: RegExp, error: ValidationErrors) {
   const pattern: ValidatorFn = (control: AbstractControl): ValidationErrors => {

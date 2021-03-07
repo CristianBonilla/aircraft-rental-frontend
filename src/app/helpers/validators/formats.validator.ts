@@ -1,4 +1,4 @@
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl } from '@angular/forms';
 
 export function numberValidator({ value }: AbstractControl) {
   if (value && isNaN(+value)) {
