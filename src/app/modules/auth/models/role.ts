@@ -1,8 +1,8 @@
 import { Permission } from '@modules/auth/models/permission';
 
 export enum DefaultRoles {
-  AdminUser = 'AdminUser',
-  CommonUser = 'CommonUser'
+  ADMIN_USER = 'AdminUser',
+  COMMON_USER = 'CommonUser'
 }
 
 export interface RoleRequest {
@@ -19,5 +19,5 @@ export interface RoleResponse {
 }
 
 export enum RoleState {
-  Created
+  CREATED
 }

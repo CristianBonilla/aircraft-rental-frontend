@@ -38,12 +38,6 @@
           [formControl]="lastName"
           [arfFormErrorHandler]="lastName" trim="blur">
       </div>
-      <div class="form-group" *ngIf="!!roleCustom">
-        <label for="role">Role</label>
-        <select id="role" class="form-control" [formControl]="role" [arfFormErrorHandler]="role">
-          <option *ngFor="let role of roles | async" [value]="role.name">{{ role.displayName }}</option>
-        </select>
-      </div>
       <button type="submit" class="btn btn-primary btn-lg float-left" [disabled]="!registerForm.valid || (loading$ | async)">
         <fa-icon [icon]="[ 'fas', 'spinner' ]" [spin]="true" *ngIf="loading$ | async"></fa-icon>
         Registrarse

@@ -1,6 +1,6 @@
 import { DefaultRoles } from '@modules/auth/models/role';
 
-const { AdminUser } = DefaultRoles;
+const { ADMIN_USER: AdminUser } = DefaultRoles;
 
 export enum PermissionType {
   ROLES = 'CanRoles',

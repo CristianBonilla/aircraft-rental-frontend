@@ -3,7 +3,7 @@ import { CoreModule } from '@core/core.module';
 import { UserResponse } from '@modules/auth/models/authentication';
 import { RoleResponse } from '@modules/auth/models/role';
 import { IdentityService } from '@services/identity/identity.service';
-import { Refresh } from '@facade/refresh-facade';
+import { Refresh } from '@facade/.';
 import { RefreshFacade } from '@facade/refresh-facade/refresh-facade';
 
 type InjectionTokenOptions = ConstructorParameters<typeof InjectionToken>[1];

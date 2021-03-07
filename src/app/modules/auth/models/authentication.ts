@@ -38,3 +38,7 @@ export interface UserAccount {
   user: UserResponse;
   role: RoleResponse;
 }
+
+export enum UserState {
+  CREATED
+}

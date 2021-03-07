@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { UserResponse } from '@modules/auth/models/authentication';
-import { IdentityService } from '@services/identity/identity.service';
-import { delay, take, tap } from 'rxjs/operators';
+import { RefreshUsers, REFRESH_USERS } from '@core/providers/refresh.provider';
 
 @Component({
   selector: 'arf-users',
@@ -10,21 +9,15 @@ import { delay, take, tap } from 'rxjs/operators';
   styles: []
 })
 export class UsersComponent implements OnInit {
-  private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
-  users$ = of<UserResponse[]>([]);
+  readonly users$: Observable<UserResponse[]>;
 
-  constructor(private identity: IdentityService) {
-    this.loading$ = this.loadingSubject.asObservable();
+  constructor(@Inject(REFRESH_USERS) private refresh: RefreshUsers) {
+    this.loading$ = this.refresh.loading$;
+    this.users$ = this.refresh.data$;
   }
 
   ngOnInit() {
-    this.refreshUsers();
-  }
-
-  private refreshUsers() {
-    this.loadingSubject.next(true);
-    this.users$ = this.identity.fetchUsers().pipe(delay(2000),
-      take(1), tap(_ => this.loadingSubject.next(false)));
+    this.refresh.dispatch();
   }
 }

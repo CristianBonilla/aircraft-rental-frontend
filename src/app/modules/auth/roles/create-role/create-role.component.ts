@@ -10,7 +10,7 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { IdentityService } from '@services/identity/identity.service';
 import { CustomizeDropdownSelect, DropdownSelectStyle } from '@shared/components/dropdown-select';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { DEFAULT_MODAL_OPTIONS } from 'src/app/models/modal';
 import { APP_ROUTES } from 'src/app/models/routes';
 
@@ -80,7 +80,7 @@ export class CreateRoleComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.roleModal = this.modal.open(this.roleTemplate, DEFAULT_MODAL_OPTIONS);
-    this.createRoleCompleted();
+    this.actionOnCompletion();
   }
 
   createRole(active: NgbActiveModal) {
@@ -92,7 +92,7 @@ export class CreateRoleComponent implements AfterViewInit {
     };
     this.identity.createRole(roleRequest)
       .pipe(take(1))
-      .subscribe(_ => active.close(RoleState.Created));
+      .subscribe(_ => active.close(RoleState.CREATED));
   }
 
   setLoading(loading: boolean) {
@@ -103,17 +103,19 @@ export class CreateRoleComponent implements AfterViewInit {
     active.dismiss(null);
   }
 
-  private createRoleCompleted() {
-    this.roleModal.closed.pipe(take(1))
-      .subscribe(_ => this.refresh.dispatch());
+  private actionOnCompletion() {
+    this.roleModal.closed.pipe(
+      take(1),
+      filter<RoleState>(state => state === RoleState.CREATED)
+    ).subscribe(_ => this.refresh.dispatch());
     this.roleModal.hidden.pipe(take(1))
       .subscribe(_ => this.router.navigate([ APP_ROUTES.HOME.ROLES ]));
   }
 
   private buildDropdownSelectItems() {
-    const permissionsList = this.dropdownPermissionsSelect.data;
+    const dropdownPermissionItems = this.dropdownPermissionsSelect.data;
     for (const { id, displayName } of ALL_PERMISSIONS) {
-      permissionsList.push({
+      dropdownPermissionItems.push({
         value: id,
         text: displayName
       });

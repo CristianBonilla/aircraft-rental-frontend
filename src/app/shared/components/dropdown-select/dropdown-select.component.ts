@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Attribute,
   Component,
+  DoCheck,
   ElementRef,
   forwardRef,
   Input,
@@ -27,21 +28,26 @@ import {
     }
   ]
 })
-export class DropdownSelectComponent implements ControlValueAccessor, AfterViewInit {
+export class DropdownSelectComponent implements ControlValueAccessor, AfterViewInit, DoCheck {
   @ViewChild('select')
   readonly selectRef: ElementRef<HTMLSelectElement>;
   private _style = DropdownSelectStyle.Light;
-  @Input() items: DropdownSelectItem[] = [];
+  private _items: DropdownSelectItem[] = [];
+  private oldItems: DropdownSelectItem[] = [];
+  @Input()
+  get items() {
+    return this._items;
+  }
+  set items(items: DropdownSelectItem[]) {
+    this._items = items;
+  }
   @Input() options: DropdownSelectOptions = { };
   @Input()
   get style() {
     return this._style;
   }
   set style(style: DropdownSelectStyle) {
-    if (!!this.$select) {
-      this.$select.selectpicker('setStyle', this._style, 'remove');
-      this.$select.selectpicker('setStyle', style, 'add');
-    }
+    this.changeStyle(style);
     this._style = style;
   }
   @Input() disabled = false;
@@ -96,9 +102,18 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
       style: this.style
     };
     setTimeout(() => {
+      console.log(this.items);
       this.$select = $($select);
       this.$select.selectpicker(dropdownSelectOptions);
     });
+  }
+
+  // check when there are items to refresh
+  ngDoCheck() {
+    if (!!this.items.length && this.items !== this.oldItems) {
+      this.refresh();
+      this.oldItems = this.items;
+    }
   }
 
   get hasSelected() {
@@ -127,6 +142,20 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
 
   compareSelectedFn(itemA: DropdownSelectItem, itemB: DropdownSelectItem) {
     return itemA && itemB ? itemA.value === itemB.value : itemA === itemB;
+  }
+
+  private changeStyle(style: DropdownSelectStyle) {
+    if (!this.$select) {
+      return;
+    }
+    this.$select.selectpicker('setStyle', this.style, 'remove');
+    this.$select.selectpicker('setStyle', style, 'add');
+  }
+
+  private refresh() {
+    if (!!this.$select && !!this.items.length) {
+      setTimeout(() => this.$select.selectpicker('refresh'));
+    }
   }
 
   private hasDiff(valuesA: DropdownSelectItemValues, valuesB: DropdownSelectItemValues) {

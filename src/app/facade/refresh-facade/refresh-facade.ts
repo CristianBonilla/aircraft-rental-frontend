@@ -1,9 +1,9 @@
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Refresh } from '@facade/refresh-facade';
+import { Refresh } from '@facade/.';
 
 export class RefreshFacade<T> implements Refresh<T> {
-  private readonly loadingSubject = new Subject<boolean>();
+  private readonly loadingSubject = new BehaviorSubject(false);
   private readonly dataSubject = new Subject<T>();
   readonly loading$: Observable<boolean>;
   readonly data$: Observable<T>;

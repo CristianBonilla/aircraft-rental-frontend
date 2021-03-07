@@ -14,7 +14,6 @@ import { UserAccountRedirectService } from '@services/user-account-redirect/user
   styles: []
 })
 export class RegisterComponent {
-  @Input() roleCustom = false;
   @Output() loading: EventEmitter<boolean> = new EventEmitter(false);
   private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
@@ -22,18 +21,13 @@ export class RegisterComponent {
     validators: [ passwordMatchValidator ]
   };
   readonly registerForm = this.formBuilder.group({
-    username: [ '' ],
-    password: [ '' ],
-    confirmPassword: [ '' ],
-    email: [ '' ],
-    firstName: [ '' ],
-    lastName: [ '' ],
-    role: [ '' ]
+    username: [ null ],
+    password: [ null ],
+    confirmPassword: [ null ],
+    email: [ null ],
+    firstName: [ null ],
+    lastName: [ null ]
   }, this.controlOptions);
-  readonly roles = of([
-    { name: 'AdminUser', displayName: 'Administrador' },
-    { name: 'CommonUser', displayName: 'Usuario' }
-  ]);
 
   get username() {
     return this.registerForm.get('username');
@@ -57,10 +51,6 @@ export class RegisterComponent {
 
   get lastName() {
     return this.registerForm.get('lastName');
-  }
-
-  get role() {
-    return this.registerForm.get('role');
   }
 
   constructor(
@@ -97,11 +87,6 @@ export class RegisterComponent {
       Validators.minLength(3),
       Validators.maxLength(50)
     ]);
-    if (!!this.roleCustom) {
-      this.role.setValidators([ Validators.required ]);
-    } else {
-      this.role.setValue(null);
-    }
   }
 
   register() {
@@ -112,7 +97,7 @@ export class RegisterComponent {
       email: this.email.value,
       firstName: this.firstName.value,
       lastName: this.lastName.value,
-      role: this.role.value
+      role: null
     };
     this.userAccountRedirect.register(userRegisterRequest)
       .pipe(take(1))
