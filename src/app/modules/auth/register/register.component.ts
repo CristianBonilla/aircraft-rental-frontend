@@ -7,6 +7,7 @@ import { take } from 'rxjs/operators';
 import { FailedResponse, UserRegisterRequest } from '@modules/auth/models/authentication';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserAccountRedirectService } from '@services/user-account-redirect/user-account-redirect.service';
+import { emailValidator } from '@helpers/validators/formats.validator';
 
 @Component({
   selector: 'arf-register',
@@ -63,7 +64,10 @@ export class RegisterComponent {
       Validators.minLength(5),
       Validators.maxLength(20)
     ]);
-    this.email.setValidators([ Validators.required ]);
+    this.email.setValidators([
+      Validators.required,
+      emailValidator
+    ]);
     this.password.setValidators([
       Validators.required,
       patternValidator(/[A-Z]/, { hasCapitalCase: true }),

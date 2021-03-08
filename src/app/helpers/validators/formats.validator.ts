@@ -7,6 +7,12 @@ export function numberValidator({ value }: AbstractControl) {
   return null;
 }
 
+export function emailValidator({ value }: AbstractControl) {
+  const emailUnicode = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+  return !emailUnicode.test(value) ? { email: true } : null;
+}
+
 export function onlyNumbers({ value }: AbstractControl) {
   return !/^\d*$/.test(value) ? { onlyNumbers: true } : null;
 }

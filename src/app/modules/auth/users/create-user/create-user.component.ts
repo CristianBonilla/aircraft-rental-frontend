@@ -3,6 +3,7 @@ import { AbstractControlOptions, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { RefreshUsers, REFRESH_USERS } from '@core/providers/refresh.provider';
 import { patternValidator } from '@helpers/validators/custom.validator';
+import { emailValidator } from '@helpers/validators/formats.validator';
 import { passwordMatchValidator } from '@helpers/validators/password.validator';
 import { UserRegisterRequest, UserState } from '@modules/auth/models/authentication';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -88,7 +89,10 @@ export class CreateUserComponent implements AfterViewInit {
       Validators.minLength(5),
       Validators.maxLength(20)
     ]);
-    this.email.setValidators([ Validators.required ]);
+    this.email.setValidators([
+      Validators.required,
+      emailValidator
+    ]);
     this.password.setValidators([
       Validators.required,
       patternValidator(/[A-Z]/, { hasCapitalCase: true }),
