@@ -13,6 +13,8 @@ import { filter, take } from 'rxjs/operators';
 import { DEFAULT_MODAL_OPTIONS } from 'src/app/models/modal';
 import { APP_ROUTES } from 'src/app/models/routes';
 
+const { HOME: ROUTES } = APP_ROUTES;
+
 @Component({
   selector: 'arf-create-user',
   templateUrl: './create-user.component.html',
@@ -154,6 +156,6 @@ export class CreateUserComponent implements AfterViewInit {
       filter<UserState>(state => state === UserState.CREATED)
     ).subscribe(_ => this.refresh.dispatch());
     this.userModal.hidden.pipe(take(1))
-      .subscribe(_ => this.router.navigate([ APP_ROUTES.HOME.USERS ]));
+      .subscribe(_ => this.router.navigate([ ROUTES.USERS.MAIN ]));
   }
 }

@@ -3,6 +3,7 @@ import { ALLOW } from '@modules/auth/models/permission';
 import { IdentityService } from '@services/identity/identity.service';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { SIDEBAR_ROUTES } from 'src/app/models/routes';
 
 @Component({
   selector: 'arf-sidebar-wrapper',
@@ -10,6 +11,7 @@ import { map, take } from 'rxjs/operators';
   styles: []
 })
 export class SidebarWrapperComponent {
+  readonly ROUTES = SIDEBAR_ROUTES;
   readonly userName: Observable<string>;
   readonly allowRoles = ALLOW.ROLES;
   readonly allowUsers = ALLOW.USERS;

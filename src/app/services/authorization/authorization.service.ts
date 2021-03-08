@@ -5,7 +5,7 @@ import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { APP_ROUTES } from 'src/app/models/routes';
 
-const { HOME } = APP_ROUTES;
+const { HOME: ROUTES } = APP_ROUTES;
 
 @Injectable({
   providedIn: 'root'
@@ -36,21 +36,21 @@ export class AuthorizationService {
       .map(({ name }) => {
         switch (name) {
           case PermissionType.ROLES:
-            return HOME.ROLES;
+            return ROUTES.ROLES.MAIN;
           case PermissionType.USERS:
-            return HOME.USERS;
+            return ROUTES.USERS.MAIN;
           case PermissionType.AIRCRAFTS:
-            return HOME.AIRCRAFTS;
+            return ROUTES.AIRCRAFTS;
           case PermissionType.PASSENGERS:
-            return HOME.PASSENGERS;
+            return ROUTES.PASSENGERS;
           default:
-            return HOME.RENTALS;
+            return ROUTES.RENTALS;
         }
       })
       .splice(0, 1)
       .reduce((_, route) => route);
     if (!redirectTo) {
-      redirectTo = HOME.MAIN;
+      redirectTo = ROUTES.MAIN;
     }
     this.startRedirectSubject.next(redirectTo);
   }

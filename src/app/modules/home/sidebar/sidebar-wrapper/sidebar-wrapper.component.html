@@ -9,31 +9,31 @@
   </div>
   <ul class="nav">
     <li class="nav-item" routerLinkActive="active" *ngxPermissionsOnly="allowRoles">
-      <a class="nav-link" routerLink="roles">
+      <a class="nav-link" [routerLink]="ROUTES.ROLES">
         <fa-icon [icon]="[ 'fas', 'user-shield' ]" size="2x"></fa-icon>
         <p>Roles<span class="badge badge-success">¡Nuevo!</span></p>
       </a>
     </li>
     <li class="nav-item" routerLinkActive="active" *ngxPermissionsOnly="allowUsers">
-      <a class="nav-link" routerLink="users">
+      <a class="nav-link" [routerLink]="ROUTES.USERS">
         <fa-icon [icon]="[ 'fas', 'users' ]" size="2x"></fa-icon>
         <p>Usuarios</p>
       </a>
     </li>
     <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowRentals">
-      <a class="nav-link" routerLink="rentals">
+      <a class="nav-link" [routerLink]="ROUTES.RENTALS">
         <fa-icon [icon]="[ 'fas', 'fighter-jet' ]" size="2x"></fa-icon>
         <p>Alquiler de Aeronaves</p>
       </a>
     </li>
     <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowAircrafts">
-      <a class="nav-link" routerLink="aircrafts">
+      <a class="nav-link" [routerLink]="ROUTES.AIRCRAFTS">
         <fa-icon [icon]="[ 'far', 'paper-plane' ]" size="2x"></fa-icon>
         <p>Aeronaves</p>
       </a>
     </li>
     <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowPassengers">
-      <a class="nav-link" routerLink="passengers">
+      <a class="nav-link" [routerLink]="ROUTES.PASSENGERS">
         <fa-icon [icon]="[ 'fas', 'briefcase' ]" size="2x"></fa-icon>
         <p>Pasajeros</p>
       </a>

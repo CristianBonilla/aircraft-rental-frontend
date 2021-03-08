@@ -14,6 +14,8 @@ import { filter, take } from 'rxjs/operators';
 import { DEFAULT_MODAL_OPTIONS } from 'src/app/models/modal';
 import { APP_ROUTES } from 'src/app/models/routes';
 
+const { HOME: ROUTES } = APP_ROUTES;
+
 @Component({
   selector: 'arf-create-role',
   templateUrl: './create-role.component.html',
@@ -109,7 +111,7 @@ export class CreateRoleComponent implements AfterViewInit {
       filter<RoleState>(state => state === RoleState.CREATED)
     ).subscribe(_ => this.refresh.dispatch());
     this.roleModal.hidden.pipe(take(1))
-      .subscribe(_ => this.router.navigate([ APP_ROUTES.HOME.ROLES ]));
+      .subscribe(_ => this.router.navigate([ ROUTES.ROLES.MAIN ]));
   }
 
   private buildDropdownSelectItems() {
