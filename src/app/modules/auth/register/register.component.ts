@@ -22,9 +22,9 @@ export class RegisterComponent {
   };
   readonly registerForm = this.formBuilder.group({
     username: [ null ],
+    email: [ null ],
     password: [ null ],
     confirmPassword: [ null ],
-    email: [ null ],
     firstName: [ null ],
     lastName: [ null ]
   }, this.controlOptions);
@@ -33,16 +33,16 @@ export class RegisterComponent {
     return this.registerForm.get('username');
   }
 
+  get email() {
+    return this.registerForm.get('email');
+  }
+
   get password() {
     return this.registerForm.get('password');
   }
 
   get confirmPassword() {
     return this.registerForm.get('confirmPassword');
-  }
-
-  get email() {
-    return this.registerForm.get('email');
   }
 
   get firstName() {
@@ -63,6 +63,7 @@ export class RegisterComponent {
       Validators.minLength(5),
       Validators.maxLength(20)
     ]);
+    this.email.setValidators([ Validators.required ]);
     this.password.setValidators([
       Validators.required,
       patternValidator(/[A-Z]/, { hasCapitalCase: true }),
@@ -73,10 +74,6 @@ export class RegisterComponent {
       Validators.minLength(10)
     ]);
     this.confirmPassword.setValidators([ Validators.required ]);
-    this.email.setValidators([
-      Validators.required,
-      Validators.email
-    ]);
     this.firstName.setValidators([
       Validators.required,
       Validators.minLength(3),

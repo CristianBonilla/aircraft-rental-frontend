@@ -31,9 +31,9 @@ export class CreateUserComponent implements AfterViewInit {
   };
   readonly userForm = this.formBuilder.group({
     username: [ null ],
+    email: [ null ],
     password: [ null ],
     confirmPassword: [ null ],
-    email: [ null ],
     firstName: [ null ],
     lastName: [ null ],
     role: [ null ]
@@ -51,16 +51,16 @@ export class CreateUserComponent implements AfterViewInit {
     return this.userForm.get('username');
   }
 
+  get email() {
+    return this.userForm.get('email');
+  }
+
   get password() {
     return this.userForm.get('password');
   }
 
   get confirmPassword() {
     return this.userForm.get('confirmPassword');
-  }
-
-  get email() {
-    return this.userForm.get('email');
   }
 
   get firstName() {
@@ -88,6 +88,7 @@ export class CreateUserComponent implements AfterViewInit {
       Validators.minLength(5),
       Validators.maxLength(20)
     ]);
+    this.email.setValidators([ Validators.required ]);
     this.password.setValidators([
       Validators.required,
       patternValidator(/[A-Z]/, { hasCapitalCase: true }),
@@ -96,10 +97,6 @@ export class CreateUserComponent implements AfterViewInit {
       Validators.minLength(10)
     ]);
     this.confirmPassword.setValidators([ Validators.required ]);
-    this.email.setValidators([
-      Validators.required,
-      Validators.email
-    ]);
     this.firstName.setValidators([
       Validators.required,
       Validators.minLength(3),

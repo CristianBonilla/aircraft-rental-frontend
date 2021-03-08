@@ -1,23 +1,20 @@
-.roles-container {
+.table-container {
   width: 100%;
 
-  h4 {
-    line-height: 1;
-  }
-
-  button fa-icon {
-    vertical-align: middle;
+  tbody th,
+  tbody td {
+    max-width: none;
   }
 }
 
 @media (min-width: 576px) {
-  .roles-container {
+  .table-container {
     width: 80%;
   }
 }
 
 @media (min-width: 768px) {
-  .roles-container {
+  .table-container {
     width: 50%;
   }
 }
