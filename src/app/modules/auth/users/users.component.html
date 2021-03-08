@@ -14,12 +14,13 @@
           <ng-container *ngIf="!!users.length; else noUsersFound">
             <ng-container *ngTemplateOutlet="header; context: { $implicit: true }"></ng-container>
             <tbody>
-              <tr *ngFor="let user of users; let index = index">
+              <tr *ngFor="let user of users | usersWithRole | async; let index = index; trackBy: trackByUser">
                 <th scope="row" class="text-center">{{ index + 1 }}</th>
                 <td class="text-truncate miw-18">{{ user.username }}</td>
                 <td class="text-truncate miw-25">{{ user.email }}</td>
                 <td class="text-truncate">{{ user.firstName }}</td>
                 <td class="text-truncate">{{ user.lastName }}</td>
+                <td class="text-truncate">{{ user.role.displayName }}</td>
               </tr>
             </tbody>
           </ng-container>
@@ -53,6 +54,7 @@
       <th scope="col">Correo</th>
       <th scope="col">Nombres</th>
       <th scope="col">Apellidos</th>
+      <th scope="col">Rol</th>
     </tr>
   </thead>
 </ng-template>

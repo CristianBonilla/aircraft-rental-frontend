@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserResponse } from '@modules/auth/models/authentication';
 import { RefreshUsers, REFRESH_USERS } from '@core/providers/refresh.provider';
+import { RoleResponse } from '@modules/auth/models/role';
 
 @Component({
   selector: 'arf-users',
@@ -11,6 +12,7 @@ import { RefreshUsers, REFRESH_USERS } from '@core/providers/refresh.provider';
 export class UsersComponent implements OnInit {
   readonly loading$: Observable<boolean>;
   readonly users$: Observable<UserResponse[]>;
+  readonly roles$: Observable<RoleResponse[]>;
 
   constructor(@Inject(REFRESH_USERS) private refresh: RefreshUsers) {
     this.loading$ = this.refresh.loading$;
@@ -19,5 +21,9 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.refresh.dispatch();
+  }
+
+  trackByUser(_: number, userResponse: UserResponse) {
+    return userResponse.id;
   }
 }
