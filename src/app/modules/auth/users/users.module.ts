@@ -7,7 +7,7 @@ import { DropdownSelectModule } from '@shared/components/dropdown-select/dropdow
 import { DirectivesModule } from '@directives/directives.module';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
-import { UsersWithRolePipe } from '@modules/auth/users/pipes/userWithRole/users-with-role.pipe';
+import { UsersWithRolePipe } from '@modules/auth/users/pipes/users-with-role/users-with-role.pipe';
 
 import { UsersComponent } from '@modules/auth/users/users.component';
 import { CreateUserComponent } from '@modules/auth/users/create-user/create-user.component';

@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { UserResponse } from '@modules/auth/models/authentication';
 import { RefreshUsers, REFRESH_USERS } from '@core/providers/refresh.provider';
+import { UserResponse } from '@modules/auth/models/authentication';
 import { RoleResponse } from '@modules/auth/models/role';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'arf-users',
