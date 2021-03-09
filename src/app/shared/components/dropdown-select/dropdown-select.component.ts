@@ -33,6 +33,7 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
   readonly selectRef: ElementRef<HTMLSelectElement>;
   private _style = DropdownSelectStyle.Light;
   private _items: DropdownSelectItem[] = [];
+  private _selected: string | DropdownSelectItemValues;
   private oldItems: DropdownSelectItem[] = [];
   @Input()
   get items() {
@@ -64,25 +65,24 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     width: '100%'
   };
   $select: JQuery<HTMLSelectElement>;
-  selectedItems: string | DropdownSelectItemValues;
   onChange = (_value?: any) => { };
   onTouched = (_value?: any) => { };
 
   get selected() {
-    return this.selectedItems;
+    return this._selected;
   }
 
   set selected(values: string | DropdownSelectItemValues) {
     let changeValues = false;
-    if (typeof values === 'string') {
-      changeValues = !!values && this.selectedItems !== values;
-    } else if (Array.isArray(values)) {
-      changeValues = this.hasDiff(this.selectedItems as DropdownSelectItemValues, values);
+    if (Array.isArray(values)) {
+      changeValues = this.hasDiff(this._selected as DropdownSelectItemValues, values);
+    } else {
+      changeValues = !!values && this._selected !== values;
     }
     if (changeValues) {
-      this.selectedItems = values;
       this.onChange(values);
       this.onTouched(values);
+      this._selected = values;
     }
   }
 
@@ -91,7 +91,7 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     @Attribute('id') public id: string,
     @Attribute('name') public name: string
   ) {
-    this.selectedItems = !!this.multiple ? [] : '';
+    this._selected = !!this.multiple ? [] : null;
   }
 
   ngAfterViewInit() {
@@ -120,7 +120,7 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
   }
 
   writeValue(obj: any) {
-    this.selectedItems = obj;
+    this._selected = obj;
   }
 
   registerOnChange(fn: any) {

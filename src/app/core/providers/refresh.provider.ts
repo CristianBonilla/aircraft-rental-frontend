@@ -43,12 +43,12 @@ export function refreshUsersFactory(
   }
 }
 
-export const REFRESH_ROLES = new InjectionToken<Refresh<RoleResponse[]>>('refresh.roles', {
+export const REFRESH_ROLES = new InjectionToken<RefreshRoles>('refresh.roles', {
   ...DEFAULT_TOKEN_OPTIONS,
   factory: () => refreshRolesFactory(inject(IdentityService, InjectFlags.Default))
 });
 
-export const REFRESH_USERS = new InjectionToken<Refresh<UserResponse[]>>('refresh.users', {
+export const REFRESH_USERS = new InjectionToken<RefreshUsers>('refresh.users', {
   ...DEFAULT_TOKEN_OPTIONS,
   factory: () => refreshUsersFactory(inject(IdentityService, InjectFlags.Default))
 });

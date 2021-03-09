@@ -6,11 +6,12 @@ import { patternValidator } from '@helpers/validators/custom.validator';
 import { emailValidator } from '@helpers/validators/formats.validator';
 import { passwordMatchValidator } from '@helpers/validators/password.validator';
 import { UserRegisterRequest, UserState } from '@modules/auth/models/authentication';
+import { DefaultRoles } from '@modules/auth/models/role';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
 import { CustomizeDropdownSelect, DropdownSelectStyle } from '@shared/components/dropdown-select';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { filter, mergeAll, take, toArray } from 'rxjs/operators';
 import { DEFAULT_MODAL_OPTIONS } from 'src/app/models/modal';
 import { APP_ROUTES } from 'src/app/models/routes';
 
@@ -141,10 +142,15 @@ export class CreateUserComponent implements AfterViewInit {
 
   private buildDropdownSelectItems() {
     const dropdownRoleItems = this.dropdownRoleSelect.data;
-    this.identity.fetchRoles().pipe(take(1)).subscribe(roles => {
-      for (const { id, displayName } of roles) {
+    this.identity.fetchRoles().pipe(
+      take(1),
+      mergeAll(),
+      filter(({ name }) => name !== DefaultRoles.ADMIN_USER),
+      toArray()
+    ).subscribe(roles => {
+      for (const { name, displayName } of roles) {
         dropdownRoleItems.push({
-          value: id,
+          value: name,
           text: displayName
         });
       }

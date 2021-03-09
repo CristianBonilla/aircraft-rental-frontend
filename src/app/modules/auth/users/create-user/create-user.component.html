@@ -1,7 +1,7 @@
 <ng-template #userTemplate let-modal>
   <div class="modal-header">
     <h4 class="modal-title font-weight-bold">Crear un nuevo usuario</h4>
-    <button type="button" class="close" (click)="dismiss(modal)">
+    <button type="button" class="close" (click)="dismiss(modal)" [disabled]="loading$ | async">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
