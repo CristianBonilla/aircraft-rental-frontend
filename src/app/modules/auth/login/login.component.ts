@@ -16,8 +16,8 @@ export class LoginComponent {
   private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
   readonly loginForm = this.formBuilder.group({
-    usernameOrEmail: [ '' ],
-    password: [ '' ]
+    usernameOrEmail: [ null ],
+    password: [ null ]
   });
 
   get usernameOrEmail() {

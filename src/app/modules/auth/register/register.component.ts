@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, Validators } from '@angular/forms';
 import { patternValidator } from '@helpers/validators/custom.validator';
 import { passwordMatchValidator } from '@helpers/validators/password.validator';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { FailedResponse, UserRegisterRequest } from '@modules/auth/models/authentication';
 import { HttpErrorResponse } from '@angular/common/http';

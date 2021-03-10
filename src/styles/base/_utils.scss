@@ -1,8 +1,3 @@
-a fa-icon,
-button fa-icon {
-  vertical-align: middle;
-}
-
 .table-container {
 
   h4 {
@@ -55,14 +50,6 @@ button fa-icon {
     &:focus {
       box-shadow: none;
     }
-  }
-}
-
-.btn.dropdown-toggle {
-
-  &,
-  &:focus {
-    outline: none !important;
   }
 }
 

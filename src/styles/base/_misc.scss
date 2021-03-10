@@ -83,3 +83,25 @@ body {
     }
   }
 }
+
+a,
+button,
+input[type="button"],
+input[type="submit"] {
+
+  fa-icon {
+    vertical-align: middle;
+  }
+}
+
+.btn.dropdown-toggle {
+
+  &,
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.modal .close {
+  outline: none;
+}
