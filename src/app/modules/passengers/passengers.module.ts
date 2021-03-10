@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PassengersRoutingModule } from '@modules/auth/passengers/passengers-routing.module';
-import { PassengersComponent } from '@modules/auth/passengers/passengers.component';
+import { PassengersRoutingModule } from '@modules/passengers/passengers-routing.module';
+import { PassengersComponent } from '@modules/passengers/passengers.component';
 
 @NgModule({
   declarations: [ PassengersComponent ],

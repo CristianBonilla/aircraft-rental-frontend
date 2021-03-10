@@ -69,7 +69,7 @@ const routes: Routes = [
             redirectTo: START_REDIRECT
           }
         },
-        loadChildren: () => import('@modules/auth/passengers/passengers.module')
+        loadChildren: () => import('@modules/passengers/passengers.module')
           .then(module => module.PassengersModule)
       }
     ]
