@@ -7,7 +7,7 @@ import { filter, map, mergeAll, mergeMap, take, toArray } from 'rxjs/operators';
 
 export interface UserWithRole extends UserResponse {
   role: RoleResponse;
-};
+}
 
 @Pipe({
   name: 'usersWithRole'

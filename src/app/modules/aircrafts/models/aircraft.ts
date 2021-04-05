@@ -9,7 +9,7 @@ interface Aircraft {
   description: string;
 }
 
-export interface AircraftRequest extends Aircraft { }
+export type AircraftRequest = Aircraft;
 
 export interface AircraftResponse extends Aircraft {
   id: number;

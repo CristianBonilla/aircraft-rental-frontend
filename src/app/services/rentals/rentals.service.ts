@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PassengerRequest, PassengerResponse } from '@modules/rentals/models/passenger';
+import { PassengerRequest, PassengerResponse } from '@modules/passengers/models/passenger';
 import { RentalRequest, RentalResponse } from '@modules/rentals/models/rental';
 import { map } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';

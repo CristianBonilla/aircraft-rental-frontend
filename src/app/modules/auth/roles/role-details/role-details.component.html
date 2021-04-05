@@ -1,0 +1,48 @@
+<ng-template #roleTemplate let-modal>
+  <ng-container *ngIf="role | roleWithPermissions | async as role">
+    <ng-container [ngTemplateOutlet]="roleModalTemplate" [ngTemplateOutletContext]="{
+      $implicit: modal,
+      role: role
+    }"></ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #roleModalTemplate let-modal let-role="role">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      Descripción del rol<br>
+      <strong class="h4 mb-0 font-weight-bold">{{ role.displayName }}...</strong>
+    </h5>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Nombre único</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="font-weight-bold mb-0">{{ role.name }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Permisos</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center flex-column py-2">
+          <ng-container *ngFor="let permission of role.permissions; let index = index">
+            <ul class="list-group list-group-horizontal mw-100">
+              <li class="list-group-item">{{ index + 1 }}</li>
+              <li class="list-group-item">{{ permission.displayName }}</li>
+            </ul>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary text-light" (click)="close(modal)">
+      <fa-icon [icon]="[ 'fas', 'times' ]" size="lg"></fa-icon>
+      Cerrar
+    </button>
+  </div>
+</ng-template>

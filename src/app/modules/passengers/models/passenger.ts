@@ -5,7 +5,7 @@ interface Passenger {
   specialty: string;
 }
 
-export interface PassengerRequest extends Passenger { }
+export type PassengerRequest = Passenger;
 
 export interface PassengerResponse extends Passenger {
   id: number;

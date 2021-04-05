@@ -19,9 +19,9 @@ export class AuthorizationService {
   }
 
   loadRoleAndPermissions({ role }: UserAccount) {
-    const { name, permissions } = role;
+    const { name: roleName, permissions } = role;
     const permissionNames = permissions.map(({ name }) => name);
-    this.roles.addRoleWithPermissions(name, permissionNames);
+    this.roles.addRoleWithPermissions(roleName, permissionNames);
     this.startRedirectTo(permissions);
   }
 

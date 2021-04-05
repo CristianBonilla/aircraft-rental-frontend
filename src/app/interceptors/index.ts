@@ -6,6 +6,6 @@ export const authTokenProvider: ClassProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthTokenService,
   multi: true
-}
+};
 
 export const INTERCEPTOR_PROVIDERS = [ authTokenProvider ];

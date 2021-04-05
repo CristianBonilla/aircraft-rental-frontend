@@ -6,7 +6,7 @@ interface Rental {
   departureDate: Date;
 }
 
-export interface RentalRequest extends Rental { }
+export type RentalRequest = Rental;
 
 export interface RentalResponse extends Rental {
   id: number;

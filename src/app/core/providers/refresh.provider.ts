@@ -30,7 +30,7 @@ export function refreshRolesFactory(
   switch (fetchType) {
     default:
       return new RefreshFacade(identity.fetchRoles());
-  };
+  }
 }
 
 export function refreshUsersFactory(

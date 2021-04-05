@@ -9,9 +9,17 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 import { RolesComponent } from '@modules/auth/roles/roles.component';
 import { CreateRoleComponent } from '@modules/auth/roles/create-role/create-role.component';
+import { RoleDetailsComponent } from '@modules/auth/roles/role-details/role-details.component';
+
+import { RoleWithPermissionsPipe } from '@modules/auth/roles/pipes/role-with-permissions/role-with-permissions.pipe';
 
 @NgModule({
-  declarations: [ RolesComponent, CreateRoleComponent ],
+  declarations: [
+    RolesComponent,
+    CreateRoleComponent,
+    RoleDetailsComponent,
+    RoleWithPermissionsPipe
+  ],
   imports: [
     CommonModule,
     RolesRoutingModule,

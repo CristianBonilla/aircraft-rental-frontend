@@ -24,7 +24,7 @@ const { HOME: ROUTES } = APP_ROUTES;
 export class CreateRoleComponent implements AfterViewInit {
   @ViewChild('roleTemplate')
   readonly roleTemplate: TemplateRef<NgbActiveModal>;
-  private roleModal: NgbModalRef;
+  private roleModal: NgbModalRef = null;
   private readonly loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
   readonly roleForm = this.formBuilder.group({

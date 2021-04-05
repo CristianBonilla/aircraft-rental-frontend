@@ -23,8 +23,8 @@ export class AuthTokenService implements HttpInterceptor {
 
   constructor(private identity: IdentityService) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const intercept$ = of(request).pipe(
+  intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const intercept$ = of(httpRequest).pipe(
       mergeMap(request => this.getRequest(request)),
       mergeMap(request => next.handle(request))
     );

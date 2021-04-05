@@ -10,7 +10,8 @@ export {
   faBriefcase,
   faFighterJet,
   faSpinner,
-  faPlusCircle
+  faPlusCircle,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 export {

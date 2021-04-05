@@ -3,8 +3,8 @@
     <ng-container *ngIf="auth !== type.Login; then login; else register"></ng-container>
     <div class="auth-panel_container" [ngClass]="{ 'right-log': auth === type.Register }">
       <ng-container [ngSwitch]="auth">
-        <arf-register (loading)="loading = $event" *ngSwitchCase="type.Register"></arf-register>
-        <arf-login (loading)="loading = $event" *ngSwitchDefault></arf-login>
+        <arf-register *ngSwitchCase="type.Register" (loading)="loading = $event"></arf-register>
+        <arf-login *ngSwitchDefault (loading)="loading = $event"></arf-login>
       </ng-container>
     </div>
   </div>

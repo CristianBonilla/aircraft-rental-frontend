@@ -7,7 +7,7 @@ interface ControlElements {
   $element: HTMLElement;
   $parent: HTMLElement;
   $error: HTMLDivElement;
-};
+}
 
 @Directive({
   selector: '[arfFormErrorHandler]'

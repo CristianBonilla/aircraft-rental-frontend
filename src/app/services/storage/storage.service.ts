@@ -8,8 +8,8 @@ import { STORAGE_KEYS } from 'src/app/models/storage-keys';
 })
 export class StorageService {
   get<T>(storageKey: STORAGE_KEYS) {
-    const value = localStorage.getItem(storageKey);
-    const storageValue$ = of(value).pipe(
+    const storageValue = localStorage.getItem(storageKey);
+    const storageValue$ = of(storageValue).pipe(
       map<string, { [x: string]: string | T }>(value => {
         try {
           return { [storageKey]: JSON.parse(value) };

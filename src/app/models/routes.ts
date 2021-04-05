@@ -1,4 +1,4 @@
-import { NavigationEnd } from "@angular/router";
+import { NavigationEnd } from '@angular/router';
 
 const APP_ROUTES = {
   AUTH: '/auth',
