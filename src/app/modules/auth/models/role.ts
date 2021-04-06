@@ -2,7 +2,7 @@ import { Permission } from '@modules/auth/models/permission';
 
 export enum DefaultRoles {
   ADMIN_USER = 'AdminUser',
-  COMMON_USER = 'CommonUser'
+  PASSENGER_USER = 'PassengerUser'
 }
 
 export interface RoleRequest {

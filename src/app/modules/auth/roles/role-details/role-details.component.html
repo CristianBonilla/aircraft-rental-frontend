@@ -30,11 +30,9 @@
         </div>
         <div class="col-sm-8 d-flex align-items-center flex-column py-2">
           <ul class="list-group list-group-flush w-100">
-            <li class="list-group-item p-2" *ngFor="let permission of role.permissions; let index = index">
-              <div class="d-flex">
-                <strong class="py-2 px-3">{{ index + 1 }}</strong>
-                <p class="text-muted p-2 mb-0 w-100">{{ permission.displayName }}</p>
-              </div>
+            <li class="list-group-item d-flex p-2" *ngFor="let permission of role.permissions; let index = index">
+              <strong class="py-2 px-3">{{ index + 1 }}</strong>
+              <p class="text-muted p-2 mb-0 w-100">{{ permission.displayName }}</p>
             </li>
           </ul>
         </div>
