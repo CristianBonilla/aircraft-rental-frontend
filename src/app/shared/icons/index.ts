@@ -17,5 +17,6 @@ export {
 export {
   faUserCircle,
   faBell,
-  faPaperPlane
+  faPaperPlane,
+  faEye
 } from '@fortawesome/free-regular-svg-icons';

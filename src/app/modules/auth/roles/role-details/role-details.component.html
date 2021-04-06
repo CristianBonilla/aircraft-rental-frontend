@@ -29,12 +29,14 @@
           <h5 class="text-muted mb-0">Permisos</h5>
         </div>
         <div class="col-sm-8 d-flex align-items-center flex-column py-2">
-          <ng-container *ngFor="let permission of role.permissions; let index = index">
-            <ul class="list-group list-group-horizontal mw-100">
-              <li class="list-group-item">{{ index + 1 }}</li>
-              <li class="list-group-item">{{ permission.displayName }}</li>
-            </ul>
-          </ng-container>
+          <ul class="list-group list-group-flush w-100">
+            <li class="list-group-item p-2" *ngFor="let permission of role.permissions; let index = index">
+              <div class="d-flex">
+                <strong class="py-2 px-3">{{ index + 1 }}</strong>
+                <p class="text-muted p-2 mb-0 w-100">{{ permission.displayName }}</p>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

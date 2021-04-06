@@ -28,12 +28,18 @@
   }
 
   .table-actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 
+    &__content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    a,
     button {
+      display: inline-block;
       margin: 0 .25rem;
 
       &:focus {
@@ -45,6 +51,7 @@
 
 .card .card-actions {
 
+  a,
   button {
 
     &:focus {

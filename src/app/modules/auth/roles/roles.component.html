@@ -17,6 +17,7 @@
               <tr *ngFor="let role of roles; let index = index">
                 <th scope="row" class="text-center">{{ index + 1 }}</th>
                 <td>{{ role.displayName }}</td>
+                <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: role.id }"></ng-container>
               </tr>
             </tbody>
           </ng-container>
@@ -27,12 +28,24 @@
   <router-outlet></router-outlet>
 </div>
 
+<ng-template #actions let-roleId>
+  <td class="table-actions">
+    <div class="table-actions__content">
+      <a role="button" class="btn text-primary" placement="top" ngbTooltip="Detalles"
+        [routerLink]="[ 'details/' + roleId ]">
+        <fa-icon [icon]="[ 'far', 'eye' ]" size="lg"></fa-icon>
+      </a>
+    </div>
+  </td>
+</ng-template>
+
 <ng-template #header let-hasRoles>
   <caption *ngIf="!!hasRoles">Roles disponibles</caption>
   <thead class="thead-light">
     <tr class="text-center">
       <th scope="col">N°</th>
       <th scope="col">Nombre del rol</th>
+      <th scope="col">Acciones</th>
     </tr>
   </thead>
 </ng-template>
@@ -41,7 +54,7 @@
   <ng-container [ngTemplateOutlet]="header"></ng-container>
   <tbody>
     <tr>
-      <td colspan="2" class="text-black-50 text-center table-light">No hay roles registrados</td>
+      <td colspan="3" class="text-black-50 text-center table-light">No hay roles registrados</td>
     </tr>
   </tbody>
 </ng-template>
@@ -50,7 +63,7 @@
   <ng-container [ngTemplateOutlet]="header"></ng-container>
   <tbody>
     <tr>
-      <th scope="row" colspan="2" class="text-black-50 text-center table-light">Cargando...</th>
+      <th scope="row" colspan="3" class="text-black-50 text-center table-light">Cargando...</th>
     </tr>
   </tbody>
 </ng-template>

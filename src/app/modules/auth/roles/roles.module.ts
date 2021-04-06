@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RolesRoutingModule } from '@modules/auth/roles/roles-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IconsModule } from '@shared/icons/icons.module';
 import { DropdownSelectModule } from '@shared/components/dropdown-select/dropdown-select.module';
 import { DirectivesModule } from '@directives/directives.module';
@@ -24,6 +25,7 @@ import { RoleWithPermissionsPipe } from '@modules/auth/roles/pipes/role-with-per
     CommonModule,
     RolesRoutingModule,
     ReactiveFormsModule,
+    NgbModule,
     IconsModule,
     DropdownSelectModule,
     DirectivesModule,
