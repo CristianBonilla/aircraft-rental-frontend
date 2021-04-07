@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { WINDOW } from '@core/providers/window.provider';
-import { DEFAULT_SCROLLBAR_OPTIONS } from 'src/app/models/scrollbar';
+import { DEFAULT_SCROLLBAR_OPTIONS, ScrollbarOptions } from 'src/app/models/scrollbar';
 
 @Component({
   selector: 'arf-home',
@@ -8,7 +8,12 @@ import { DEFAULT_SCROLLBAR_OPTIONS } from 'src/app/models/scrollbar';
   styles: []
 })
 export class HomeComponent implements OnInit {
-  readonly scrollbarOptions = DEFAULT_SCROLLBAR_OPTIONS;
+  readonly scrollbarOptions: ScrollbarOptions = {
+    ...DEFAULT_SCROLLBAR_OPTIONS,
+    overflowBehavior: {
+      x: 'visible-hidden'
+    }
+  };
   private readonly $body: HTMLElement;
 
   constructor(@Inject(WINDOW) { document }: Window) {

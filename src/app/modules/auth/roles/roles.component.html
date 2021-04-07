@@ -8,7 +8,7 @@
         Crear un nuevo rol
       </a>
     </div>
-    <div class="table-responsive-sm">
+    <overlay-scrollbars class="table-responsive-sm" [options]="scrollbarOptions">
       <table class="table table-sm table-bordered table-hover">
         <ng-container *ngIf="roles$ | async as roles; else loadingRoles">
           <ng-container *ngIf="!!roles.length; else noRolesFound">
@@ -23,7 +23,7 @@
           </ng-container>
         </ng-container>
       </table>
-    </div>
+    </overlay-scrollbars>
   </div>
   <router-outlet></router-outlet>
 </div>

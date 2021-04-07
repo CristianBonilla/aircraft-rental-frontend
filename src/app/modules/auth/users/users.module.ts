@@ -7,6 +7,7 @@ import { IconsModule } from '@shared/icons/icons.module';
 import { DropdownSelectModule } from '@shared/components/dropdown-select/dropdown-select.module';
 import { DirectivesModule } from '@directives/directives.module';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 
 import { UsersComponent } from '@modules/auth/users/users.component';
 import { CreateUserComponent } from '@modules/auth/users/create-user/create-user.component';
@@ -29,7 +30,8 @@ import { UsersWithRolePipe } from '@modules/auth/users/pipes/users-with-role/use
     IconsModule,
     DropdownSelectModule,
     DirectivesModule,
-    NgxTrimDirectiveModule
+    NgxTrimDirectiveModule,
+    OverlayscrollbarsModule
   ]
 })
 export class UsersModule { }

@@ -8,7 +8,7 @@
         Crear un nuevo usuario
       </a>
     </div>
-    <div class="table-responsive">
+    <overlay-scrollbars class="table-responsive" [options]="scrollbarOptions">
       <table class="table table-borderless table-striped">
         <ng-container *ngIf="users$ | async as users; else loadingUsers">
           <ng-container *ngIf="!!users.length; else noUsersFound">
@@ -20,14 +20,14 @@
                 <td class="text-truncate miw-25">{{ user.email }}</td>
                 <td class="text-truncate">{{ user.firstName }}</td>
                 <td class="text-truncate">{{ user.lastName }}</td>
-                <td class="text-truncate">{{ user.role.displayName }}</td>
+                <td class="text-secondary text-truncate">{{ user.role.displayName }}</td>
                 <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: user.id }"></ng-container>
               </tr>
             </tbody>
           </ng-container>
         </ng-container>
       </table>
-    </div>
+    </overlay-scrollbars>
   </div>
   <router-outlet></router-outlet>
 </div>

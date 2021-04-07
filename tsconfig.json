@@ -20,6 +20,7 @@
       "ES2018"
     ],
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "paths": {
       "@core/*": [
         "src/app/core/*"

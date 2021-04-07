@@ -4,7 +4,7 @@ import { IdentityService } from '@services/identity/identity.service';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { SIDEBAR_ROUTES } from 'src/app/models/routes';
-import { DEFAULT_SCROLLBAR_OPTIONS } from 'src/app/models/scrollbar';
+import { DEFAULT_SCROLLBAR_OPTIONS, ScrollbarOptions } from 'src/app/models/scrollbar';
 
 @Component({
   selector: 'arf-sidebar-wrapper',
@@ -12,7 +12,12 @@ import { DEFAULT_SCROLLBAR_OPTIONS } from 'src/app/models/scrollbar';
   styles: []
 })
 export class SidebarWrapperComponent {
-  readonly scrollbarOptions = DEFAULT_SCROLLBAR_OPTIONS;
+  readonly scrollbarOptions: ScrollbarOptions = {
+    ...DEFAULT_SCROLLBAR_OPTIONS,
+    overflowBehavior: {
+      x: 'visible-hidden'
+    }
+  };
   readonly ROUTES = SIDEBAR_ROUTES;
   readonly userName: Observable<string>;
   readonly allowRoles = ALLOW.ROLES;

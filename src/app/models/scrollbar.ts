@@ -9,8 +9,10 @@ export interface Scrollbar {
 
 export const DEFAULT_SCROLLBAR_OPTIONS: ScrollbarOptions = {
   overflowBehavior: {
-    x: 'visible-hidden'
+    x: 'scroll',
+    y: 'scroll'
   },
+  resize: 'none',
   scrollbars: {
     autoHide: 'move'
   }
