@@ -19,6 +19,7 @@
       "DOM.Iterable",
       "ES2018"
     ],
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@core/*": [
         "src/app/core/*"

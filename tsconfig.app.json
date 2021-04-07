@@ -6,7 +6,8 @@
       "node",
       "jquery",
       "bootstrap",
-      "bootstrap-select"
+      "bootstrap-select",
+      "overlayscrollbars"
     ]
   },
   "files": [

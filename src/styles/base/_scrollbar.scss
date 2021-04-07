@@ -1,0 +1,10 @@
+.os-scrollbar-horizontal,
+.os-scrollbar-vertical {
+  transition: all .3s ease-in-out !important;
+  width: 10px;
+
+  &.active,
+  &:hover {
+    width: 12.5px;
+  }
+}

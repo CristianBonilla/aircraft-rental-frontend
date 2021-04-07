@@ -179,12 +179,20 @@
 
   &_wrapper {
     position: relative;
-    height: calc(100vh - 67px);
+    height: calc(100vh - 71.65px);
     overflow-y: auto;
     overflow-x: hidden;
     width: $sidebar-width;
     z-index: 4;
     padding-bottom: 30px;
+
+    &.os-host {
+      padding-bottom: 100px;
+
+      .nav {
+        padding-bottom: 20px;
+      }
+    }
 
     .nav {
       margin-top: 20px;

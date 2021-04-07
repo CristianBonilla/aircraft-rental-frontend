@@ -5,6 +5,7 @@ import { HomeRoutingModule } from '@modules/home/home-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@shared/icons/icons.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 
 import { FooterComponent } from '@modules/home/footer/footer.component';
 import { NavbarComponent } from '@modules/home/navbar/navbar.component';
@@ -28,7 +29,8 @@ import { ToggleSidebarDirective } from '@modules/home/directives/toggle-sidebar.
     NgxPermissionsModule.forChild(),
     ReactiveFormsModule,
     IconsModule,
-    NgbModule
+    NgbModule,
+    OverlayscrollbarsModule
   ]
 })
 export class HomeModule { }
