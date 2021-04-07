@@ -1,0 +1,67 @@
+<ng-template #userTemplate let-modal>
+  <ng-container *ngIf="!!user">
+    <ng-template [ngTemplateOutlet]="userModalTemplate" [ngTemplateOutletContext]="{
+      $implicit: modal,
+      user: user
+    }"></ng-template>
+  </ng-container>
+</ng-template>
+
+<ng-template #userModalTemplate let-modal let-user="user">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      Descripción del usuario<br>
+      <strong class="h4 font-weight-bold mb-0">{{ user.username }}...</strong>
+    </h5>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Rol</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="font-weight-bold mb-0">{{ user.role.displayName }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Contraseña</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="font-weight-bold mb-0">*****</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Correo</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="mb-0">{{ user.email }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Nombres</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="mb-0">{{ user.firstName }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Apellidos</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="mb-0">{{ user.lastName }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary text-light" (click)="close(modal)">
+      <fa-icon [icon]="[ 'fas', 'times' ]" size="lg"></fa-icon>
+      Cerrar
+    </button>
+  </div>
+</ng-template>

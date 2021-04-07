@@ -21,6 +21,7 @@
                 <td class="text-truncate">{{ user.firstName }}</td>
                 <td class="text-truncate">{{ user.lastName }}</td>
                 <td class="text-truncate">{{ user.role.displayName }}</td>
+                <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: user.id }"></ng-container>
               </tr>
             </tbody>
           </ng-container>
@@ -31,17 +32,28 @@
   <router-outlet></router-outlet>
 </div>
 
+<ng-template #actions let-userId>
+  <td class="table-actions">
+    <div class="table-actions__content">
+      <a role="button" class="btn text-primary" placement="top" ngbTooltip="Detalles"
+        [routerLink]="[ 'details/' + userId ]">
+        <fa-icon [icon]="[ 'far', 'eye' ]" size="lg"></fa-icon>
+      </a>
+    </div>
+  </td>
+</ng-template>
+
 <ng-template #noUsersFound>
   <ng-container [ngTemplateOutlet]="header"></ng-container>
   <tbody>
-    <td colspan="6" class="text-black-50 text-center table-active">No hay usuarios registrados</td>
+    <td colspan="7" class="text-black-50 text-center table-active">No hay usuarios registrados</td>
   </tbody>
 </ng-template>
 
 <ng-template #loadingUsers>
   <ng-container [ngTemplateOutlet]="header"></ng-container>
   <tbody>
-    <th scope="row" colspan="6" class="text-black-50 text-center table-active">Cargando...</th>
+    <th scope="row" colspan="7" class="text-black-50 text-center table-active">Cargando...</th>
   </tbody>
 </ng-template>
 
@@ -55,6 +67,7 @@
       <th scope="col">Nombres</th>
       <th scope="col">Apellidos</th>
       <th scope="col">Rol</th>
+      <th scope="col">Acciones</th>
     </tr>
   </thead>
 </ng-template>
