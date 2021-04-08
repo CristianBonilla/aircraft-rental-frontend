@@ -1,13 +1,8 @@
 import { Inject, Pipe, PipeTransform } from '@angular/core';
 import { RefreshRoles, REFRESH_ROLES } from '@core/providers/refresh.provider';
-import { UserResponse } from '@modules/auth/models/authentication';
-import { RoleResponse } from '@modules/auth/models/role';
+import { UserResponse, UserWithRole } from '@modules/auth/models/authentication';
 import { from } from 'rxjs';
 import { filter, map, mergeAll, mergeMap, take, toArray } from 'rxjs/operators';
-
-export interface UserWithRole extends UserResponse {
-  role: RoleResponse;
-}
 
 @Pipe({
   name: 'usersWithRole'

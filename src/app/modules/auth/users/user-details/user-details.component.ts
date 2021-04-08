@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserResponse, UserWithRole } from '@modules/auth/models/authentication';
 import { RoleResponse } from '@modules/auth/models/role';
-import { UserWithRole } from '@modules/auth/users/pipes/users-with-role/users-with-role.pipe';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
 import { iif, throwError } from 'rxjs';
@@ -55,12 +55,18 @@ export class UserDetailsComponent implements OnInit, AfterViewInit {
   private fetchUser() {
     const user$ = this.identity.fetchUserById(this.userId).pipe(
       mergeMap(user => iif(() => !!user,
-        this.identity.fetchRoleById(user.roleId).pipe(
-          map<RoleResponse, UserWithRole>(role => ({ ...user, role }))
-        ),
+        this.userWithRole(user),
         throwError(null)
       )),
       take(1)
+    );
+
+    return user$;
+  }
+
+  private userWithRole(user: UserResponse) {
+    const user$ = this.identity.fetchRoleById(user.roleId).pipe(
+      map<RoleResponse, UserWithRole>(role => ({ ...user, role }))
     );
 
     return user$;

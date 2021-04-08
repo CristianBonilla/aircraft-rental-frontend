@@ -23,6 +23,10 @@ export interface UserResponse extends User {
   roleId: number;
 }
 
+export interface UserWithRole extends UserResponse {
+  role: RoleResponse;
+}
+
 export interface SuccessResponse {
   token: string;
   user: UserResponse;

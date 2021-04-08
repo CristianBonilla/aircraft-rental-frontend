@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Permission } from '@modules/auth/models/permission';
 import { RoleResponse } from '@modules/auth/models/role';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
-import { of, throwError } from 'rxjs';
-import { mergeMap, take } from 'rxjs/operators';
+import { iif, throwError } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs/operators';
 import { DEFAULT_MODAL_OPTIONS } from 'src/app/models/modal';
 import { APP_ROUTES } from 'src/app/models/routes';
 
@@ -53,8 +54,19 @@ export class RoleDetailsComponent implements OnInit, AfterViewInit {
 
   private fetchRole() {
     const role$ = this.identity.fetchRoleById(this.roleId).pipe(
-      mergeMap(role => !!role ? of(role) : throwError(null)),
+      mergeMap(role => iif(() => !!role,
+        this.roleWithPermissions(role),
+        throwError(null)
+      )),
       take(1)
+    );
+
+    return role$;
+  }
+
+  private roleWithPermissions(role: RoleResponse) {
+    const role$ = this.identity.fetchPermissionsByRole(role.id).pipe(
+      map<Permission[], RoleResponse>(permissions => ({ ...role, permissions }))
     );
 
     return role$;
