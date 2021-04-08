@@ -2,9 +2,11 @@ import { inject, InjectFlags, InjectionToken } from '@angular/core';
 import { CoreModule } from '@core/core.module';
 import { UserResponse } from '@modules/auth/models/authentication';
 import { RoleResponse } from '@modules/auth/models/role';
+import { PassengerResponse } from '@modules/passengers/models/passenger';
 import { IdentityService } from '@services/identity/identity.service';
 import { Refresh } from '@facade/.';
 import { RefreshFacade } from '@facade/refresh-facade/refresh-facade';
+import { RentalsService } from '@services/rentals/rentals.service';
 
 type InjectionTokenOptions = ConstructorParameters<typeof InjectionToken>[1];
 
@@ -14,12 +16,17 @@ const DEFAULT_TOKEN_OPTIONS: Pick<InjectionTokenOptions, 'providedIn'> = {
 
 export type RefreshRoles = Refresh<RoleResponse[]>;
 export type RefreshUsers = Refresh<UserResponse[]>;
+export type RefreshPassengers = Refresh<PassengerResponse[]>;
 
 enum REFRESH_FETCH_ROLES {
   ALL
 }
 
 enum REFRESH_FETCH_USERS {
+  ALL
+}
+
+enum REFRESH_FETCH_PASSENGERS {
   ALL
 }
 
@@ -43,6 +50,16 @@ export function refreshUsersFactory(
   }
 }
 
+export function refreshPassegersFactory(
+  rentals: RentalsService,
+  fetchType: REFRESH_FETCH_PASSENGERS = REFRESH_FETCH_PASSENGERS.ALL
+) {
+  switch (fetchType) {
+    default:
+      return new RefreshFacade(rentals.fetchPassengers());
+  }
+}
+
 export const REFRESH_ROLES = new InjectionToken<RefreshRoles>('refresh.roles', {
   ...DEFAULT_TOKEN_OPTIONS,
   factory: () => refreshRolesFactory(inject(IdentityService, InjectFlags.Default))
@@ -51,4 +68,9 @@ export const REFRESH_ROLES = new InjectionToken<RefreshRoles>('refresh.roles', {
 export const REFRESH_USERS = new InjectionToken<RefreshUsers>('refresh.users', {
   ...DEFAULT_TOKEN_OPTIONS,
   factory: () => refreshUsersFactory(inject(IdentityService, InjectFlags.Default))
+});
+
+export const REFRESH_PASSENGERS = new InjectionToken<RefreshPassengers>('refresh.passengers', {
+  ...DEFAULT_TOKEN_OPTIONS,
+  factory: () => refreshPassegersFactory(inject(RentalsService, InjectFlags.Default))
 });

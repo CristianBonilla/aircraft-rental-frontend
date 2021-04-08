@@ -1,1 +1,61 @@
-<p>passengers works!</p>
+<div class="container-fluid px-0 px-sm-2 px-lg-3">
+  <div class="table-container">
+    <div class="d-sm-flex justify-content-between align-items-center bg-primary px-3 py-2">
+      <h4 class="text-light my-1 my-sm-0">Pasajeros</h4>
+      <a type="button" class="btn btn-outline-light my-1 my-sm-0" [ngClass]="{ disabled: loading$ | async }"
+        routerLink="create">
+        <fa-icon [icon]="[ 'fas', 'briefcase' ]" size="lg"></fa-icon>
+        Crear un nuevo pasajero
+      </a>
+    </div>
+    <overlay-scrollbars class="table-responsive" [options]="scrollbarOptions">
+      <table class="table table-borderless table-striped">
+        <thead class="thead-dark">
+          <tr class="text-center">
+            <th scope="col">N°</th>
+            <th scope="col">Documento de identificación</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <ng-container *ngIf="passengers$ | async as passengers; else loadingPassengers">
+          <ng-container *ngIf="!!passengers.length; else noPassengersFound">
+            <tbody>
+              <tr *ngFor="let passenger of passengers; let index = index; trackBy: trackByPassenger">
+                <th scope="row" class="text-center">{{ index + 1 }}</th>
+                <td class="text-truncate">{{ passenger.identificationDocument }}</td>
+                <td class="text-truncate">{{ passenger.firstName }}</td>
+                <td class="text-truncate">{{ passenger.lastName }}</td>
+                <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: passenger.id }"></ng-container>
+              </tr>
+            </tbody>
+          </ng-container>
+        </ng-container>
+      </table>
+    </overlay-scrollbars>
+  </div>
+</div>
+
+<ng-template #actions let-passengerId>
+  <td class="table-actions">
+    <div class="table-actions__content">
+      <a role="button" class="btn text-primary" placement="top" ngbTooltip="Detalles"
+        [routerLink]="[ 'details/' + passengerId ]">
+        <fa-icon [icon]="[ 'far', 'eye' ]" size="lg"></fa-icon>
+      </a>
+    </div>
+  </td>
+</ng-template>
+
+<ng-template #loadingPassengers>
+  <tbody>
+    <th scope="row" colspan="5" class="text-black-50 text-center table-active">Cargando...</th>
+  </tbody>
+</ng-template>
+
+<ng-template #noPassengersFound>
+  <tbody>
+    <td colspan="5" class="text-black-50 text-center table-active">No hay pasajeros registrados</td>
+  </tbody>
+</ng-template>
