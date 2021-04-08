@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { RefreshUsers, REFRESH_USERS } from '@core/providers/refresh.provider';
 import { patternValidator } from '@helpers/validators/custom.validator';
 import { emailValidator } from '@helpers/validators/formats.validator';
@@ -119,6 +119,7 @@ export class CreateUserComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.userModal = this.modal.open(this.userTemplate, DEFAULT_MODAL_OPTIONS);
     this.actionOnCompletion();
+    this.onPopState();
   }
 
   createUser(active: NgbActiveModal) {
@@ -163,5 +164,12 @@ export class CreateUserComponent implements AfterViewInit {
     ).subscribe(_ => this.refresh.dispatch());
     this.userModal.hidden.pipe(take(1))
       .subscribe(_ => this.router.navigate([ ROUTES.USERS.MAIN ]));
+  }
+
+  private onPopState() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart && !!event.restoredState),
+      take(1)
+    ).subscribe(_ => this.userModal.close(null));
   }
 }

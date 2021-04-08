@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { RefreshPassengers, REFRESH_PASSENGERS } from '@core/providers/refresh.provider';
 import { onlyLetters, onlyNumbers } from '@helpers/validators/formats.validator';
 import { PassengerRequest, PassengerState } from '@modules/passengers/models/passenger';
@@ -81,6 +81,7 @@ export class CreatePassengerComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.passengerModal = this.modal.open(this.passengerTemplate, DEFAULT_MODAL_OPTIONS);
     this.actionOnCompletion();
+    this.onPopState();
   }
 
   dismiss(active: NgbActiveModal) {
@@ -106,5 +107,12 @@ export class CreatePassengerComponent implements AfterViewInit {
     ).subscribe(_ => this.refresh.dispatch());
     this.passengerModal.hidden.pipe(take(1))
       .subscribe(_ => this.router.navigate([ ROUTES.PASSENGERS.MAIN ]));
+  }
+
+  private onPopState() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart && !!event.restoredState),
+      take(1)
+    ).subscribe(_ => this.passengerModal.close(null));
   }
 }

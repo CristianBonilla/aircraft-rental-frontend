@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { Permission } from '@modules/auth/models/permission';
 import { RoleResponse } from '@modules/auth/models/role';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { IdentityService } from '@services/identity/identity.service';
 import { iif, throwError } from 'rxjs';
-import { map, mergeMap, take } from 'rxjs/operators';
+import { filter, map, mergeMap, take } from 'rxjs/operators';
 import { DEFAULT_MODAL_OPTIONS } from 'src/app/models/modal';
 import { APP_ROUTES } from 'src/app/models/routes';
 
@@ -45,6 +45,7 @@ export class RoleDetailsComponent implements OnInit, AfterViewInit {
       this.role = role;
       this.roleModal = this.modal.open(this.roleTemplate, DEFAULT_MODAL_OPTIONS);
       this.actionOnCompletion();
+      this.onPopState();
     }, _ => this.giveBack());
   }
 
@@ -78,5 +79,12 @@ export class RoleDetailsComponent implements OnInit, AfterViewInit {
 
   private giveBack() {
     this.router.navigate([ ROUTES.ROLES.MAIN ]);
+  }
+
+  private onPopState() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart && !!event.restoredState),
+      take(1)
+    ).subscribe(_ => this.roleModal.close(null));
   }
 }

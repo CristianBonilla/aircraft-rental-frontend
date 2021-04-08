@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { RefreshRoles, REFRESH_ROLES } from '@core/providers/refresh.provider';
 import { requiredMultiValidator } from '@helpers/validators/custom.validator';
 import { onlyLetters } from '@helpers/validators/formats.validator';
@@ -83,6 +83,7 @@ export class CreateRoleComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.roleModal = this.modal.open(this.roleTemplate, DEFAULT_MODAL_OPTIONS);
     this.actionOnCompletion();
+    this.onPopState();
   }
 
   createRole(active: NgbActiveModal) {
@@ -138,5 +139,12 @@ export class CreateRoleComponent implements AfterViewInit {
       }
       dropdownSelect.style = original;
     });
+  }
+
+  private onPopState() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart && !!event.restoredState),
+      take(1)
+    ).subscribe(_ => this.roleModal.close(null));
   }
 }
