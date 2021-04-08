@@ -21,7 +21,7 @@
         <ng-container *ngIf="aircrafts$ | async as aircrafts; else loadingAircrafts">
           <ng-container *ngIf="!!aircrafts.length; else noAircraftsFound">
             <tbody>
-              <tr *ngFor="let aircraft of aircrafts; let index = index">
+              <tr *ngFor="let aircraft of aircrafts; let index = index; trackBy: trackByAircraft">
                 <th scope="row" class="text-center">{{ index + 1 }}</th>
                 <td class="text-truncate miw-18">{{ aircraft.name }}</td>
                 <td class="text-truncate miw-18">{{ aircraft.state }}</td>

@@ -27,4 +27,8 @@ export class AircraftsComponent implements OnInit {
   ngOnInit() {
     this.refresh.dispatch();
   }
+
+  trackByAircraft(_: number, aircraftResponse: AircraftResponse) {
+    return aircraftResponse.id;
+  }
 }
