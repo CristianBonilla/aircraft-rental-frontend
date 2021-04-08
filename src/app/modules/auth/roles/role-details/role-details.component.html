@@ -1,15 +1,17 @@
 <ng-template #roleTemplate let-modal>
-  <ng-container [ngTemplateOutlet]="roleModalTemplate" [ngTemplateOutletContext]="{
-    $implicit: modal,
-    role: role
-  }"></ng-container>
+  <ng-container *ngIf="!!role">
+    <ng-container [ngTemplateOutlet]="roleModalTemplate" [ngTemplateOutletContext]="{
+      $implicit: modal,
+      role: role
+    }"></ng-container>
+  </ng-container>
 </ng-template>
 
 <ng-template #roleModalTemplate let-modal let-role="role">
   <div class="modal-header">
     <h5 class="modal-title">
       Descripción del rol<br>
-      <strong class="h4 mb-0 font-weight-bold">{{ role.displayName }}...</strong>
+      <strong class="font-weight-bold h4 mb-0">{{ role.displayName }}...</strong>
     </h5>
   </div>
   <div class="modal-body">

@@ -9,11 +9,13 @@ import { DirectivesModule } from '@directives/directives.module';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 import { CreatePassengerComponent } from '@modules/passengers/create-passenger/create-passenger.component';
+import { PassengerDetailsComponent } from '@modules/passengers/passenger-details/passenger-details.component';
 
 @NgModule({
   declarations: [
     PassengersComponent,
-    CreatePassengerComponent
+    CreatePassengerComponent,
+    PassengerDetailsComponent
   ],
   imports: [
     CommonModule,

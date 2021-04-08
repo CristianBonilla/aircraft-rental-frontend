@@ -1,43 +1,24 @@
-<ng-template #userTemplate let-modal>
-  <ng-container *ngIf="!!user">
-    <ng-template [ngTemplateOutlet]="userModalTemplate" [ngTemplateOutletContext]="{
+<ng-template #passengerTemplate let-modal>
+  <ng-container *ngIf="!!passenger">
+    <ng-container [ngTemplateOutlet]="passengerModalTemplate" [ngTemplateOutletContext]="{
       $implicit: modal,
-      user: user
-    }"></ng-template>
+      passenger: passenger
+    }"></ng-container>
   </ng-container>
 </ng-template>
 
-<ng-template #userModalTemplate let-modal let-user="user">
+<ng-template #passengerModalTemplate let-modal let-passenger="passenger">
   <div class="modal-header">
-    <h5 class="modal-title">
-      Descripción del usuario<br>
-      <strong class="font-weight-bold h4 mb-0">{{ user.username }}...</strong>
-    </h5>
+    <h5 class="modal-title font-weight-bold">Descripción del pasajero...</h5>
   </div>
   <div class="modal-body">
     <div class="container">
       <div class="row">
         <div class="col-sm-4 d-flex align-items-center py-2">
-          <h5 class="text-muted mb-0">Rol</h5>
+          <h6 class="text-muted mb-0">Documento de identificación</h6>
         </div>
         <div class="col-sm-8 d-flex align-items-center py-2">
-          <p class="font-weight-bold mb-0">{{ user.role.displayName }}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4 d-flex align-items-center py-2">
-          <h5 class="text-muted mb-0">Contraseña</h5>
-        </div>
-        <div class="col-sm-8 d-flex align-items-center py-2">
-          <p class="font-weight-bold mb-0">*****</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4 d-flex align-items-center py-2">
-          <h5 class="text-muted mb-0">Correo</h5>
-        </div>
-        <div class="col-sm-8 d-flex align-items-center py-2">
-          <p class="mb-0">{{ user.email }}</p>
+          <p class="font-weight-bold mb-0">{{ passenger.identificationDocument }}</p>
         </div>
       </div>
       <div class="row">
@@ -45,7 +26,7 @@
           <h5 class="text-muted mb-0">Nombres</h5>
         </div>
         <div class="col-sm-8 d-flex align-items-center py-2">
-          <p class="mb-0">{{ user.firstName }}</p>
+          <p class="h5 mb-0">{{ passenger.firstName }}</p>
         </div>
       </div>
       <div class="row">
@@ -53,7 +34,15 @@
           <h5 class="text-muted mb-0">Apellidos</h5>
         </div>
         <div class="col-sm-8 d-flex align-items-center py-2">
-          <p class="mb-0">{{ user.lastName }}</p>
+          <p class="h5 mb-0">{{ passenger.lastName }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Especialidad</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="text-black-50 mb-0">{{ passenger.specialty }}</p>
         </div>
       </div>
     </div>
