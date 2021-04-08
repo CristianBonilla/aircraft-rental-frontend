@@ -131,8 +131,7 @@ export class CreateUserComponent implements AfterViewInit {
       lastName: this.lastName.value,
       role: this.role.value
     };
-    this.identity.createUser(userRegisterRequest)
-      .pipe(take(1))
+    this.identity.createUser(userRegisterRequest).pipe(take(1))
       .subscribe(_ => active.close(UserState.CREATED));
   }
 

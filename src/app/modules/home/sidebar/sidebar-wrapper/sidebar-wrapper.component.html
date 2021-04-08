@@ -32,7 +32,7 @@
         <p>Aeronaves</p>
       </a>
     </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowPassengers">
+    <li class="nav-item" routerLinkActive="active" *ngxPermissionsOnly="allowPassengers">
       <a class="nav-link" [routerLink]="ROUTES.PASSENGERS">
         <fa-icon [icon]="[ 'fas', 'briefcase' ]" size="2x"></fa-icon>
         <p>Pasajeros</p>

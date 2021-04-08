@@ -29,6 +29,7 @@ export class SidebarWrapperComponent {
   constructor(identity: IdentityService) {
     this.userName = identity.userAccount$.pipe(
       take(1),
-      map(({ user }) => user.firstName));
+      map(({ user }) => user.firstName)
+    );
   }
 }

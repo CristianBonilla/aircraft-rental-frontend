@@ -7,7 +7,7 @@ import { PassengerResponse } from '@modules/passengers/models/passenger';
 @Component({
   selector: 'arf-passengers',
   templateUrl: './passengers.component.html',
-  styles: []
+  styleUrls: [ './passengers.component.scss' ]
 })
 export class PassengersComponent implements OnInit {
   readonly scrollbarOptions: ScrollbarOptions = {

@@ -10,3 +10,7 @@ export type PassengerRequest = Passenger;
 export interface PassengerResponse extends Passenger {
   id: number;
 }
+
+export enum PassengerState {
+  CREATED
+}

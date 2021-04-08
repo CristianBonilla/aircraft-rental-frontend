@@ -13,7 +13,10 @@ const APP_ROUTES = {
       CREATE: '/users/create'
     },
     AIRCRAFTS: '/aircrafts',
-    PASSENGERS: '/passengers',
+    PASSENGERS: {
+      MAIN: '/passengers',
+      CREATE: '/passengers/create'
+    },
     RENTALS: '/rentals'
   }
 };
@@ -29,7 +32,7 @@ const SIDEBAR_ROUTES: HomeRoutes = {
   ROLES: ROUTES.ROLES.MAIN,
   USERS: ROUTES.USERS.MAIN,
   AIRCRAFTS: ROUTES.AIRCRAFTS,
-  PASSENGERS: ROUTES.PASSENGERS,
+  PASSENGERS: ROUTES.PASSENGERS.MAIN,
   RENTALS: ROUTES.RENTALS
 };
 

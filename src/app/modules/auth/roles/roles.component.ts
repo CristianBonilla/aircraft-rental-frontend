@@ -7,7 +7,7 @@ import { DEFAULT_SCROLLBAR_OPTIONS, ScrollbarOptions } from 'src/app/models/scro
 @Component({
   selector: 'arf-roles',
   templateUrl: './roles.component.html',
-  styleUrls: ['./roles.component.scss']
+  styleUrls: [ './roles.component.scss' ]
 })
 export class RolesComponent implements OnInit {
   readonly scrollbarOptions: ScrollbarOptions = {

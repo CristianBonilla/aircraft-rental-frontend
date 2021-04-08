@@ -1,0 +1,44 @@
+<ng-template #passengerTemplate let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title font-weight-bold">Crear un nuevo pasajero</h4>
+    <button type="button" class="close" (click)="dismiss(modal)" [disabled]="loading$ | async">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form autocomplete="off" [formGroup]="passengerForm" (ngSubmit)="createPassenger(modal)">
+    <div class="modal-body">
+      <div class="mb-3">
+        <input type="text" id="identification-document" class="form-control form-control-lg" placeholder="Documento de identificación"
+          [formControl]="identificationDocument"
+          [arfFormErrorHandler]="identificationDocument" trim="blur">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-sm-6">
+          <input type="text" id="first-name" class="form-control" placeholder="Nombres"
+            [formControl]="firstName"
+            [arfFormErrorHandler]="firstName" trim="blur">
+        </div>
+        <div class="form-group col-sm-6">
+          <input type="text" id="last-name" class="form-control" placeholder="Apellidos"
+            [formControl]="lastName"
+            [arfFormErrorHandler]="lastName" trim="blur">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="specialty">Especialidad</label>
+        <textarea type="text" id="name" class="form-control" placeholder="Especialidad del pasajero..."
+          cols="1" rows="3"
+          [ngStyle]="{ resize: 'none' }"
+          [formControl]="specialty"
+          [arfFormErrorHandler]="specialty" trim="blur">
+        </textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success" [disabled]="!passengerForm.valid || (loading$ | async)">
+        <fa-icon [icon]="(loading$ | async) ? [ 'fas', 'spinner' ] : [ 'fas', 'briefcase' ]" [spin]="loading$ | async"></fa-icon>
+        Guardar Pasajero
+      </button>
+    </div>
+  </form>
+</ng-template>
