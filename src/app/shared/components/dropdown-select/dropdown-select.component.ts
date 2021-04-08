@@ -5,10 +5,12 @@ import {
   DoCheck,
   ElementRef,
   forwardRef,
+  Inject,
   Input,
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { WINDOW } from '@core/providers/window.provider';
 import {
   DropdownSelectItem,
   DropdownSelectItemValues,
@@ -31,6 +33,7 @@ import {
 export class DropdownSelectComponent implements ControlValueAccessor, AfterViewInit, DoCheck {
   @ViewChild('select')
   readonly selectRef: ElementRef<HTMLSelectElement>;
+  private userAgent: string;
   private _style = DropdownSelectStyle.Light;
   private _items: DropdownSelectItem[] = [];
   private _selected: string | DropdownSelectItemValues;
@@ -89,8 +92,10 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
   constructor(
     @Attribute('placeholder') public placeholder: string,
     @Attribute('id') public id: string,
-    @Attribute('name') public name: string
+    @Attribute('name') public name: string,
+    @Inject(WINDOW) window: Window
   ) {
+    this.userAgent = window.navigator.userAgent;
     this._selected = !!this.multiple ? [] : null;
   }
 
@@ -104,6 +109,12 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     setTimeout(() => {
       this.$select = $($select);
       this.$select.selectpicker(dropdownSelectOptions);
+      if (
+        /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(this.userAgent) ||
+        /\b(Android|Windows Phone|iPad|iPod)\b/i.test(this.userAgent)
+      ) {
+        this.$select.selectpicker('mobile');
+      }
     });
   }
 
