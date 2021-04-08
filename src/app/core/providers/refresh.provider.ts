@@ -7,6 +7,8 @@ import { IdentityService } from '@services/identity/identity.service';
 import { Refresh } from '@facade/.';
 import { RefreshFacade } from '@facade/refresh-facade/refresh-facade';
 import { RentalsService } from '@services/rentals/rentals.service';
+import { AircraftResponse } from '@modules/aircrafts/models/aircraft';
+import { AircraftsService } from '@services/aircrafts/aircrafts.service';
 
 type InjectionTokenOptions = ConstructorParameters<typeof InjectionToken>[1];
 
@@ -17,6 +19,7 @@ const DEFAULT_TOKEN_OPTIONS: Pick<InjectionTokenOptions, 'providedIn'> = {
 export type RefreshRoles = Refresh<RoleResponse[]>;
 export type RefreshUsers = Refresh<UserResponse[]>;
 export type RefreshPassengers = Refresh<PassengerResponse[]>;
+export type RefreshAircrafts = Refresh<AircraftResponse[]>;
 
 enum REFRESH_FETCH_ROLES {
   ALL
@@ -27,6 +30,10 @@ enum REFRESH_FETCH_USERS {
 }
 
 enum REFRESH_FETCH_PASSENGERS {
+  ALL
+}
+
+enum REFRESH_FETCH_AIRCRAFTS {
   ALL
 }
 
@@ -60,6 +67,16 @@ export function refreshPassegersFactory(
   }
 }
 
+export function refreshAircraftsFactory(
+  aircrafts: AircraftsService,
+  fetchType: REFRESH_FETCH_AIRCRAFTS = REFRESH_FETCH_AIRCRAFTS.ALL
+) {
+  switch (fetchType) {
+    default:
+      return new RefreshFacade(aircrafts.fetchAircrafts());
+  }
+}
+
 export const REFRESH_ROLES = new InjectionToken<RefreshRoles>('refresh.roles', {
   ...DEFAULT_TOKEN_OPTIONS,
   factory: () => refreshRolesFactory(inject(IdentityService, InjectFlags.Default))
@@ -73,4 +90,9 @@ export const REFRESH_USERS = new InjectionToken<RefreshUsers>('refresh.users', {
 export const REFRESH_PASSENGERS = new InjectionToken<RefreshPassengers>('refresh.passengers', {
   ...DEFAULT_TOKEN_OPTIONS,
   factory: () => refreshPassegersFactory(inject(RentalsService, InjectFlags.Default))
+});
+
+export const REFRESH_AIRCRAFTS = new InjectionToken<RefreshAircrafts>('refresh.aircrafts', {
+  ...DEFAULT_TOKEN_OPTIONS,
+  factory: () => refreshAircraftsFactory(inject(AircraftsService, InjectFlags.Default))
 });

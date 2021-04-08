@@ -1,0 +1,64 @@
+<div class="container-fluid px-0 px-sm-2 px-lg-3">
+  <div class="table-container">
+    <div class="d-sm-flex justify-content-between align-items-center bg-dark px-3 py-2">
+      <h4 class="text-light my-1 my-sm-0">Aeronaves</h4>
+      <a type="button" class="btn btn-success btn-sm my-1 my-sm-0" [ngClass]="{ disabled: true }"
+        routerLink="create">
+        <fa-icon [icon]="[ 'far', 'paper-plane' ]" size="lg"></fa-icon>
+        Registrar aeronave
+      </a>
+    </div>
+    <overlay-scrollbars class="table-responsive-sm" [options]="scrollbarOptions">
+      <table class="table table-sm table-borderless table-hover">
+        <thead class="thead-light">
+          <tr class="text-center">
+            <th scope="col">N°</th>
+            <th scope="col" class="miw-18">Nombre</th>
+            <th scope="col" class="miw-18">Estado Actual</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <ng-container *ngIf="aircrafts$ | async as aircrafts; else loadingAircrafts">
+          <ng-container *ngIf="!!aircrafts.length; else noAircraftsFound">
+            <tbody>
+              <tr *ngFor="let aircraft of aircrafts; let index = index">
+                <th scope="row" class="text-center">{{ index + 1 }}</th>
+                <td class="text-truncate miw-18">{{ aircraft.name }}</td>
+                <td class="text-truncate miw-18">{{ aircraft.state }}</td>
+                <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: aircraft.id }"></ng-container>
+              </tr>
+            </tbody>
+          </ng-container>
+        </ng-container>
+      </table>
+    </overlay-scrollbars>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+
+<ng-template #actions let-aircraftId>
+  <td class="table-actions">
+    <div class="table-actions__content">
+      <a role="button" class="btn text-primary" placement="top" ngbTooltip="Detalles"
+        [routerLink]="[ 'details/' + aircraftId ]">
+        <fa-icon [icon]="[ 'far', 'eye' ]" size="lg"></fa-icon>
+      </a>
+    </div>
+  </td>
+</ng-template>
+
+<ng-template #noAircraftsFound>
+  <tbody>
+    <tr>
+      <td colspan="4" class="text-black-50 text-center table-light">No hay aeronaves disponibles</td>
+    </tr>
+  </tbody>
+</ng-template>
+
+<ng-template #loadingAircrafts>
+  <tbody>
+    <tr>
+      <th scope="row" colspan="4" class="text-black-50 text-center table-light">Cargando...</th>
+    </tr>
+  </tbody>
+</ng-template>

@@ -16,7 +16,7 @@
             <tbody>
               <tr *ngFor="let role of roles; let index = index">
                 <th scope="row" class="text-center">{{ index + 1 }}</th>
-                <td>{{ role.displayName }}</td>
+                <td class="miw-18">{{ role.displayName }}</td>
                 <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: role.id }"></ng-container>
               </tr>
             </tbody>
@@ -44,7 +44,7 @@
   <thead class="thead-light">
     <tr class="text-center">
       <th scope="col">N°</th>
-      <th scope="col">Nombre del rol</th>
+      <th scope="col" class="miw-18">Nombre del rol</th>
       <th scope="col">Acciones</th>
     </tr>
   </thead>
