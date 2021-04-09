@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-success" [disabled]="!userForm.valid || (loading$ | async)">
+      <button type="submit" class="btn btn-info" [disabled]="!userForm.valid || (loading$ | async)">
         <fa-icon [icon]="(loading$ | async) ? [ 'fas', 'spinner' ] : [ 'fas', 'users' ]" [spin]="loading$ | async"></fa-icon>
         Guardar Usuario
       </button>

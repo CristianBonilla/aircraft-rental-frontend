@@ -40,7 +40,7 @@ export class AuthorizationService {
           case PermissionType.USERS:
             return ROUTES.USERS.MAIN;
           case PermissionType.AIRCRAFTS:
-            return ROUTES.AIRCRAFTS;
+            return ROUTES.AIRCRAFTS.MAIN;
           case PermissionType.PASSENGERS:
             return ROUTES.PASSENGERS.MAIN;
           default:

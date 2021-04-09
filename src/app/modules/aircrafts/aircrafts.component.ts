@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { RefreshAircrafts, REFRESH_AIRCRAFTS } from '@core/providers/refresh.provider';
-import { AircraftResponse } from '@modules/aircrafts/models/aircraft';
+import { AircraftRentalState, AircraftResponse } from '@modules/aircrafts/models/aircraft';
 import { DEFAULT_SCROLLBAR_OPTIONS, ScrollbarOptions } from 'src/app/models/scrollbar';
 import { Observable } from 'rxjs';
 
@@ -18,6 +18,7 @@ export class AircraftsComponent implements OnInit {
   };
   readonly loading$: Observable<boolean>;
   readonly aircrafts$: Observable<AircraftResponse[]>;
+  readonly aircraftState = AircraftRentalState;
 
   constructor(@Inject(REFRESH_AIRCRAFTS) private refresh: RefreshAircrafts) {
     this.loading$ = this.refresh.loading$;

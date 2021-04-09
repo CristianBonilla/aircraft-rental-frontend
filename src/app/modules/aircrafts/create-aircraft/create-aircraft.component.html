@@ -1,0 +1,35 @@
+<ng-template #aircraftTemplate let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title font-weight-bold">Crear un aeronave</h4>
+    <button type="button" class="close" (click)="dismiss(modal)" [disabled]="loading$ | async">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form autocomplete="off" [formGroup]="aircraftForm" (ngSubmit)="createAircraft(modal)">
+    <div class="modal-body">
+      <div class="form-group">
+        <input type="text" id="name" class="form-control form-control-lg" placeholder="Nombre del aeronave"
+          [formControl]="name"
+          [arfFormErrorHandler]="name" trim="blur">
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea type="text" id="name" class="form-control" placeholder="Una breve descripción del aeronave (opcional)..."
+          cols="1" rows="3" [ngStyle]="{
+            resize: 'vertical',
+            'max-height.px': 168,
+            'min-height.px': 48
+          }"
+          [formControl]="description"
+          [arfFormErrorHandler]="description" trim="blur">
+        </textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-info" [disabled]="!aircraftForm.valid || (loading$ | async)">
+        <fa-icon [icon]="(loading$ | async) ? [ 'fas', 'spinner' ] : [ 'far', 'paper-plane' ]" [spin]="loading$ | async"></fa-icon>
+        Guardar Aeronave
+      </button>
+    </div>
+  </form>
+</ng-template>

@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-success" [disabled]="!roleForm.valid || (loading$ | async)">
+      <button type="submit" class="btn btn-info" [disabled]="!roleForm.valid || (loading$ | async)">
         <fa-icon [icon]="(loading$ | async) ? [ 'fas', 'spinner' ] : [ 'fas', 'user-shield' ]" [spin]="loading$ | async"></fa-icon>
         Guardar Rol
       </button>

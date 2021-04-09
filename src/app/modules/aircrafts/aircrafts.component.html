@@ -2,7 +2,7 @@
   <div class="table-container">
     <div class="d-sm-flex justify-content-between align-items-center bg-dark px-3 py-2">
       <h4 class="text-light my-1 my-sm-0">Aeronaves</h4>
-      <a type="button" class="btn btn-success btn-sm my-1 my-sm-0" [ngClass]="{ disabled: true }"
+      <a type="button" class="btn btn-success btn-sm my-1 my-sm-0" [ngClass]="{ disabled: loading$ | async }"
         routerLink="create">
         <fa-icon [icon]="[ 'far', 'paper-plane' ]" size="lg"></fa-icon>
         Registrar aeronave
@@ -24,7 +24,12 @@
               <tr *ngFor="let aircraft of aircrafts; let index = index; trackBy: trackByAircraft">
                 <th scope="row" class="text-center">{{ index + 1 }}</th>
                 <td class="text-truncate miw-18">{{ aircraft.name }}</td>
-                <td class="text-truncate miw-18">{{ aircraft.state }}</td>
+                <td class="text-center text-truncate miw-18">
+                  <ng-container [ngSwitch]="aircraft.state">
+                    <span class="badge badge-success" *ngSwitchCase="aircraftState.NotRented">No Alquilado</span>
+                    <span class="badge badge-danger" *ngSwitchDefault>Alquilado</span>
+                  </ng-container>
+                </td>
                 <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: aircraft.id }"></ng-container>
               </tr>
             </tbody>

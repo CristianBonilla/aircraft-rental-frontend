@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AircraftRequest, AircraftResponse, AircraftState } from '@modules/aircrafts/models/aircraft';
+import { AircraftRequest, AircraftResponse, AircraftRentalState } from '@modules/aircrafts/models/aircraft';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 
 @Injectable({
@@ -43,7 +43,7 @@ export class AircraftsService {
     return aircraft$;
   }
 
-  fetchAircraftsByState(aircraftState: AircraftState) {
+  fetchAircraftsByState(aircraftState: AircraftRentalState) {
     const aircrafts$ = this.http.get<AircraftResponse[]>(`${ this.endpointUrl }/state/${ aircraftState }`, {
       responseType: 'json',
       ...this.httpHeaderOptions

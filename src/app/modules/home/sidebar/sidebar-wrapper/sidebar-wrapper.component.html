@@ -26,7 +26,7 @@
         <p>Alquiler de Aeronaves</p>
       </a>
     </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowAircrafts">
+    <li class="nav-item" routerLinkActive="active" *ngxPermissionsOnly="allowAircrafts">
       <a class="nav-link" [routerLink]="ROUTES.AIRCRAFTS">
         <fa-icon [icon]="[ 'far', 'paper-plane' ]" size="2x"></fa-icon>
         <p>Aeronaves</p>
