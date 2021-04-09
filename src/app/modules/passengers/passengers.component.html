@@ -24,7 +24,7 @@
             <tbody>
               <tr *ngFor="let passenger of passengers; let index = index; trackBy: trackByPassenger">
                 <th scope="row" class="text-center">{{ index + 1 }}</th>
-                <td class="text-truncate miw-25">{{ passenger.identificationDocument }}</td>
+                <td class="text-center text-truncate miw-25">{{ passenger.identificationDocument }}</td>
                 <td class="text-truncate">{{ passenger.firstName }}</td>
                 <td class="text-truncate">{{ passenger.lastName }}</td>
                 <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: passenger.id }"></ng-container>

@@ -1,0 +1,55 @@
+<ng-template #aircraftTemplate let-modal>
+  <ng-container *ngIf="!!aircraft">
+    <ng-template [ngTemplateOutlet]="aircraftModalTemplate" [ngTemplateOutletContext]="{
+      $implicit: modal,
+      aircraft: aircraft
+    }"></ng-template>
+  </ng-container>
+</ng-template>
+
+<ng-template #aircraftModalTemplate let-modal let-aircraft="aircraft">
+  <div class="modal-header">
+    <h5 class="modal-title font-weight-bold">Descripción del aeronave</h5>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Nombre</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="font-weight-bold mb-0">{{ aircraft.name }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Estado del aeronave</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="h5 mb-0">
+            <ng-container [ngSwitch]="aircraft.state">
+              <span class="badge badge-warning" *ngSwitchCase="aircraftState.Rented">Alquilado</span>
+              <span class="badge badge-success" *ngSwitchDefault>No Alquilado</span>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Descripción</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="text-black-50 mb-0">{{
+            !!aircraft.description ? aircraft.description : 'Sin descripción...'
+          }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary text-light" (click)="close(modal)">
+      <fa-icon [icon]="[ 'fas', 'times' ]" size="lg"></fa-icon>
+      Cerrar
+    </button>
+  </div>
+</ng-template>
