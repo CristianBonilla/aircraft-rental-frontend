@@ -16,8 +16,10 @@ export {
 
 export {
   faUserCircle,
+  faTimesCircle,
   faBell,
   faPaperPlane,
   faEye,
-  faEdit
+  faEdit,
+  faTrashAlt
 } from '@fortawesome/free-regular-svg-icons';

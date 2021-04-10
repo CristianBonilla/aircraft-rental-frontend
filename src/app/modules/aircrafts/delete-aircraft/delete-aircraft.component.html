@@ -1,0 +1,30 @@
+<ng-template #aircraftTemplate let-modal>
+  <ng-container *ngIf="!!aircraft">
+    <ng-template [ngTemplateOutlet]="aircraftModalTemplate" [ngTemplateOutletContext]="{ $implicit: modal }"></ng-template>
+  </ng-container>
+</ng-template>
+
+<ng-template #aircraftModalTemplate let-modal>
+  <form autocomplete="off" [formGroup]="id" (ngSubmit)="deleteAircraft(modal)">
+    <div class="modal-body">
+      <div class="form-group mb-0">
+        <input type="hidden" id="aircraft-id" class="form-control" [formControl]="id">
+      </div>
+      <div class="card bg-light border-light">
+        <div class="card-body">
+          <p class="text-center text-muted h5 mb-0">¿Deseas eliminar el aeronave <strong>{{ aircraft.name }}...</strong>?</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer justify-content-sm-between">
+      <button type="button" class="btn btn-secondary text-light" [disabled]="loading$ | async" (click)="dismiss(modal)">
+        <fa-icon [icon]="[ 'far', 'times-circle' ]" size="lg"></fa-icon>
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-danger text-light" [disabled]="!aircraftForm.valid || (loading$ | async)">
+        <fa-icon [icon]="(loading$ | async) ? [ 'fas', 'spinner' ] : [ 'far', 'trash-alt' ]" [spin]="loading$ | async" size="lg"></fa-icon>
+        Eliminar Aeronave
+      </button>
+    </div>
+  </form>
+</ng-template>

@@ -13,13 +13,15 @@ import { AircraftsComponent } from '@modules/aircrafts/aircrafts.component';
 import { CreateAircraftComponent } from '@modules/aircrafts/create-aircraft/create-aircraft.component';
 import { AircraftDetailsComponent } from '@modules/aircrafts/aircraft-details/aircraft-details.component';
 import { UpdateAircraftComponent } from '@modules/aircrafts/update-aircraft/update-aircraft.component';
+import { DeleteAircraftComponent } from '@modules/aircrafts/delete-aircraft/delete-aircraft.component';
 
 @NgModule({
   declarations: [
     AircraftsComponent,
     CreateAircraftComponent,
     AircraftDetailsComponent,
-    UpdateAircraftComponent
+    UpdateAircraftComponent,
+    DeleteAircraftComponent
   ],
   imports: [
     CommonModule,

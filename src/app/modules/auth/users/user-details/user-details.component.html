@@ -1,13 +1,10 @@
 <ng-template #userTemplate let-modal>
   <ng-container *ngIf="!!user">
-    <ng-template [ngTemplateOutlet]="userModalTemplate" [ngTemplateOutletContext]="{
-      $implicit: modal,
-      user: user
-    }"></ng-template>
+    <ng-template [ngTemplateOutlet]="userModalTemplate" [ngTemplateOutletContext]="{ $implicit: modal }"></ng-template>
   </ng-container>
 </ng-template>
 
-<ng-template #userModalTemplate let-modal let-user="user">
+<ng-template #userModalTemplate let-modal>
   <div class="modal-header">
     <h5 class="modal-title">
       Descripción del usuario<br>

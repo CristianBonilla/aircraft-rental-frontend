@@ -36,7 +36,7 @@ export class RoleDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.roleId && isNaN(this.roleId)) {
+    if (!this.roleId || isNaN(this.roleId)) {
       this.giveBack();
 
       return;

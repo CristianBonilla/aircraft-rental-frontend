@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { RefreshAircrafts, REFRESH_AIRCRAFTS } from '@core/providers/refresh.provider';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';

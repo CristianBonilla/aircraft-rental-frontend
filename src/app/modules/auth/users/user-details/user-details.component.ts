@@ -36,7 +36,7 @@ export class UserDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.userId && isNaN(this.userId)) {
+    if (!this.userId || isNaN(this.userId)) {
       this.giveBack();
 
       return;

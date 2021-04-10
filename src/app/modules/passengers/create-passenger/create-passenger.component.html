@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-info" [disabled]="!passengerForm.valid || (loading$ | async)">
+      <button type="submit" class="btn btn-success" [disabled]="!passengerForm.valid || (loading$ | async)">
         <fa-icon [icon]="(loading$ | async) ? [ 'fas', 'spinner' ] : [ 'fas', 'briefcase' ]" [spin]="loading$ | async"></fa-icon>
         Guardar Pasajero
       </button>

@@ -52,6 +52,10 @@
         [routerLink]="[ 'update/' + aircraftId ]">
         <fa-icon [icon]="[ 'far', 'edit' ]" size="lg"></fa-icon>
       </a>
+      <a role="button" class="btn text-danger" placement="top" ngbTooltip="Eliminar"
+        [routerLink]="[ 'delete/' + aircraftId ]">
+        <fa-icon [icon]="[ 'far', 'trash-alt' ]" size="lg"></fa-icon>
+      </a>
     </div>
   </td>
 </ng-template>

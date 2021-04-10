@@ -35,7 +35,7 @@ export class PassengerDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.passengerId && isNaN(this.passengerId)) {
+    if (!this.passengerId || isNaN(this.passengerId)) {
       this.giveBack();
 
       return;

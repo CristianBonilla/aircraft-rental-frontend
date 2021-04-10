@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-info" [disabled]="!aircraftForm.valid || (loading$ | async)">
+      <button type="submit" class="btn btn-primary" [disabled]="!aircraftForm.valid || (loading$ | async)">
         <fa-icon [icon]="(loading$ | async) ? [ 'fas', 'spinner' ] : [ 'far', 'paper-plane' ]" [spin]="loading$ | async"></fa-icon>
         Guardar Aeronave
       </button>

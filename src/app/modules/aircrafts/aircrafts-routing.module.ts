@@ -4,6 +4,7 @@ import { AircraftsComponent } from '@modules/aircrafts/aircrafts.component';
 import { CreateAircraftComponent } from '@modules/aircrafts/create-aircraft/create-aircraft.component';
 import { AircraftDetailsComponent } from '@modules/aircrafts/aircraft-details/aircraft-details.component';
 import { UpdateAircraftComponent } from '@modules/aircrafts/update-aircraft/update-aircraft.component';
+import { DeleteAircraftComponent } from '@modules/aircrafts/delete-aircraft/delete-aircraft.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'update/:aircraftId',
         component: UpdateAircraftComponent
+      },
+      {
+        path: 'delete/:aircraftId',
+        component: DeleteAircraftComponent
       }
     ]
   }

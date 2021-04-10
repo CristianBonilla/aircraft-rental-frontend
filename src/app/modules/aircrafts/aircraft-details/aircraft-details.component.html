@@ -1,13 +1,10 @@
 <ng-template #aircraftTemplate let-modal>
   <ng-container *ngIf="!!aircraft">
-    <ng-template [ngTemplateOutlet]="aircraftModalTemplate" [ngTemplateOutletContext]="{
-      $implicit: modal,
-      aircraft: aircraft
-    }"></ng-template>
+    <ng-template [ngTemplateOutlet]="aircraftModalTemplate" [ngTemplateOutletContext]="{ $implicit: modal }"></ng-template>
   </ng-container>
 </ng-template>
 
-<ng-template #aircraftModalTemplate let-modal let-aircraft="aircraft">
+<ng-template #aircraftModalTemplate let-modal>
   <div class="modal-header">
     <h5 class="modal-title font-weight-bold">Descripción del aeronave</h5>
   </div>
