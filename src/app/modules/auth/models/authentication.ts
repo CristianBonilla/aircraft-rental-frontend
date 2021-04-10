@@ -7,6 +7,7 @@ export interface UserLoginRequest {
 }
 
 interface User {
+  identificationDocument: number;
   username: string;
   password: string;
   email: string;

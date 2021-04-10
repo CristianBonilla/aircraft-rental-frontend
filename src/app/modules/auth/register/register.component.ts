@@ -7,7 +7,7 @@ import { take } from 'rxjs/operators';
 import { FailedResponse, UserRegisterRequest } from '@modules/auth/models/authentication';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserAccountRedirectService } from '@services/user-account-redirect/user-account-redirect.service';
-import { emailValidator } from '@helpers/validators/formats.validator';
+import { emailValidator, onlyNumbers } from '@helpers/validators/formats.validator';
 
 @Component({
   selector: 'arf-register',
@@ -22,6 +22,7 @@ export class RegisterComponent {
     validators: [ passwordMatchValidator ]
   };
   readonly registerForm = this.formBuilder.group({
+    identificationDocument: [ null ],
     username: [ null ],
     email: [ null ],
     password: [ null ],
@@ -29,6 +30,10 @@ export class RegisterComponent {
     firstName: [ null ],
     lastName: [ null ]
   }, this.controlOptions);
+
+  get identificationDocument() {
+    return this.registerForm.get('identificationDocument');
+  }
 
   get username() {
     return this.registerForm.get('username');
@@ -59,6 +64,11 @@ export class RegisterComponent {
     private userAccountRedirect: UserAccountRedirectService
   ) {
     this.loading$ = this.loadingSubject.asObservable();
+    this.identificationDocument.setValidators([
+      Validators.required,
+      Validators.minLength(3),
+      onlyNumbers
+    ]);
     this.username.setValidators([
       Validators.required,
       Validators.minLength(5),
@@ -93,6 +103,7 @@ export class RegisterComponent {
   register() {
     this.setLoading(true);
     const userRegisterRequest: UserRegisterRequest = {
+      identificationDocument: this.identificationDocument.value,
       username: this.username.value,
       password: this.password.value,
       email: this.email.value,

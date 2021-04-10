@@ -3,6 +3,12 @@
     <h2 class="text-secondary text-left">Registrarse</h2>
     <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="register()">
       <div class="form-group">
+        <label for="identification-document">Documento de identificación</label>
+        <input type="text" id="identification-document" class="form-control" placeholder="Documento de identificación"
+          [formControl]="identificationDocument"
+          [arfFormErrorHandler]="identificationDocument" trim="blur">
+      </div>
+      <div class="form-group">
         <label for="username">Nombre de usuario</label>
         <input type="text" id="username" class="form-control" placeholder="Nombre de usuario"
           [formControl]="username"

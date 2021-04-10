@@ -7,6 +7,11 @@
   </div>
   <form autocomplete="off" [formGroup]="userForm" (ngSubmit)="createUser(modal)">
     <div class="modal-body">
+      <div class="form-group">
+        <input type="text" id="identification-document" class="form-control form-control-lg" placeholder="Documento de identificación..."
+          [formControl]="identificationDocument"
+          [arfFormErrorHandler]="identificationDocument" trim="blur">
+      </div>
       <div class="form-row">
         <div class="form-group col-sm-6">
           <input type="text" id="username" class="form-control" placeholder="Nombre de usuario"

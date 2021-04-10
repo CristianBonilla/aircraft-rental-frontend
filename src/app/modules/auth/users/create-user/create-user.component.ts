@@ -3,7 +3,7 @@ import { AbstractControlOptions, FormBuilder, Validators } from '@angular/forms'
 import { NavigationStart, Router } from '@angular/router';
 import { RefreshUsers, REFRESH_USERS } from '@core/providers/refresh.provider';
 import { patternValidator } from '@helpers/validators/custom.validator';
-import { emailValidator } from '@helpers/validators/formats.validator';
+import { emailValidator, onlyNumbers } from '@helpers/validators/formats.validator';
 import { passwordMatchValidator } from '@helpers/validators/password.validator';
 import { UserRegisterRequest, UserState } from '@modules/auth/models/authentication';
 import { DefaultRoles } from '@modules/auth/models/role';
@@ -32,6 +32,7 @@ export class CreateUserComponent implements AfterViewInit {
     validators: [ passwordMatchValidator ]
   };
   readonly userForm = this.formBuilder.group({
+    identificationDocument: [ null ],
     username: [ null ],
     email: [ null ],
     password: [ null ],
@@ -48,6 +49,10 @@ export class CreateUserComponent implements AfterViewInit {
       size: 5
     }
   };
+
+  get identificationDocument() {
+    return this.userForm.get('identificationDocument');
+  }
 
   get username() {
     return this.userForm.get('username');
@@ -85,6 +90,11 @@ export class CreateUserComponent implements AfterViewInit {
     @Inject(REFRESH_USERS) private refresh: RefreshUsers
   ) {
     this.loading$ = this.loadingSubject.asObservable();
+    this.identificationDocument.setValidators([
+      Validators.required,
+      Validators.minLength(3),
+      onlyNumbers
+    ]);
     this.username.setValidators([
       Validators.required,
       Validators.minLength(5),
@@ -125,6 +135,7 @@ export class CreateUserComponent implements AfterViewInit {
   createUser(active: NgbActiveModal) {
     this.loadingSubject.next(true);
     const userRegisterRequest: UserRegisterRequest = {
+      identificationDocument: this.identificationDocument.value,
       username: this.username.value,
       password: this.password.value,
       email: this.email.value,
