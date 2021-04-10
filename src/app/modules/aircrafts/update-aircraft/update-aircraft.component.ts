@@ -88,7 +88,6 @@ export class UpdateAircraftComponent implements OnInit, AfterViewInit {
     this.description.setValidators([
       Validators.minLength(10)
     ]);
-    this.changeDropdownStyle(this.state, this.dropdownStateSelect, DropdownSelectStyle.Warning);
   }
 
   ngOnInit() {
@@ -141,26 +140,6 @@ export class UpdateAircraftComponent implements OnInit, AfterViewInit {
     this.name.setValue(this.aircraftName);
     this.state.setValue(this.aircraft.state);
     this.description.setValue(this.aircraft.description);
-  }
-
-  private getAircraftState() {
-    return this.dropdownStateSelect.data.find(({ value }) => value === this.aircraft.state);
-  }
-
-  private changeDropdownStyle(
-    control: AbstractControl,
-    dropdownSelect: CustomizeDropdownSelect,
-    original = DropdownSelectStyle.Info
-  ) {
-    control.valueChanges.subscribe(_ => {
-      const { invalid, dirty, touched } = control;
-      if (invalid && (dirty || touched)) {
-        dropdownSelect.style = DropdownSelectStyle.Danger;
-
-        return;
-      }
-      dropdownSelect.style = original;
-    });
   }
 
   private actionOnCompletion() {
