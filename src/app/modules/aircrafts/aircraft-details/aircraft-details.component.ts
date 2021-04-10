@@ -36,7 +36,7 @@ export class AircraftDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.aircraftId && isNaN(this.aircraftId)) {
+    if (!this.aircraftId || isNaN(this.aircraftId)) {
       this.giveBack();
 
       return;

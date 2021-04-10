@@ -32,7 +32,7 @@ export class CreateRoleComponent implements AfterViewInit {
     displayName: [ '' ],
     permissions: [ [] ]
   });
-  dropdownPermissionsSelect: CustomizeDropdownSelect = {
+  readonly dropdownPermissionsSelect: CustomizeDropdownSelect = {
     data: [],
     style: DropdownSelectStyle.Info,
     options: {

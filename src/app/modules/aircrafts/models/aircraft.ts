@@ -16,5 +16,6 @@ export interface AircraftResponse extends Aircraft {
 }
 
 export enum AircraftState {
-  CREATED
+  CREATED,
+  UPDATED
 }

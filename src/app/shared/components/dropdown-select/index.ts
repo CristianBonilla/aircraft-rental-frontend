@@ -1,7 +1,7 @@
 export type DropdownSelectOptions = BootstrapSelectOptions;
 
 export interface DropdownSelectItem {
-  value: string | number | object;
+  value: string | number | boolean | object;
   text: string;
 }
 
@@ -14,7 +14,7 @@ export enum DropdownSelectStyle {
   Danger = 'btn-danger'
 }
 
-export type DropdownSelectItemValues = DropdownSelectItem['value'][];
+export type DropdownSelectItemValue = DropdownSelectItem['value'];
 
 export interface CustomizeDropdownSelect {
   data: DropdownSelectItem[];

@@ -6,17 +6,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IconsModule } from '@shared/icons/icons.module';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { DropdownSelectModule } from '@shared/components/dropdown-select/dropdown-select.module';
 import { DirectivesModule } from '@directives/directives.module';
 
 import { AircraftsComponent } from '@modules/aircrafts/aircrafts.component';
 import { CreateAircraftComponent } from '@modules/aircrafts/create-aircraft/create-aircraft.component';
-import { AircraftDetailsComponent } from './aircraft-details/aircraft-details.component';
+import { AircraftDetailsComponent } from '@modules/aircrafts/aircraft-details/aircraft-details.component';
+import { UpdateAircraftComponent } from '@modules/aircrafts/update-aircraft/update-aircraft.component';
 
 @NgModule({
   declarations: [
     AircraftsComponent,
     CreateAircraftComponent,
-    AircraftDetailsComponent
+    AircraftDetailsComponent,
+    UpdateAircraftComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +29,7 @@ import { AircraftDetailsComponent } from './aircraft-details/aircraft-details.co
     IconsModule,
     OverlayscrollbarsModule,
     NgxTrimDirectiveModule,
+    DropdownSelectModule,
     DirectivesModule
   ]
 })

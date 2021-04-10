@@ -1,5 +1,5 @@
 <div [ngClass]="{ 'mb-2': hasSelected }">
-  <ng-container *ngIf="!!multiple; else multipleSelect">
+  <ng-container *ngIf="!!multiple; else noMultipleSelect">
     <select class="form-control"
       [attr.id]="id"
       [attr.name]="name"
@@ -15,7 +15,7 @@
   </ng-container>
 </div>
 
-<ng-template #multipleSelect>
+<ng-template #noMultipleSelect>
   <select class="form-control"
     [attr.id]="id"
     [attr.name]="name"

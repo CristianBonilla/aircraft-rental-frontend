@@ -13,7 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WINDOW } from '@core/providers/window.provider';
 import {
   DropdownSelectItem,
-  DropdownSelectItemValues,
+  DropdownSelectItemValue,
   DropdownSelectOptions,
   DropdownSelectStyle
 } from '@shared/components/dropdown-select';
@@ -36,7 +36,7 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
   private userAgent: string;
   private _style = DropdownSelectStyle.Light;
   private _items: DropdownSelectItem[] = [];
-  private _selected: string | DropdownSelectItemValues;
+  private _selected: DropdownSelectItemValue | DropdownSelectItemValue[];
   private oldItems: DropdownSelectItem[] = [];
   @Input()
   get items() {
@@ -75,10 +75,10 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     return this._selected;
   }
 
-  set selected(values: string | DropdownSelectItemValues) {
+  set selected(values: DropdownSelectItemValue | DropdownSelectItemValue[]) {
     let changeValues = false;
     if (Array.isArray(values)) {
-      changeValues = this.hasDiff(this._selected as DropdownSelectItemValues, values);
+      changeValues = this.hasDiff(this._selected as DropdownSelectItemValue[], values);
     } else {
       changeValues = !!values && this._selected !== values;
     }
@@ -150,8 +150,11 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     this.onTouched(value);
   }
 
-  compareSelectedFn(itemA: DropdownSelectItem, itemB: DropdownSelectItem) {
-    return itemA && itemB ? itemA.value === itemB.value : itemA === itemB;
+  compareSelectedFn(
+    valueA: DropdownSelectItemValue | DropdownSelectItemValue[],
+    valueB: DropdownSelectItemValue | DropdownSelectItemValue[]
+  ) {
+    return !!valueA && !!valueB && valueA === valueB;
   }
 
   private changeStyle(style: DropdownSelectStyle) {

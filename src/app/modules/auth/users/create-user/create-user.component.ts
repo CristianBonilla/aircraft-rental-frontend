@@ -40,7 +40,7 @@ export class CreateUserComponent implements AfterViewInit {
     lastName: [ null ],
     role: [ null ]
   }, this.controlOptions);
-  dropdownRoleSelect: CustomizeDropdownSelect = {
+  readonly dropdownRoleSelect: CustomizeDropdownSelect = {
     data: [],
     style: DropdownSelectStyle.Info,
     options: {

@@ -48,6 +48,10 @@
         [routerLink]="[ 'details/' + aircraftId ]">
         <fa-icon [icon]="[ 'far', 'eye' ]" size="lg"></fa-icon>
       </a>
+      <a role="button" class="btn text-warning" placement="top" ngbTooltip="Actualizar"
+        [routerLink]="[ 'update/' + aircraftId ]">
+        <fa-icon [icon]="[ 'far', 'edit' ]" size="lg"></fa-icon>
+      </a>
     </div>
   </td>
 </ng-template>

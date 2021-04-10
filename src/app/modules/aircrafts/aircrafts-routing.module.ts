@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AircraftsComponent } from '@modules/aircrafts/aircrafts.component';
 import { CreateAircraftComponent } from '@modules/aircrafts/create-aircraft/create-aircraft.component';
 import { AircraftDetailsComponent } from '@modules/aircrafts/aircraft-details/aircraft-details.component';
+import { UpdateAircraftComponent } from '@modules/aircrafts/update-aircraft/update-aircraft.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'details/:aircraftId',
         component: AircraftDetailsComponent
+      },
+      {
+        path: 'update/:aircraftId',
+        component: UpdateAircraftComponent
       }
     ]
   }
