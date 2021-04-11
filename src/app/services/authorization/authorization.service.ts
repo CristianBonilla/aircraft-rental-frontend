@@ -32,7 +32,7 @@ export class AuthorizationService {
   }
 
   private startRedirectTo(permissions: Permission[]) {
-    let redirectTo = permissions.sort((compareA, compareB) => compareA.id - compareB.id)
+    let redirectTo = permissions.sort((compareA, compareB) => compareA.order - compareB.order)
       .map(({ name }) => {
         switch (name) {
           case PermissionType.ROLES:

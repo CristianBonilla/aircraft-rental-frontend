@@ -34,7 +34,7 @@ export class AircraftsService {
     return aircrafts$;
   }
 
-  fetchAircraftById(aircraftId: number) {
+  fetchAircraftById(aircraftId: string) {
     const aircraft$ = this.http.get<AircraftResponse>(`${ this.endpointUrl }/${ aircraftId }`, {
       responseType: 'json',
       ...this.httpHeaderOptions
@@ -52,7 +52,7 @@ export class AircraftsService {
     return aircrafts$;
   }
 
-  updateAircraft(aircraftId: number, aircraft: AircraftRequest) {
+  updateAircraft(aircraftId: string, aircraft: AircraftRequest) {
     const update$ = this.http.put<AircraftResponse>(`${ this.endpointUrl }/${ aircraftId }`, aircraft, {
       responseType: 'json',
       ...this.httpHeaderOptions
@@ -61,7 +61,7 @@ export class AircraftsService {
     return update$;
   }
 
-  deleteAircraft(aircraftId: number) {
+  deleteAircraft(aircraftId: string) {
     const delete$ = this.http.delete<void>(`${ this.endpointUrl }/${ aircraftId }`, {
       responseType: 'json',
       ...this.httpHeaderOptions

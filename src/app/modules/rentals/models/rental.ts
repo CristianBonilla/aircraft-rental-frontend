@@ -9,5 +9,5 @@ interface Rental {
 export type RentalRequest = Rental;
 
 export interface RentalResponse extends Rental {
-  id: number;
+  id: string;
 }

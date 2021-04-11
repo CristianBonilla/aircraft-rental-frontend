@@ -20,7 +20,7 @@ export class RoleDetailsComponent implements OnInit, AfterViewInit {
   @ViewChild('roleTemplate')
   readonly roleTemplate: TemplateRef<NgbActiveModal>;
   private roleModal: NgbModalRef = null;
-  private roleId: number | null = null;
+  private roleId: string | null = null;
   role: RoleResponse = null;
 
   constructor(
@@ -36,7 +36,7 @@ export class RoleDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.roleId || isNaN(this.roleId)) {
+    if (!this.roleId || !!this.roleId && !this.roleId.trim()) {
       this.giveBack();
 
       return;

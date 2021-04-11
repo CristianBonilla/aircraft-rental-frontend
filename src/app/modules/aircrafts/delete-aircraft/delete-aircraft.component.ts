@@ -24,7 +24,7 @@ export class DeleteAircraftComponent implements OnInit, AfterViewInit {
   private loadingSubject = new BehaviorSubject(false);
   readonly loading$: Observable<boolean>;
   readonly aircraftForm: FormGroup;
-  aircraftId: number | null = null;
+  aircraftId: string | null = null;
   aircraft: AircraftResponse = null;
 
   get id() {
@@ -51,7 +51,7 @@ export class DeleteAircraftComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.aircraftId || isNaN(this.aircraftId)) {
+    if (!this.aircraftId || !!this.aircraftId && !this.aircraftId.trim()) {
       this.giveBack();
 
       return;

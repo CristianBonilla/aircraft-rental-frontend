@@ -19,7 +19,7 @@ export class AircraftDetailsComponent implements OnInit, AfterViewInit {
   @ViewChild('aircraftTemplate')
   readonly aircraftTemplate: TemplateRef<NgbActiveModal>;
   private aircraftModal: NgbModalRef = null;
-  private aircraftId: number | null = null;
+  private aircraftId: string | null = null;
   readonly aircraftState = AircraftRentalState;
   aircraft: AircraftResponse = null;
 
@@ -36,7 +36,7 @@ export class AircraftDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.aircraftId || isNaN(this.aircraftId)) {
+    if (!this.aircraftId || !!this.aircraftId && !this.aircraftId.trim()) {
       this.giveBack();
 
       return;

@@ -12,7 +12,7 @@ interface Aircraft {
 export type AircraftRequest = Aircraft;
 
 export interface AircraftResponse extends Aircraft {
-  id: number;
+  id: string;
 }
 
 export enum AircraftState {

@@ -37,7 +37,7 @@ export class RentalsService {
     return create$;
   }
 
-  fetchRentalById(rentalId: number) {
+  fetchRentalById(rentalId: string) {
     const rental$ = this.http.get<RentalResponse>(`${ this.rentalEndpointUrl }/${ rentalId }`, {
       responseType: 'json',
       ...this.httpHeaderOptions
@@ -46,7 +46,7 @@ export class RentalsService {
     return rental$;
   }
 
-  fetchPassengerById(passengerId: number) {
+  fetchPassengerById(passengerId: string) {
     const passenger$ = this.http.get<PassengerResponse>(`${ this.passengersEndpointUrl }/${ passengerId }`, {
       responseType: 'json',
       ...this.httpHeaderOptions
@@ -68,9 +68,7 @@ export class RentalsService {
     const passengers$ = this.http.get<PassengerResponse[]>(this.passengersEndpointUrl, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    }).pipe(
-      map(passengers => passengers.sort((compareA, compareB) => compareA.id - compareB.id))
-    );
+    });
 
     return passengers$;
   }

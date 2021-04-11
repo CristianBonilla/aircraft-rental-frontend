@@ -23,7 +23,7 @@ export class UpdateAircraftComponent implements OnInit, AfterViewInit {
   readonly aircraftTemplate: TemplateRef<NgbActiveModal>;
   private aircraftModal: NgbModalRef;
   private readonly loadingSubject = new BehaviorSubject(false);
-  private aircraftId: number | null = null;
+  private aircraftId: string | null = null;
   readonly loading$: Observable<boolean>;
   readonly aircraftForm = this.formBuilder.group({
     id: [ null ],
@@ -96,7 +96,7 @@ export class UpdateAircraftComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.aircraftId || isNaN(this.aircraftId)) {
+    if (!this.aircraftId || !!this.aircraftId && !this.aircraftId.trim()) {
       this.giveBack();
 
       return;

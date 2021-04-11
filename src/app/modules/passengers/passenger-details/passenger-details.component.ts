@@ -19,7 +19,7 @@ export class PassengerDetailsComponent implements OnInit, AfterViewInit {
   @ViewChild('passengerTemplate')
   readonly passengerTemplate: TemplateRef<NgbActiveModal>;
   private passengerModal: NgbModalRef = null;
-  private passengerId: number | null = null;
+  private passengerId: string | null = null;
   passenger: PassengerResponse = null;
 
   constructor(
@@ -35,7 +35,7 @@ export class PassengerDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.passengerId || isNaN(this.passengerId)) {
+    if (!this.passengerId || !!this.passengerId && !this.passengerId.trim()) {
       this.giveBack();
 
       return;

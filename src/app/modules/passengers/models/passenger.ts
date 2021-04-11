@@ -8,7 +8,7 @@ interface Passenger {
 export type PassengerRequest = Passenger;
 
 export interface PassengerResponse extends Passenger {
-  id: number;
+  id: string;
 }
 
 export enum PassengerState {

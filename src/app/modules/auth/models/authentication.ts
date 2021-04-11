@@ -20,8 +20,8 @@ export interface UserRegisterRequest extends User {
 }
 
 export interface UserResponse extends User {
-  id: number;
-  roleId: number;
+  id: string;
+  roleId: string;
 }
 
 export interface UserWithRole extends UserResponse {

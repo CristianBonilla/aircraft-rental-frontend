@@ -14,7 +14,7 @@ export interface RoleRequest {
 }
 
 export interface RoleResponse {
-  id: number;
+  id: string;
   name: string;
   displayName: string;
   permissions: Permission[];

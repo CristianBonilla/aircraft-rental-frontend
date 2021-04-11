@@ -20,7 +20,7 @@ export class UserDetailsComponent implements OnInit, AfterViewInit {
   @ViewChild('userTemplate')
   readonly userTemplate: TemplateRef<NgbActiveModal>;
   private userModal: NgbModalRef = null;
-  private userId: number | null = null;
+  private userId: string | null = null;
   user: UserWithRole = null;
 
   constructor(
@@ -36,7 +36,7 @@ export class UserDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.userId || isNaN(this.userId)) {
+    if (!this.userId || !!this.userId && !this.userId.trim()) {
       this.giveBack();
 
       return;

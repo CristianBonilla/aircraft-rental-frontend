@@ -131,7 +131,7 @@ export class IdentityService {
     return user$;
   }
 
-  fetchRoleById(roleId: number) {
+  fetchRoleById(roleId: string) {
     const role$ = this.http.get<RoleResponse>(`${ this.rolesEndpointUrl }/${ roleId }`, {
       responseType: 'json',
       ...this.httpHeaderOptions
@@ -140,7 +140,7 @@ export class IdentityService {
     return role$;
   }
 
-  fetchUserById(userId: number) {
+  fetchUserById(userId: string) {
     const user$ = this.http.get<UserResponse>(`${ this.usersEndpointUrl }/${ userId }`, {
       responseType: 'json',
       ...this.httpHeaderOptions
@@ -167,11 +167,13 @@ export class IdentityService {
     return users$;
   }
 
-  fetchPermissionsByRole(roleId: number) {
+  fetchPermissionsByRole(roleId: string) {
     const permissions$ = this.http.get<Permission[]>(`${ this.rolesEndpointUrl }/${ roleId }/permissions`, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    });
+    }).pipe(
+      map(permissions => permissions.sort((compareA, compareB) => compareA.order - compareB.order))
+    );
 
     return permissions$;
   }
