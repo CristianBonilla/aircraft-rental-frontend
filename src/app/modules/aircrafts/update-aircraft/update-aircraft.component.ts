@@ -28,7 +28,7 @@ export class UpdateAircraftComponent implements OnInit, AfterViewInit {
   readonly aircraftForm = this.formBuilder.group({
     id: [ null ],
     name: [ null ],
-    state: [ null ],
+    state: [ { value: null, disabled: true } ],
     description: [ null ]
   });
   readonly dropdownStateSelect: CustomizeDropdownSelect = {
@@ -42,7 +42,7 @@ export class UpdateAircraftComponent implements OnInit, AfterViewInit {
         text: 'Alquilado'
       }
     ],
-    style: DropdownSelectStyle.Warning,
+    style: DropdownSelectStyle.Light,
     options: {
       noneSelectedText: 'Estado sin seleccionar...',
       size: 5

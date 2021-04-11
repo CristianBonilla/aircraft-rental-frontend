@@ -35,6 +35,7 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
   readonly selectRef: ElementRef<HTMLSelectElement>;
   private userAgent: string;
   private _style = DropdownSelectStyle.Light;
+  private _disabled = false;
   private _items: DropdownSelectItem[] = [];
   private _selected: DropdownSelectItemValue | DropdownSelectItemValue[];
   private oldItems: DropdownSelectItem[] = [];
@@ -54,7 +55,14 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     this.changeStyle(style);
     this._style = style;
   }
-  @Input() disabled = false;
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+  set disabled(disabled: boolean) {
+    this.changeDisabled(disabled);
+    this._disabled = disabled;
+  }
   @Input() multiple = false;
   defaultOptions: DropdownSelectOptions = {
     selectAllText: 'Seleccionar todo',
@@ -163,6 +171,13 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     }
     this.$select.selectpicker('setStyle', this.style, 'remove');
     this.$select.selectpicker('setStyle', style, 'add');
+  }
+
+  private changeDisabled(disabled: boolean) {
+    if (!this.$select) {
+      return;
+    }
+    this.$select.prop('disabled', disabled);
   }
 
   private refresh() {
