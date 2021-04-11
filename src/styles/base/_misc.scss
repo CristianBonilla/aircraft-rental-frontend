@@ -94,19 +94,17 @@ input[type="submit"] {
   }
 }
 
-.btn.dropdown-toggle {
+button.btn {
 
-  &,
-  &:focus {
-    outline: none !important;
-  }
-}
+  &.dropdown-toggle,
+  &.disabled {
 
-button.btn.disabled {
-
-  &:focus {
-    outline: none !important;
-    box-shadow: none !important;
+    &,
+    &:focus {
+      cursor: default !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
   }
 }
 
