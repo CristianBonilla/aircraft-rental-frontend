@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IdentityService } from '@services/identity/identity.service';
 import { take } from 'rxjs/operators';
+import { DEFAULT_SCROLLBAR_OPTIONS, ScrollbarOptions } from 'src/app/models/scrollbar';
 
 enum AuthType {
   Register,
@@ -13,6 +14,12 @@ enum AuthType {
   styles: []
 })
 export class AuthComponent {
+  readonly scrollbarOptions: ScrollbarOptions = {
+    ...DEFAULT_SCROLLBAR_OPTIONS,
+    overflowBehavior: {
+      x: 'visible-hidden'
+    }
+  };
   readonly type = AuthType;
   auth = this.type.Login;
   loading = false;

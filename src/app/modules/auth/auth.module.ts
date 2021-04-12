@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@shared/icons/icons.module';
 import { DirectivesModule } from '@directives/directives.module';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 
 import { AuthComponent } from '@modules/auth/auth.component';
 import { LoginComponent } from '@modules/auth/login/login.component';
@@ -22,7 +23,8 @@ import { RegisterComponent } from '@modules/auth/register/register.component';
     ReactiveFormsModule,
     IconsModule,
     DirectivesModule,
-    NgxTrimDirectiveModule
+    NgxTrimDirectiveModule,
+    OverlayscrollbarsModule
   ]
 })
 export class AuthModule { }

@@ -1,12 +1,14 @@
 <div class="auth-wrap">
   <div class="auth-panel">
     <ng-container *ngIf="auth !== type.Login; then login; else register"></ng-container>
-    <div class="auth-panel_container" [ngClass]="{ 'right-log': auth === type.Register }">
+    <overlay-scrollbars class="auth-panel_container" [options]="scrollbarOptions" [ngClass]="{
+      'right-log': auth === type.Register
+    }">
       <ng-container [ngSwitch]="auth">
         <arf-register *ngSwitchCase="type.Register" (loading)="loading = $event"></arf-register>
         <arf-login *ngSwitchDefault (loading)="loading = $event"></arf-login>
       </ng-container>
-    </div>
+    </overlay-scrollbars>
   </div>
 </div>
 
