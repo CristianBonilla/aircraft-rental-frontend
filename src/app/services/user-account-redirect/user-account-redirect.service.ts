@@ -94,8 +94,7 @@ export class UserAccountRedirectService {
     const nonExistentUser$ = this.identity.userExists(userResponse).pipe(
       map(user => !!user),
       filter(existing => !existing),
-      mergeMap(_ => this.logout()),
-      catchError(_ => this.logout())
+      mergeMap(_ => this.logout())
     );
 
     return nonExistentUser$;
