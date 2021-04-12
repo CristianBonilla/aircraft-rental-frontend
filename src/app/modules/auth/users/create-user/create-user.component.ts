@@ -156,7 +156,7 @@ const { HOME: ROUTES } = APP_ROUTES;
     this.identity.fetchRoles().pipe(
       take(1),
       mergeAll(),
-      filter(({ name }) => name !== DefaultRoles.ADMIN_USER && name !== DefaultRoles.COMMON_USER),
+      filter(({ name }) => name !== DefaultRoles.ADMIN_USER),
       toArray()
     ).subscribe(roles => {
       for (const { name, displayName } of roles) {
