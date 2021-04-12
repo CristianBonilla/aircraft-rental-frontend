@@ -1,0 +1,30 @@
+.toggle-theme {
+  position: relative;
+  margin: 10px;
+  width: 50px;
+  height: 25px;
+  border-radius: 25px;
+  background-color: #0275d8;
+  transition: background-color 0.15s ease-in-out;
+
+  &.selected {
+    background: #b82d1b;
+  }
+
+  &__container {
+    position: absolute;
+    margin-top: 3px;
+    margin-left: 3px;
+    left: 0px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #f7f7f7;
+    transition: left 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+    &.selected {
+      left: 25px;
+      background-color: #cccccc;
+    }
+  }
+}

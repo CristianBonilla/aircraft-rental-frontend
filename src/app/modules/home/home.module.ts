@@ -6,12 +6,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@shared/icons/icons.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
+import { ThemeToggleModule } from '@shared/components/theme-toggle/theme-toggle.module';
 
 import { FooterComponent } from '@modules/home/footer/footer.component';
 import { NavbarComponent } from '@modules/home/navbar/navbar.component';
 import { SidebarComponent } from '@modules/home/sidebar/sidebar.component';
 import { SidebarWrapperComponent } from '@modules/home/sidebar/sidebar-wrapper/sidebar-wrapper.component';
 import { HomeComponent } from '@modules/home/home.component';
+
 import { ToggleSidebarDirective } from '@modules/home/directives/toggle-sidebar.directive';
 
 @NgModule({
@@ -30,7 +32,8 @@ import { ToggleSidebarDirective } from '@modules/home/directives/toggle-sidebar.
     ReactiveFormsModule,
     IconsModule,
     NgbModule,
-    OverlayscrollbarsModule
+    OverlayscrollbarsModule,
+    ThemeToggleModule
   ]
 })
 export class HomeModule { }

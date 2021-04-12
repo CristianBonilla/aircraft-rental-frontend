@@ -6,6 +6,7 @@ import { IconsModule } from '@shared/icons/icons.module';
 import { DirectivesModule } from '@directives/directives.module';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
+import { ThemeToggleModule } from '@shared/components/theme-toggle/theme-toggle.module';
 
 import { AuthComponent } from '@modules/auth/auth.component';
 import { LoginComponent } from '@modules/auth/login/login.component';
@@ -24,7 +25,8 @@ import { RegisterComponent } from '@modules/auth/register/register.component';
     IconsModule,
     DirectivesModule,
     NgxTrimDirectiveModule,
-    OverlayscrollbarsModule
+    OverlayscrollbarsModule,
+    ThemeToggleModule
   ]
 })
 export class AuthModule { }
