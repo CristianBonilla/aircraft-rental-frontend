@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PassengerRequest, PassengerResponse } from '@modules/passengers/models/passenger';
 import { RentalRequest, RentalResponse } from '@modules/rentals/models/rental';
-import { map } from 'rxjs/operators';
 import { ENDPOINTS } from 'src/app/models/endpoints';
 
 @Injectable({
@@ -71,5 +70,16 @@ export class RentalsService {
     });
 
     return passengers$;
+  }
+
+  fetchPassengersNotAvailable() {
+    const passengersNotAvailable$ = this.http.get<PassengerResponse[]>(
+      `${ this.passengersEndpointUrl }/notavailable`, {
+        responseType: 'json',
+        ...this.httpHeaderOptions
+      }
+    );
+
+    return passengersNotAvailable$;
   }
 }

@@ -13,11 +13,22 @@ interface ControlElements {
   selector: '[arfFormErrorHandler]'
 })
 export class FormErrorHandlerDirective implements OnInit {
-  @Input('arfFormErrorHandler') control: AbstractControl;
+  @Input('arfFormErrorHandler') controlOptions: AbstractControl | {
+    instance: AbstractControl,
+    touched: boolean
+  };
+  private control: AbstractControl;
+  private controlTouched = true;
 
   constructor(private controlElementRef: ElementRef<HTMLElement>, private renderer: Renderer2) { }
 
   ngOnInit() {
+    if (this.controlOptions instanceof AbstractControl) {
+      this.control = this.controlOptions;
+    } else {
+      this.control = this.controlOptions.instance;
+      this.controlTouched = this.controlOptions.touched;
+    }
     const controlElements = this.getControlElements();
     this.control.valueChanges.pipe(delay(1)).subscribe(() => {
       if (this.hasError()) {
@@ -72,6 +83,6 @@ export class FormErrorHandlerDirective implements OnInit {
   private hasError() {
     const { invalid, dirty, touched } = this.control;
 
-    return invalid && (dirty || touched);
+    return invalid && (dirty || this.controlTouched && touched);
   }
 }

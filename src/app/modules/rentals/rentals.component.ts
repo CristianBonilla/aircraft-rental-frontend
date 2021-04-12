@@ -25,7 +25,13 @@ export class RentalsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.refresh.dispatch();
+    this.syncData();
+  }
+
+  syncData(refresh = true) {
+    if (refresh) {
+      this.refresh.dispatch();
+    }
   }
 
   trackByRentals(_: number, rentalResponse: RentalResponse) {

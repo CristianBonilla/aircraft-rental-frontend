@@ -1,18 +1,19 @@
-<div class="container-fluid px-0 px-sm-0 px-lg-3">
+<div class="container-fluid px-0 px-sm-2 px-lg-3">
+  <arf-create-rental (refresh)="syncData($event)"></arf-create-rental>
   <div class="table-container">
     <overlay-scrollbars class="table-responsive" [options]="scrollbarOptions">
-      <table class="table table-borderless table-striped">
-        <ng-container *ngIf="rentals$ | rentalsDisplay | async as rentals; else loadingRentals">
+      <table class="table table-sm table-borderless table-striped">
+        <ng-container *ngIf="rentals$ | async as rentals; else loadingRentals">
           <ng-container *ngIf="!!rentals.length; else noRentalsFound">
             <ng-container *ngTemplateOutlet="header; context: { $implicit: true }"></ng-container>
             <tbody>
-              <tr *ngFor="let rental of rentals; let index = index; trackBy: trackByRentals">
-                <th scope="row" class="text-center">{{ index + 1 }}</th>
-                <td class="text-center text-truncate">{{ rental.aircraft.name }}</td>
-                <td class="text-secondary text-truncate">{{ rental.location }}</td>
-                <td class="text-center text-truncate miw-25">{{ rental.arrivalDate | date : 'MMM d, y, h:mm:ss a' }}</td>
-                <td class="text-center text-truncate miw-25">{{ rental.departureDate | date : 'MMM d, y, h:mm:ss a' }}</td>
-                <td class="text-center text-truncate miw-18">{{ rental.passengersAmount }}</td>
+              <tr class="text-center" *ngFor="let rental of rentals | rentalsDisplay | async; let index = index; trackBy: trackByRentals">
+                <th scope="row">{{ index + 1 }}</th>
+                <td class="text-truncate">{{ rental.aircraft.name }}</td>
+                <td class="text-truncate text-secondary">{{ rental.location }}</td>
+                <td class="text-truncate miw-25">{{ rental.departureDate | date : 'MMM d, y, h:mm:ss a' }}</td>
+                <td class="text-truncate miw-25">{{ rental.arrivalDate | date : 'MMM d, y, h:mm:ss a' }}</td>
+                <td class="text-truncate miw-18">{{ rental.passengersAmount }}</td>
                 <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: rental.id }"></ng-container>
               </tr>
             </tbody>
@@ -24,7 +25,7 @@
 </div>
 
 <ng-template #actions let-rentalId>
-  <td class="table-actions">
+  <td class="table-actions miw-18">
     <div class="table-actions__content">
       <a role="button" class="btn text-primary" placement="top" ngbTooltip="Detalles"
         [routerLink]="[ 'details/' + rentalId ]">
@@ -55,10 +56,10 @@
       <th scope="col">N°</th>
       <th scope="col" class="text-center">Aeronave</th>
       <th scope="col">Ubicación</th>
-      <th scope="col">Llegada</th>
-      <th scope="col">Salida</th>
+      <th scope="col" class="miw-25">Salida</th>
+      <th scope="col" class="miw-25">Llegada</th>
       <th scope="col" class="miw-18">Número de pasajeros</th>
-      <th scope="col">Acciones</th>
+      <th scope="col" class="miw-18">Acciones</th>
     </tr>
   </thead>
 </ng-template>

@@ -21,5 +21,6 @@ export {
   faPaperPlane,
   faEye,
   faEdit,
-  faTrashAlt
+  faTrashAlt,
+  faCalendarAlt
 } from '@fortawesome/free-regular-svg-icons';

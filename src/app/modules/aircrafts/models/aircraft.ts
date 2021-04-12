@@ -1,6 +1,6 @@
 export enum AircraftRentalState {
-  NotRented = 'N',
-  Rented = 'R'
+  NotRented = 'NotRented',    // 78
+  Rented = 'Rented'           // 82
 }
 
 interface Aircraft {

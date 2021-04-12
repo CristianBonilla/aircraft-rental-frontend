@@ -96,7 +96,13 @@ input[type="submit"] {
 
 button.btn {
 
-  &.dropdown-toggle,
+  &.dropdown-toggle {
+    cursor: pointer !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  &.dropdown-toggle.disabled,
   &.disabled {
 
     &,

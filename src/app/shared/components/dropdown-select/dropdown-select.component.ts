@@ -162,7 +162,9 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
     valueA: DropdownSelectItemValue | DropdownSelectItemValue[],
     valueB: DropdownSelectItemValue | DropdownSelectItemValue[]
   ) {
-    return !!valueA && !!valueB && valueA === valueB;
+    const isValid = <T>(value: T) => typeof value !== undefined && typeof value !== null;
+
+    return isValid(valueA) && isValid(valueB) && valueA === valueB;
   }
 
   private changeStyle(style: DropdownSelectStyle) {
@@ -178,10 +180,11 @@ export class DropdownSelectComponent implements ControlValueAccessor, AfterViewI
       return;
     }
     this.$select.prop('disabled', disabled);
+    this.refresh();
   }
 
   private refresh() {
-    if (!!this.$select && !!this.items.length) {
+    if (!!this.$select) {
       setTimeout(() => this.$select.selectpicker('refresh'));
     }
   }

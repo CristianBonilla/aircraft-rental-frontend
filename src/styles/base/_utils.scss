@@ -1,6 +1,7 @@
 .table-container {
 
-  h4 {
+  h4,
+  h5 {
     line-height: 1;
   }
 
@@ -46,6 +47,15 @@
       &:focus {
         box-shadow: none;
       }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .table-container {
+
+    caption {
+      display: none;
     }
   }
 }

@@ -2,8 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AircraftResponse } from '@modules/aircrafts/models/aircraft';
 import { RentalDisplay, RentalResponse } from '@modules/rentals/models/rental';
 import { AircraftsService } from '@services/aircrafts/aircrafts.service';
-import { combineLatest, Observable } from 'rxjs';
-import { count, distinct, first, groupBy, map, mergeAll, mergeMap, take, toArray } from 'rxjs/operators';
+import { combineLatest, from } from 'rxjs';
+import { count, distinct, first, groupBy, map, mergeMap, take, toArray } from 'rxjs/operators';
 
 @Pipe({
   name: 'rentalsDisplay'
@@ -11,10 +11,8 @@ import { count, distinct, first, groupBy, map, mergeAll, mergeMap, take, toArray
 export class RentalsDisplayPipe implements PipeTransform {
   constructor(private aircrafts: AircraftsService) { }
 
-  transform(rentals$: Observable<RentalResponse[]>) {
-    const rentalsDisplay$ = rentals$.pipe(
-      take(1),
-      mergeAll(),
+  transform(rentals: RentalResponse[]) {
+    const rentalsDisplay$ = from(rentals).pipe(
       groupBy(rental => rental.aircraftId),
       mergeMap(group => combineLatest([
         group.pipe(first()),
@@ -40,8 +38,8 @@ export class RentalsDisplayPipe implements PipeTransform {
         passengersAmount,
         aircraft,
         location,
-        arrivalDate,
-        departureDate
+        departureDate,
+        arrivalDate
       }))
     );
 

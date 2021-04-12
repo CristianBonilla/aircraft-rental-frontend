@@ -43,7 +43,7 @@ export class AircraftsService {
     return aircraft$;
   }
 
-  fetchAircraftsByState(aircraftState: AircraftRentalState) {
+  fetchAircraftsByState(aircraftState: AircraftRentalState | number) {
     const aircrafts$ = this.http.get<AircraftResponse[]>(`${ this.endpointUrl }/state/${ aircraftState }`, {
       responseType: 'json',
       ...this.httpHeaderOptions

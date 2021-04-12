@@ -1,0 +1,19 @@
+.rental-container {
+  max-width: 700px;
+}
+
+.input-group {
+
+  button.btn {
+
+    &,
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    fa-icon {
+      vertical-align: baseline;
+    }
+  }
+}

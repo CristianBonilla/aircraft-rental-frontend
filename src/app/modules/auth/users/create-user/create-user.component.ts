@@ -22,7 +22,7 @@ const { HOME: ROUTES } = APP_ROUTES;
   templateUrl: './create-user.component.html',
   styles: []
 })
-export class CreateUserComponent implements AfterViewInit {
+  export class CreateUserComponent implements AfterViewInit {
   @ViewChild('userTemplate')
   readonly userTemplate: TemplateRef<NgbActiveModal>;
   private userModal: NgbModalRef;
