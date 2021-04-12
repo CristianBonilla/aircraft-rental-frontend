@@ -1,5 +1,5 @@
 <div class="container-fluid px-0 px-sm-2 px-lg-3">
-  <arf-create-rental (refresh)="syncData($event)"></arf-create-rental>
+  <arf-create-rental (refresh)="syncData($event)" *ngxPermissionsExcept="[ DEFAULT_ROLES.COMMON_USER ]"></arf-create-rental>
   <div class="table-container">
     <overlay-scrollbars class="table-responsive" [options]="scrollbarOptions">
       <table class="table table-sm table-borderless table-striped">

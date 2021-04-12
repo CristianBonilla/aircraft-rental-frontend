@@ -3,7 +3,11 @@
     <div class="d-sm-flex justify-content-between align-items-center bg-primary px-3 py-2">
       <h4 class="text-light my-1 my-sm-0">Pasajeros</h4>
       <a type="button" class="btn btn-outline-light my-1 my-sm-0" [ngClass]="{ disabled: loading$ | async }"
-        routerLink="create">
+        routerLink="create"
+        *ngxPermissionsExcept="[
+          DEFAULT_ROLES.PILOT_USER,
+          DEFAULT_ROLES.COMMON_USER
+        ]">
         <fa-icon [icon]="[ 'fas', 'briefcase' ]" size="lg"></fa-icon>
         Crear un nuevo pasajero
       </a>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RentalsRoutingModule } from '@modules/rentals/rentals-routing.module';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IconsModule } from '@shared/icons/icons.module';
 import { DirectivesModule } from '@directives/directives.module';
@@ -27,6 +28,7 @@ import { RentalsDisplayPipe } from '@modules/rentals/pipes/rentals-display/renta
     RentalsRoutingModule,
     OverlayscrollbarsModule,
     ReactiveFormsModule,
+    NgxPermissionsModule,
     NgbModule,
     IconsModule,
     DirectivesModule,

@@ -3,6 +3,7 @@ import { RefreshAircrafts, REFRESH_AIRCRAFTS } from '@core/providers/refresh.pro
 import { AircraftRentalState, AircraftResponse } from '@modules/aircrafts/models/aircraft';
 import { DEFAULT_SCROLLBAR_OPTIONS, ScrollbarOptions } from 'src/app/models/scrollbar';
 import { Observable } from 'rxjs';
+import { DefaultRoles } from '@modules/auth/models/role';
 
 @Component({
   selector: 'arf-aircrafts',
@@ -10,6 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: [ './aircrafts.component.scss' ]
 })
 export class AircraftsComponent implements OnInit {
+  readonly DEFAULT_ROLES = DefaultRoles;
   readonly scrollbarOptions: ScrollbarOptions = {
     ...DEFAULT_SCROLLBAR_OPTIONS,
     overflowBehavior: {

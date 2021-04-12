@@ -3,6 +3,7 @@ import { RefreshPassengers, REFRESH_PASSENGERS } from '@core/providers/refresh.p
 import { Observable } from 'rxjs';
 import { DEFAULT_SCROLLBAR_OPTIONS, ScrollbarOptions } from 'src/app/models/scrollbar';
 import { PassengerResponse } from '@modules/passengers/models/passenger';
+import { DefaultRoles } from '@modules/auth/models/role';
 
 @Component({
   selector: 'arf-passengers',
@@ -10,6 +11,7 @@ import { PassengerResponse } from '@modules/passengers/models/passenger';
   styleUrls: [ './passengers.component.scss' ]
 })
 export class PassengersComponent implements OnInit {
+  readonly DEFAULT_ROLES = DefaultRoles;
   readonly scrollbarOptions: ScrollbarOptions = {
     ...DEFAULT_SCROLLBAR_OPTIONS,
     overflowBehavior: {

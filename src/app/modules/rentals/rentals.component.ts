@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { RefreshRentals, REFRESH_RENTALS } from '@core/providers/refresh.provider';
+import { DefaultRoles } from '@modules/auth/models/role';
 import { RentalResponse } from '@modules/rentals/models/rental';
 import { DEFAULT_SCROLLBAR_OPTIONS, ScrollbarOptions } from 'src/app/models/scrollbar';
 import { Observable } from 'rxjs';
@@ -10,6 +11,7 @@ import { Observable } from 'rxjs';
   styles: []
 })
 export class RentalsComponent implements OnInit {
+  readonly DEFAULT_ROLES = DefaultRoles;
   readonly loading$: Observable<boolean>;
   readonly rentals$: Observable<RentalResponse[]>;
   readonly scrollbarOptions: ScrollbarOptions = {

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AircraftsRoutingModule } from '@modules/aircrafts/aircrafts-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IconsModule } from '@shared/icons/icons.module';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
@@ -27,12 +28,13 @@ import { DeleteAircraftComponent } from '@modules/aircrafts/delete-aircraft/dele
     CommonModule,
     AircraftsRoutingModule,
     NgbModule,
+    NgxPermissionsModule,
     ReactiveFormsModule,
     IconsModule,
     OverlayscrollbarsModule,
     NgxTrimDirectiveModule,
     DropdownSelectModule,
-    DirectivesModule
+    DirectivesModule,
   ]
 })
 export class AircraftsModule { }

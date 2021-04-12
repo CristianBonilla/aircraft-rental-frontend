@@ -3,7 +3,11 @@
     <div class="d-sm-flex justify-content-between align-items-center bg-dark px-3 py-2">
       <h4 class="text-light my-1 my-sm-0">Aeronaves</h4>
       <a type="button" class="btn btn-success btn-sm my-1 my-sm-0" [ngClass]="{ disabled: loading$ | async }"
-        routerLink="create">
+        routerLink="create"
+        *ngxPermissionsExcept="[
+          DEFAULT_ROLES.PASSENGER_USER,
+          DEFAULT_ROLES.COMMON_USER
+        ]">
         <fa-icon [icon]="[ 'far', 'paper-plane' ]" size="lg"></fa-icon>
         Registrar aeronave
       </a>
@@ -30,7 +34,8 @@
                     <span class="badge badge-warning" *ngSwitchDefault>Alquilado</span>
                   </ng-container>
                 </td>
-                <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: aircraft.id }"></ng-container>
+                <ng-container [ngTemplateOutlet]="actions"
+                  [ngTemplateOutletContext]="{ $implicit: aircraft.id }"></ng-container>
               </tr>
             </tbody>
           </ng-container>
@@ -48,14 +53,19 @@
         [routerLink]="[ 'details/' + aircraftId ]">
         <fa-icon [icon]="[ 'far', 'eye' ]" size="lg"></fa-icon>
       </a>
-      <a role="button" class="btn text-warning" placement="top" ngbTooltip="Actualizar"
-        [routerLink]="[ 'update/' + aircraftId ]">
-        <fa-icon [icon]="[ 'far', 'edit' ]" size="lg"></fa-icon>
-      </a>
-      <a role="button" class="btn text-danger" placement="top" ngbTooltip="Eliminar"
-        [routerLink]="[ 'delete/' + aircraftId ]">
-        <fa-icon [icon]="[ 'far', 'trash-alt' ]" size="lg"></fa-icon>
-      </a>
+      <ng-container *ngxPermissionsExcept="[
+        DEFAULT_ROLES.PASSENGER_USER,
+        DEFAULT_ROLES.COMMON_USER
+      ]">
+        <a role="button" class="btn text-warning" placement="top" ngbTooltip="Actualizar"
+          [routerLink]="[ 'update/' + aircraftId ]">
+          <fa-icon [icon]="[ 'far', 'edit' ]" size="lg"></fa-icon>
+        </a>
+        <a role="button" class="btn text-danger" placement="top" ngbTooltip="Eliminar"
+          [routerLink]="[ 'delete/' + aircraftId ]">
+          <fa-icon [icon]="[ 'far', 'trash-alt' ]" size="lg"></fa-icon>
+        </a>
+      </ng-container>
     </div>
   </td>
 </ng-template>
