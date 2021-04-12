@@ -30,7 +30,8 @@
             "sourceMap": true,
             "assets": [
               "src/assets/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
@@ -46,7 +47,9 @@
             ],
             "allowedCommonJsDependencies": [
               "overlayscrollbars"
-            ]
+            ],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "dev": {
@@ -135,12 +138,15 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/assets/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/bootstrap-select/sass/bootstrap-select.scss",
               "node_modules/overlayscrollbars/css/OverlayScrollbars.min.css",
+              "node_modules/@forevolve/bootstrap-dark/dist/css/toggle-bootstrap.min.css",
+              "node_modules/@forevolve/bootstrap-dark/dist/css/toggle-bootstrap-dark.min.css",
               "src/styles/main.scss"
             ],
             "scripts": [

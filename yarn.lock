@@ -253,6 +253,13 @@
   dependencies:
     tslib "^2.0.0"
 
+"@angular/service-worker@^11.2.9":
+  version "11.2.9"
+  resolved "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-11.2.9.tgz#ea8ea9239f0a5b4ea90d8eed22d3d46adefd6fd6"
+  integrity sha512-U5REtujzxCIkOthKC6Utiq4qcPITtL86LZl+rk5iBoHLGI1BKhBqQRxsx9dCs2De6ul7If0wV1FdA+HSOkX60g==
+  dependencies:
+    tslib "^2.0.0"
+
 "@auth0/angular-jwt@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@auth0/angular-jwt/-/angular-jwt-5.0.2.tgz#0a23f240e8c6ed37c5c7a354ad79a755a217936e"
@@ -1151,6 +1158,15 @@
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
+
+"@forevolve/bootstrap-dark@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@forevolve/bootstrap-dark/-/bootstrap-dark-1.0.0.tgz#05fb14e73fbf5ce159a5ba5d1aee151a57c79bca"
+  integrity sha512-DrW2ztlas60UgumD0KZP/MzfO2WQd8U1vT3O7aSG7ACXeVYGb+WnGz4H3LL3PD7/nOQunK+U57rVeJcyQ/uivA==
+  dependencies:
+    bootstrap "^4.6.0"
+    jquery "^3.5.1"
+    popper.js "^1.16.1"
 
 "@fortawesome/angular-fontawesome@0.8.2":
   version "0.8.2"
@@ -2125,7 +2141,7 @@ bootstrap-select@^1.13.18:
   resolved "https://registry.yarnpkg.com/bootstrap-select/-/bootstrap-select-1.13.18.tgz#4557119d58dc1159189977161c803962220e4dda"
   integrity sha512-V1IzK4rxBq5FrJtkzSH6RmFLFBsjx50byFbfAf8jYyXROWs7ZpprGjdHeoyq2HSsHyjJhMMwjsQhRoYAfxCGow==
 
-bootstrap@^4.5.0:
+bootstrap@^4.5.0, bootstrap@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.6.0.tgz#97b9f29ac98f98dfa43bf7468262d84392552fd7"
   integrity sha512-Io55IuQY3kydzHtbGvQya3H+KorS/M9rSNyfCGCg9WZ4pyT/lCxIlpJgG1GXW/PswzC84Tr2fBYi+7+jFVQQBw==
