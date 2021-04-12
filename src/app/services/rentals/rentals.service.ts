@@ -63,6 +63,17 @@ export class RentalsService {
     return rentals$;
   }
 
+  fetchRentalsByAircraftId(aircraftId: string) {
+    const rentals$ = this.http.get<RentalResponse[]>(
+      `${ this.rentalEndpointUrl }/byaircraft/${ aircraftId }`, {
+        responseType: 'json',
+        ...this.httpHeaderOptions
+      }
+    );
+
+    return rentals$;
+  }
+
   fetchPassengers() {
     const passengers$ = this.http.get<PassengerResponse[]>(this.passengersEndpointUrl, {
       responseType: 'json',

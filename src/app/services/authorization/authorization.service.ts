@@ -44,7 +44,7 @@ export class AuthorizationService {
           case PermissionType.PASSENGERS:
             return ROUTES.PASSENGERS.MAIN;
           default:
-            return ROUTES.RENTALS;
+            return ROUTES.RENTALS.MAIN;
         }
       })
       .splice(0, 1)

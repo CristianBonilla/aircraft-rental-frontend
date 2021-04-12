@@ -20,7 +20,9 @@ const APP_ROUTES = {
       MAIN: '/passengers',
       CREATE: '/passengers/create'
     },
-    RENTALS: '/rentals'
+    RENTALS: {
+      MAIN: '/rentals'
+    }
   }
 };
 
@@ -36,7 +38,7 @@ const SIDEBAR_ROUTES: HomeRoutes = {
   USERS: ROUTES.USERS.MAIN,
   AIRCRAFTS: ROUTES.AIRCRAFTS.MAIN,
   PASSENGERS: ROUTES.PASSENGERS.MAIN,
-  RENTALS: ROUTES.RENTALS
+  RENTALS: ROUTES.RENTALS.MAIN
 };
 
 Object.freeze(APP_ROUTES);

@@ -1,0 +1,72 @@
+<ng-template #rentalTemplate let-modal>
+  <ng-container *ngIf="!!rentalDisplayDetail">
+    <ng-template [ngTemplateOutlet]="rentalModalTemplate" [ngTemplateOutletContext]="{
+      $implicit: modal,
+      display: rentalDisplayDetail
+    }"></ng-template>
+  </ng-container>
+</ng-template>
+
+<ng-template #rentalModalTemplate let-modal let-display="display">
+  <div class="modal-header">
+    <h5 class="modal-title font-weight-bold">Descripción del alquiler</h5>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Aeronave</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="font-weight-bold mb-0">{{ display.aircraft.name }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Ubicación</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="h5 mb-0">{{ display.location }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Salida</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="mb-0">{{ display.departureDate | date : 'MMM d, y, h:mm:ss a' }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Llegada</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center py-2">
+          <p class="mb-0">{{ display.arrivalDate | date : 'MMM d, y, h:mm:ss a' }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 d-flex align-items-center py-2">
+          <h5 class="text-muted mb-0">Pasajeros</h5>
+        </div>
+        <div class="col-sm-8 d-flex align-items-center flex-column py-2">
+          <ul class="list-group w-100">
+            <li class="list-group-item d-flex p-0" *ngFor="let passenger of display.passengers; let index = index">
+              <strong class="py-2 px-3">{{ index + 1 }}</strong>
+              <p class="text-muted p-2 mb-0 w-100">{{
+                passenger.identificationDocument + ', ' +
+                passenger.firstName + ' ' + passenger.lastName
+              }}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary text-light" (click)="close(modal)">
+      <fa-icon [icon]="[ 'fas', 'times' ]" size="lg"></fa-icon>
+      Cerrar
+    </button>
+  </div>
+</ng-template>

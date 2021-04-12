@@ -14,7 +14,7 @@
                 <td class="text-truncate miw-25">{{ rental.departureDate | date : 'MMM d, y, h:mm:ss a' }}</td>
                 <td class="text-truncate miw-25">{{ rental.arrivalDate | date : 'MMM d, y, h:mm:ss a' }}</td>
                 <td class="text-truncate miw-18">{{ rental.passengersAmount }}</td>
-                <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: rental.id }"></ng-container>
+                <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: rental.aircraft.id }"></ng-container>
               </tr>
             </tbody>
           </ng-container>
@@ -22,13 +22,15 @@
       </table>
     </overlay-scrollbars>
   </div>
+  <router-outlet></router-outlet>
 </div>
 
-<ng-template #actions let-rentalId>
+<!-- Fetch for rentals by aircraft id -->
+<ng-template #actions let-aircraftId>
   <td class="table-actions miw-18">
     <div class="table-actions__content">
       <a role="button" class="btn text-primary" placement="top" ngbTooltip="Detalles"
-        [routerLink]="[ 'details/' + rentalId ]">
+        [routerLink]="[ 'details/' + aircraftId ]">
         <fa-icon [icon]="[ 'far', 'eye' ]" size="lg"></fa-icon>
       </a>
     </div>

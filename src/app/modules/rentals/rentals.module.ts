@@ -11,6 +11,7 @@ import { DropdownSelectModule } from '@shared/components/dropdown-select/dropdow
 
 import { RentalsComponent } from '@modules/rentals/rentals.component';
 import { CreateRentalComponent } from '@modules/rentals/create-rental/create-rental.component';
+import { RentalDetailsComponent } from '@modules/rentals/rental-details/rental-details.component';
 
 import { RentalsDisplayPipe } from '@modules/rentals/pipes/rentals-display/rentals-display.pipe';
 
@@ -18,7 +19,8 @@ import { RentalsDisplayPipe } from '@modules/rentals/pipes/rentals-display/renta
   declarations: [
     RentalsComponent,
     RentalsDisplayPipe,
-    CreateRentalComponent
+    CreateRentalComponent,
+    RentalDetailsComponent
   ],
   imports: [
     CommonModule,

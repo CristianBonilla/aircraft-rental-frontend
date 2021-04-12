@@ -1,4 +1,5 @@
 import { AircraftResponse } from '@modules/aircrafts/models/aircraft';
+import { PassengerResponse } from '@modules/passengers/models/passenger';
 
 interface Rental {
   passengerId: string;
@@ -22,4 +23,8 @@ export interface RentalDisplay {
   location: string;
   departureDate: string;
   arrivalDate: string;
+}
+
+export interface RentalDisplayDetail extends RentalDisplay {
+  passengers: PassengerResponse[];
 }

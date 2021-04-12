@@ -20,7 +20,7 @@
         <p>Usuarios</p>
       </a>
     </li>
-    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="allowRentals">
+    <li class="nav-item" routerLinkActive="active" *ngxPermissionsOnly="allowRentals">
       <a class="nav-link" [routerLink]="ROUTES.RENTALS">
         <fa-icon [icon]="[ 'fas', 'fighter-jet' ]" size="2x"></fa-icon>
         <p>Alquiler de Aeronaves</p>
