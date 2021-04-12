@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AircraftRequest, AircraftResponse, AircraftRentalState } from '@modules/aircrafts/models/aircraft';
 import { ENDPOINTS } from 'src/app/models/endpoints';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,11 @@ export class AircraftsService {
     const aircrafts$ = this.http.get<AircraftResponse[]>(this.endpointUrl, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    });
+    }).pipe(
+      map(aircrafts => aircrafts.sort((compareA, compareB) =>
+        compareA.state < compareB.state ? -1 : compareA.state > compareB.state ? 1 : 0)
+      )
+    );
 
     return aircrafts$;
   }
@@ -47,7 +52,11 @@ export class AircraftsService {
     const aircrafts$ = this.http.get<AircraftResponse[]>(`${ this.endpointUrl }/state/${ aircraftState }`, {
       responseType: 'json',
       ...this.httpHeaderOptions
-    });
+    }).pipe(
+      map(aircrafts => aircrafts.sort((compareA, compareB) =>
+        compareA.state < compareB.state ? -1 : compareA.state > compareB.state ? 1 : 0)
+      )
+    );
 
     return aircrafts$;
   }
