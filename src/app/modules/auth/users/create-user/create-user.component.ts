@@ -179,7 +179,7 @@ const { HOME: ROUTES } = APP_ROUTES;
 
   private onPopState() {
     this.router.events.pipe(
-      filter(event => event instanceof NavigationStart && !!event.restoredState),
+      filter(event => event instanceof NavigationStart && event.navigationTrigger === 'popstate'),
       take(1)
     ).subscribe(_ => this.userModal.close(null));
   }

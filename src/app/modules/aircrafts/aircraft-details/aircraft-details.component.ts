@@ -72,7 +72,7 @@ export class AircraftDetailsComponent implements OnInit, AfterViewInit {
 
   private onPopState() {
     this.router.events.pipe(
-      filter(event => event instanceof NavigationStart && !!event.restoredState),
+      filter(event => event instanceof NavigationStart && event.navigationTrigger === 'popstate'),
       take(1)
     ).subscribe(_ => this.aircraftModal.close(null));
   }
